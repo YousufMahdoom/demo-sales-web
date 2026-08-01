@@ -14,6 +14,8 @@ export default function VehicleCard({ vehicle, onSelect }) {
           <img
             src={vehicle.image}
             alt={vehicle.title}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-500"
           />
           {/* Badge */}

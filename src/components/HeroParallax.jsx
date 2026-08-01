@@ -198,8 +198,10 @@ export default function HeroParallax({ onExplore }) {
           >
             <div className="relative w-full h-full rounded-3xl overflow-hidden glass-card border border-white/10 shadow-2xl bg-black/60">
               <img
-                src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80&w=1200"
+                src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=75&w=800"
                 alt="Suzuki Wagon R FZ Side View"
+                fetchPriority="high"
+                decoding="async"
                 className="w-full h-full object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-5">
@@ -214,12 +216,14 @@ export default function HeroParallax({ onExplore }) {
           {/* CAR ANGLE 2: Open Doors / Quarter Perspective */}
           <div 
             ref={carQuarterRef}
-            className="absolute inset-0 w-full h-full flex items-center justify-center p-1 opacity-0 will-change-transform transition-opacity"
+            className="absolute inset-0 w-full h-full flex items-center justify-center p-1 opacity-0 lg:opacity-0 will-change-transform transition-opacity"
           >
             <div className="relative w-full h-full rounded-3xl overflow-hidden glass-card border border-red-500/30 shadow-2xl bg-black/80">
               <img
-                src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=1200"
+                src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=75&w=800"
                 alt="Suzuki Wagon R Cabin Ergonomics"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex items-end p-5">
@@ -234,12 +238,14 @@ export default function HeroParallax({ onExplore }) {
           {/* CAR ANGLE 3: Top Engine Zoom Bay View */}
           <div 
             ref={carEngineRef}
-            className="absolute inset-0 w-full h-full flex items-center justify-center p-1 opacity-0 will-change-transform transition-opacity"
+            className="absolute inset-0 w-full h-full flex items-center justify-center p-1 opacity-0 lg:opacity-0 will-change-transform transition-opacity"
           >
             <div className="relative w-full h-full rounded-3xl overflow-hidden glass-card border border-green-500/40 shadow-2xl bg-black/90">
               <img
-                src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=1200"
+                src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=75&w=800"
                 alt="Suzuki Wagon R Hybrid Engine Zoom"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex items-end p-5">
