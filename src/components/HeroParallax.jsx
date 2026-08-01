@@ -24,63 +24,68 @@ export default function HeroParallax({ onExplore }) {
   const specPanel3Ref = useRef(null);
 
   useEffect(() => {
-    // 3-Stage Pinned Scroll Timeline with ultra-smooth Scrub
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: heroPinRef.current,
-        start: 'top top',
-        end: '+=300%',
-        scrub: 0.8,
-        pin: true,
-        anticipatePin: 1
-      }
-    });
+    const isMobile = window.innerWidth < 1024;
+    let tl;
 
-    // ==========================================
-    // STAGE 1 -> STAGE 2 TRANSITION (Side Profile -> Open Doors/Quarter Angle)
-    // ==========================================
-    tl.to(textStage1Ref.current, { y: -50, opacity: 0, duration: 1 }, 0);
-    tl.to(specPanel1Ref.current, { x: 50, opacity: 0, duration: 1 }, 0);
-    tl.to(carSideRef.current, { scale: 0.82, opacity: 0, rotateY: -20, duration: 1.2 }, 0);
+    if (!isMobile) {
+      // 3-Stage Pinned Scroll Timeline for Desktop only
+      tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroPinRef.current,
+          start: 'top top',
+          end: '+=300%',
+          scrub: 0.8,
+          pin: true,
+          anticipatePin: 1
+        }
+      });
 
-    tl.fromTo(carQuarterRef.current,
-      { scale: 1.15, opacity: 0, rotateY: 25 },
-      { scale: 1, opacity: 1, rotateY: 0, duration: 1.4, ease: 'power2.out' },
-      0.6
-    );
-    tl.fromTo(textStage2Ref.current,
-      { y: 50, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2, ease: 'power2.out' },
-      0.8
-    );
-    tl.fromTo(specPanel2Ref.current,
-      { x: 50, opacity: 0 },
-      { x: 0, opacity: 1, duration: 1.2, ease: 'power2.out' },
-      1.0
-    );
+      // ==========================================
+      // STAGE 1 -> STAGE 2 TRANSITION
+      // ==========================================
+      tl.to(textStage1Ref.current, { y: -50, opacity: 0, duration: 1 }, 0);
+      tl.to(specPanel1Ref.current, { x: 50, opacity: 0, duration: 1 }, 0);
+      tl.to(carSideRef.current, { scale: 0.82, opacity: 0, rotateY: -20, duration: 1.2 }, 0);
 
-    // ==========================================
-    // STAGE 2 -> STAGE 3 TRANSITION (Quarter Angle -> Top Engine Zoom)
-    // ==========================================
-    tl.to(textStage2Ref.current, { y: -50, opacity: 0, duration: 1 }, 2.0);
-    tl.to(specPanel2Ref.current, { x: 50, opacity: 0, duration: 1 }, 2.0);
-    tl.to(carQuarterRef.current, { y: -80, scale: 0.85, opacity: 0, duration: 1.2 }, 2.0);
+      tl.fromTo(carQuarterRef.current,
+        { scale: 1.15, opacity: 0, rotateY: 25 },
+        { scale: 1, opacity: 1, rotateY: 0, duration: 1.4, ease: 'power2.out' },
+        0.6
+      );
+      tl.fromTo(textStage2Ref.current,
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: 'power2.out' },
+        0.8
+      );
+      tl.fromTo(specPanel2Ref.current,
+        { x: 50, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1.2, ease: 'power2.out' },
+        1.0
+      );
 
-    tl.fromTo(carEngineRef.current,
-      { scale: 1.25, opacity: 0, y: 100 },
-      { scale: 1, opacity: 1, y: 0, duration: 1.4, ease: 'power2.out' },
-      2.5
-    );
-    tl.fromTo(textStage3Ref.current,
-      { y: 50, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2, ease: 'power2.out' },
-      2.7
-    );
-    tl.fromTo(specPanel3Ref.current,
-      { x: 50, opacity: 0 },
-      { x: 0, opacity: 1, duration: 1.2, ease: 'power2.out' },
-      2.9
-    );
+      // ==========================================
+      // STAGE 2 -> STAGE 3 TRANSITION
+      // ==========================================
+      tl.to(textStage2Ref.current, { y: -50, opacity: 0, duration: 1 }, 2.0);
+      tl.to(specPanel2Ref.current, { x: 50, opacity: 0, duration: 1 }, 2.0);
+      tl.to(carQuarterRef.current, { y: -80, scale: 0.85, opacity: 0, duration: 1.2 }, 2.0);
+
+      tl.fromTo(carEngineRef.current,
+        { scale: 1.25, opacity: 0, y: 100 },
+        { scale: 1, opacity: 1, y: 0, duration: 1.4, ease: 'power2.out' },
+        2.5
+      );
+      tl.fromTo(textStage3Ref.current,
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: 'power2.out' },
+        2.7
+      );
+      tl.fromTo(specPanel3Ref.current,
+        { x: 50, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1.2, ease: 'power2.out' },
+        2.9
+      );
+    }
 
     return () => {
       ScrollTrigger.getAll().forEach(t => t.kill());
@@ -91,7 +96,7 @@ export default function HeroParallax({ onExplore }) {
     <section 
       ref={heroPinRef} 
       id="hero" 
-      className="relative h-screen w-full bg-[#0b0c10] text-white overflow-hidden flex flex-col justify-between pt-20 pb-4 px-4 sm:px-8 lg:px-12 select-none"
+      className="relative min-h-screen lg:h-screen w-full bg-[#0b0c10] text-white overflow-hidden flex flex-col justify-between pt-24 lg:pt-20 pb-8 lg:pb-4 px-4 sm:px-8 lg:px-12 select-none"
     >
       
       {/* Hyper-Garage Dark Ambient Radial Lighting */}
