@@ -107,12 +107,12 @@ export default function HeroParallax({ onExplore }) {
       <div className="w-full max-w-7xl mx-auto my-auto relative z-20 flex-1 flex flex-col justify-between lg:grid lg:grid-cols-12 gap-4 lg:gap-8 items-center min-h-0 py-4 lg:py-2">
         
         {/* ==========================================
-            LEFT COLUMN: DYNAMIC STAGE HEADLINES & TEXT
+            LEFT COLUMN: HEADLINES & TEXT
            ========================================== */}
-        <div className="lg:col-span-4 relative w-full h-[28%] lg:h-72 flex flex-col justify-center">
+        <div className="lg:col-span-4 relative w-full lg:h-72 flex flex-col justify-center">
           
           {/* STAGE 1 TEXT: Side Profile Overview */}
-          <div ref={textStage1Ref} className="absolute inset-0 flex flex-col justify-center space-y-2 sm:space-y-3 transition-opacity">
+          <div ref={textStage1Ref} className="flex flex-col justify-center space-y-2 sm:space-y-3">
             <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full glass-panel border border-red-500/30 text-[9px] sm:text-[10px] font-bold text-red-400 uppercase tracking-widest w-fit">
               <Sparkles className="w-3 h-3" />
               <span>Flagship Showcase Model</span>
@@ -135,8 +135,8 @@ export default function HeroParallax({ onExplore }) {
             </div>
           </div>
 
-          {/* STAGE 2 TEXT: Open Doors & Ergonomic Design */}
-          <div ref={textStage2Ref} className="absolute inset-0 flex flex-col justify-center space-y-2 sm:space-y-3 opacity-0 transition-opacity">
+          {/* STAGE 2 TEXT: Open Doors & Ergonomic Design (Desktop interactive stages) */}
+          <div ref={textStage2Ref} className="hidden lg:flex absolute inset-0 flex-col justify-center space-y-2 sm:space-y-3 opacity-0">
             <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full glass-panel border border-red-500/30 text-[9px] sm:text-[10px] font-bold text-red-400 uppercase tracking-widest w-fit">
               <ShieldCheck className="w-3 h-3" />
               <span>Safety & Cabin Architecture</span>
@@ -159,7 +159,7 @@ export default function HeroParallax({ onExplore }) {
           </div>
 
           {/* STAGE 3 TEXT: Top Hybrid Engine Zoom */}
-          <div ref={textStage3Ref} className="absolute inset-0 flex flex-col justify-center space-y-2 sm:space-y-3 opacity-0 transition-opacity">
+          <div ref={textStage3Ref} className="hidden lg:flex absolute inset-0 flex-col justify-center space-y-2 sm:space-y-3 opacity-0">
             <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full glass-panel border border-green-500/30 text-[9px] sm:text-[10px] font-bold text-green-400 uppercase tracking-widest w-fit">
               <Zap className="w-3 h-3" />
               <span>ISG Mild-Hybrid Power Core</span>
@@ -187,14 +187,14 @@ export default function HeroParallax({ onExplore }) {
         </div>
 
         {/* ==========================================
-            CENTER COLUMN: TRANSFORMING 3D CAR CANVAS
+            CENTER COLUMN: TRANSFORMING CAR CANVAS
            ========================================== */}
-        <div className="lg:col-span-5 relative w-full h-[38%] lg:h-[380px] flex items-center justify-center">
+        <div className="lg:col-span-5 relative w-full h-56 sm:h-72 lg:h-[380px] flex items-center justify-center my-4 lg:my-0">
           
           {/* CAR ANGLE 1: Side Profile View */}
           <div 
             ref={carSideRef}
-            className="absolute inset-0 w-full h-full flex items-center justify-center p-1 will-change-transform transition-opacity"
+            className="w-full h-full flex items-center justify-center p-1"
           >
             <div className="relative w-full h-full rounded-3xl overflow-hidden glass-card border border-white/10 shadow-2xl bg-black/60">
               <img
@@ -204,10 +204,10 @@ export default function HeroParallax({ onExplore }) {
                 decoding="async"
                 className="w-full h-full object-cover object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-5">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4 sm:p-5">
                 <div>
                   <span className="text-[10px] font-mono text-red-400 uppercase font-bold block">FLAGSHIP EXHIBIT</span>
-                  <span className="text-xl font-extrabold text-white">Pearl White Suzuki Wagon R FZ</span>
+                  <span className="text-base sm:text-xl font-extrabold text-white">Pearl White Suzuki Wagon R FZ</span>
                 </div>
               </div>
             </div>
@@ -216,7 +216,7 @@ export default function HeroParallax({ onExplore }) {
           {/* CAR ANGLE 2: Open Doors / Quarter Perspective */}
           <div 
             ref={carQuarterRef}
-            className="absolute inset-0 w-full h-full flex items-center justify-center p-1 opacity-0 lg:opacity-0 will-change-transform transition-opacity"
+            className="hidden lg:flex absolute inset-0 w-full h-full items-center justify-center p-1 opacity-0"
           >
             <div className="relative w-full h-full rounded-3xl overflow-hidden glass-card border border-red-500/30 shadow-2xl bg-black/80">
               <img
@@ -238,7 +238,7 @@ export default function HeroParallax({ onExplore }) {
           {/* CAR ANGLE 3: Top Engine Zoom Bay View */}
           <div 
             ref={carEngineRef}
-            className="absolute inset-0 w-full h-full flex items-center justify-center p-1 opacity-0 lg:opacity-0 will-change-transform transition-opacity"
+            className="hidden lg:flex absolute inset-0 w-full h-full items-center justify-center p-1 opacity-0"
           >
             <div className="relative w-full h-full rounded-3xl overflow-hidden glass-card border border-green-500/40 shadow-2xl bg-black/90">
               <img
@@ -260,21 +260,21 @@ export default function HeroParallax({ onExplore }) {
         </div>
 
         {/* ==========================================
-            RIGHT COLUMN: FLOATING SPECIFICATIONS PANELS
+            RIGHT COLUMN: SPECIFICATIONS PANEL
            ========================================== */}
-        <div className="lg:col-span-3 relative w-full h-[24%] lg:h-72 flex flex-col justify-center">
+        <div className="lg:col-span-3 relative w-full lg:h-72 flex flex-col justify-center">
           
-          {/* SPEC PANEL 1 (Stage 1 Overlay) */}
+          {/* SPEC PANEL 1 */}
           <div 
             ref={specPanel1Ref}
-            className="absolute inset-0 glass-panel p-3 lg:p-5 rounded-2xl border border-white/10 bg-black/80 flex flex-col justify-between shadow-2xl backdrop-blur-md transition-opacity"
+            className="w-full glass-panel p-4 lg:p-5 rounded-2xl border border-white/10 bg-black/80 flex flex-col justify-between shadow-2xl backdrop-blur-md"
           >
             <div>
               <span className="text-[10px] font-mono text-gray-400 uppercase font-bold block">SHOWROOM TARGET PRICE</span>
-              <span className="text-2xl font-black text-red-500 mt-1 block">Rs. 6,850,000</span>
+              <span className="text-xl sm:text-2xl font-black text-red-500 mt-0.5 block">Rs. 6,850,000</span>
             </div>
 
-            <div className="space-y-2.5 border-t border-white/10 pt-3 text-xs">
+            <div className="space-y-2 border-t border-white/10 pt-2.5 mt-2.5 text-xs">
               <div className="flex justify-between">
                 <span className="text-gray-400">Auction Grade</span>
                 <span className="font-extrabold text-green-400">4.5 / B Verified</span>
@@ -290,10 +290,10 @@ export default function HeroParallax({ onExplore }) {
             </div>
           </div>
 
-          {/* SPEC PANEL 2 (Stage 2 Overlay) */}
+          {/* SPEC PANEL 2 */}
           <div 
             ref={specPanel2Ref}
-            className="absolute inset-0 glass-panel p-3 lg:p-5 rounded-2xl border border-red-500/40 bg-black/90 flex flex-col justify-between shadow-2xl opacity-0 backdrop-blur-md transition-opacity"
+            className="hidden lg:flex absolute inset-0 glass-panel p-3 lg:p-5 rounded-2xl border border-red-500/40 bg-black/90 flex-col justify-between shadow-2xl opacity-0 backdrop-blur-md"
           >
             <div>
               <span className="text-[10px] font-mono text-red-400 uppercase font-bold block">SAFETY & CABIN TECH</span>
