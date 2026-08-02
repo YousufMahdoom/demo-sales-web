@@ -109,18 +109,18 @@
         <div class="lg:col-span-5 flex flex-col justify-center space-y-6 pt-4 lg:pt-0">
           <div class="parallax-layer flex items-center gap-3" data-speed="0.02" data-mouse-speed="-8">
             <span class="w-8 h-[1px] bg-red-600"></span>
-            <span class="text-xs tracking-[0.3em] font-mono text-red-500 uppercase font-semibold">FLAGSHIP JAPANESE IMPORT</span>
+            <span id="hero-badge" class="text-xs tracking-[0.3em] font-mono text-red-500 uppercase font-semibold">FLAGSHIP JAPANESE IMPORT</span>
           </div>
 
           <div class="parallax-layer space-y-1" data-speed="0.04" data-mouse-speed="-15">
             <h1 class="text-5xl sm:text-7xl lg:text-[92px] font-light tracking-tighter leading-[0.9] uppercase text-white font-sans">
-              Suzuki <br />
-              <span class="font-extrabold text-gradient-red tracking-tight">Wagon R FZ</span>
+              <span id="hero-brand">Suzuki</span> <br />
+              <span id="hero-model" class="font-extrabold text-gradient-red tracking-tight">Wagon R FZ</span>
             </h1>
-            <p class="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase pt-2">2023 Mild Hybrid ISG • Grade 4.5/B</p>
+            <p id="hero-subtitle" class="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase pt-2">2023 Mild Hybrid ISG • Grade 4.5/B</p>
           </div>
 
-          <p class="parallax-layer text-sm lg:text-base text-gray-400 max-w-md font-light leading-relaxed tracking-wide" data-speed="0.03" data-mouse-speed="-10">
+          <p id="hero-desc" class="parallax-layer text-sm lg:text-base text-gray-400 max-w-md font-light leading-relaxed tracking-wide transition-all duration-300" data-speed="0.03" data-mouse-speed="-10">
             Sri Lanka’s premier mild-hybrid hatchback with 30+ km/L efficiency, 100% verified Japanese auction sheet, and high-resale value.
           </p>
 
@@ -134,7 +134,7 @@
 
             <div class="hidden sm:flex flex-col">
               <span class="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Tagline</span>
-              <span class="text-xs italic text-gray-300 font-serif">"A family of extreme performance cars"</span>
+              <span id="hero-tagline" class="text-xs italic text-gray-300 font-serif">"A family of extreme performance cars"</span>
             </div>
           </div>
         </div>
@@ -143,7 +143,7 @@
         <div class="lg:col-span-4 relative h-[380px] lg:h-[580px] flex items-center justify-center">
           <div class="parallax-layer hero-tilt-card relative w-full h-full flex items-center justify-center transition-transform duration-300 ease-out" data-speed="0.08" data-mouse-speed="28">
             <div class="relative w-full max-w-[560px] aspect-[16/10] rounded-3xl overflow-hidden glass-card border border-white/10 shadow-[0_30px_100px_rgba(220,38,38,0.15)] bg-black/60 group">
-              <img src="public/images/wagonr-fz.jpg" fetchpriority="high" decoding="async" alt="Suzuki Wagon R FZ" class="w-full h-full object-cover object-center scale-100 group-hover:scale-105 transition-transform duration-1000 ease-out" />
+              <img id="hero-image" src="public/images/wagonr-fz.jpg" fetchpriority="high" decoding="async" alt="Suzuki Wagon R FZ" class="w-full h-full object-cover object-center scale-100 group-hover:scale-105 transition-all duration-500 ease-out" />
               <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-80"></div>
               
               <!-- Floating Card Badges -->
@@ -161,26 +161,26 @@
           <div class="parallax-layer glass-panel p-6 rounded-2xl border border-white/10 bg-black/60 backdrop-blur-xl w-full max-w-xs shadow-2xl space-y-4" data-speed="0.05" data-mouse-speed="-18">
             <div>
               <span class="text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em] block">Showroom Target Price</span>
-              <span class="text-3xl font-extrabold text-white tracking-tight mt-1 block">Rs. 6,850,000</span>
+              <span id="hero-price" class="text-3xl font-extrabold text-white tracking-tight mt-1 block">Rs. 6,850,000</span>
               <span class="text-[11px] text-red-400 font-mono block mt-0.5">Duty Paid / Immediate Delivery</span>
             </div>
 
             <div class="space-y-2 border-t border-white/10 pt-4 text-xs font-mono">
               <div class="flex justify-between">
                 <span class="text-gray-500 uppercase">Auction Grade</span>
-                <span class="font-bold text-green-400">4.5 / B</span>
+                <span id="hero-grade" class="font-bold text-green-400">4.5 / B</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-500 uppercase">Mileage</span>
-                <span class="font-bold text-white">14,500 km</span>
+                <span id="hero-mileage" class="font-bold text-white">14,500 km</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-500 uppercase">Fuel Economy</span>
-                <span class="font-bold text-red-400">30+ km/L</span>
+                <span id="hero-fuel" class="font-bold text-red-400">30+ km/L</span>
               </div>
             </div>
 
-            <a href="https://wa.me/94755331445?text=Hello%20DEMO%20SALES%20WEB,%20I%20want%20to%20reserve%20or%20inspect%20the%20Suzuki%20Wagon%20R%20FZ." target="_blank" rel="noreferrer" class="w-full py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-red-600/30 transition-all">
+            <a id="hero-reserve-btn" href="https://wa.me/94755331445?text=Hello%20DEMO%20SALES%20WEB,%20I%20want%20to%20reserve%20or%20inspect%20the%20Suzuki%20Wagon%20R%20FZ." target="_blank" rel="noreferrer" class="w-full py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-red-600/30 transition-all">
               <i class="fa-brands fa-whatsapp text-sm"></i>
               <span>Reserve Vehicle</span>
             </a>
@@ -189,16 +189,26 @@
 
       </div>
 
-      <!-- Bottom Bar: Progress Indicator, Socials & Scroll Indicator -->
+      <!-- Bottom Bar: Progress Indicator, Controls & Socials -->
       <div class="relative z-20 w-full max-w-[1700px] mx-auto flex items-center justify-between pt-4 border-t border-white/10 text-xs font-mono text-gray-400">
         
         <!-- Left: Progress Slider -->
         <div class="flex items-center gap-4">
-          <span class="text-white font-bold tracking-widest">01</span>
+          <span id="hero-index-current" class="text-white font-bold tracking-widest">01</span>
           <div class="w-24 sm:w-36 h-[2px] bg-white/10 rounded-full overflow-hidden relative">
-            <div class="absolute top-0 left-0 h-full w-1/3 bg-red-600 animate-pulse"></div>
+            <div id="hero-progress-fill" class="absolute top-0 left-0 h-full w-full bg-red-600 transition-all duration-500 ease-out"></div>
           </div>
           <span class="text-gray-600">03</span>
+
+          <!-- Slider Prev / Next Controls -->
+          <div class="flex items-center gap-2 ml-4">
+            <button id="hero-prev-btn" class="w-8 h-8 rounded-full border border-white/20 glass-panel flex items-center justify-center text-white hover:border-red-500 hover:text-red-500 transition-colors" aria-label="Previous Slide">
+              <i class="fa-solid fa-chevron-left text-[10px]"></i>
+            </button>
+            <button id="hero-next-btn" class="w-8 h-8 rounded-full border border-white/20 glass-panel flex items-center justify-center text-white hover:border-red-500 hover:text-red-500 transition-colors" aria-label="Next Slide">
+              <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </button>
+          </div>
         </div>
 
         <!-- Center: Scroll Indicator -->

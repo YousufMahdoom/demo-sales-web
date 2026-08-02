@@ -232,6 +232,58 @@ const TESTIMONIALS = [
   }
 ];
 
+// ================= HERO SLIDER DATA =================
+const HERO_SLIDES = [
+  {
+    badge: "FLAGSHIP JAPANESE IMPORT",
+    brand: "SUZUKI",
+    model: "WAGON R FZ",
+    year: "2023",
+    subtitle: "2023 Mild Hybrid ISG • Grade 4.5/B",
+    description: "Sri Lanka’s premier mild-hybrid hatchback with 30+ km/L efficiency, 100% verified Japanese auction sheet, and high-resale value.",
+    tagline: '"A family of extreme performance cars"',
+    price: "Rs. 6,850,000",
+    grade: "4.5 / B Verified",
+    mileage: "14,500 km",
+    fuel: "30+ km/L Hybrid",
+    image: "public/images/wagonr-fz.jpg",
+    modalId: "wr-fz-2023"
+  },
+  {
+    badge: "PREMIUM SPORT EDITION",
+    brand: "SUZUKI",
+    model: "WAGON R STINGRAY",
+    year: "2022",
+    subtitle: "2022 Turbocharged Hybrid T • DSBS Safety",
+    description: "Aggressive sport edition with signature LED front fascia, turbo paddle-shift boost, and full leather luxury interior.",
+    tagline: '"Unmatched turbo performance & style"',
+    price: "Rs. 7,250,000",
+    grade: "4.5 / A Verified",
+    mileage: "18,200 km",
+    fuel: "Turbo Hybrid",
+    image: "public/images/wagonr-stingray.jpg",
+    modalId: "wr-stingray-2022"
+  },
+  {
+    badge: "DUAL-MOTOR HYBRID CROSSOVER",
+    brand: "HONDA",
+    model: "FIT CROSSTAR",
+    year: "2022",
+    subtitle: "1500cc e:HEV Dual-Motor • Sunlit White",
+    description: "Premium Japanese hybrid crossover edition with high ground clearance, water-repellent fabric, and Honda SENSING.",
+    tagline: '"Luxury crossover versatility & efficiency"',
+    price: "Contact for Direct Quote",
+    grade: "5.0 / Mint",
+    mileage: "22,000 km",
+    fuel: "e:HEV Dual-Motor",
+    image: "public/images/honda-fit.jpg",
+    modalId: "honda-fit-crosstar"
+  }
+];
+
+let currentHeroSlide = 0;
+let heroSlideTimer = null;
+
 // ================= GLOBAL STATE =================
 let selectedCategory = 'all';
 let searchQuery = '';
@@ -244,6 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLazyMap();
   initInventoryCounts();
   initParallax();
+  initHeroSlider();
 
   // Defer heavy DOM rendering so initial paint finishes instantly on Safari & iPhone
   const deferRender = (fn) => {
@@ -330,6 +383,89 @@ function initParallax() {
   }
 
   requestUpdate();
+}
+
+// ================= HERO SLIDER CONTROLLER =================
+function initHeroSlider() {
+  const prevBtn = document.getElementById('hero-prev-btn');
+  const nextBtn = document.getElementById('hero-next-btn');
+
+  if (prevBtn) prevBtn.addEventListener('click', () => changeHeroSlide(-1));
+  if (nextBtn) nextBtn.addEventListener('click', () => changeHeroSlide(1));
+
+  startHeroTimer();
+}
+
+function startHeroTimer() {
+  stopHeroTimer();
+  heroSlideTimer = setInterval(() => {
+    changeHeroSlide(1);
+  }, 7000);
+}
+
+function stopHeroTimer() {
+  if (heroSlideTimer) clearInterval(heroSlideTimer);
+}
+
+function changeHeroSlide(direction) {
+  currentHeroSlide = (currentHeroSlide + direction + HERO_SLIDES.length) % HERO_SLIDES.length;
+  updateHeroSlide();
+  startHeroTimer();
+}
+
+function updateHeroSlide() {
+  const slide = HERO_SLIDES[currentHeroSlide];
+  if (!slide) return;
+
+  const badgeEl = document.getElementById('hero-badge');
+  const brandEl = document.getElementById('hero-brand');
+  const modelEl = document.getElementById('hero-model');
+  const subtitleEl = document.getElementById('hero-subtitle');
+  const descEl = document.getElementById('hero-desc');
+  const taglineEl = document.getElementById('hero-tagline');
+  const priceEl = document.getElementById('hero-price');
+  const gradeEl = document.getElementById('hero-grade');
+  const mileageEl = document.getElementById('hero-mileage');
+  const fuelEl = document.getElementById('hero-fuel');
+  const imageEl = document.getElementById('hero-image');
+  const indexCurrentEl = document.getElementById('hero-index-current');
+  const progressFillEl = document.getElementById('hero-progress-fill');
+  const reserveBtnEl = document.getElementById('hero-reserve-btn');
+
+  if (badgeEl) badgeEl.textContent = slide.badge;
+  if (brandEl) brandEl.textContent = slide.brand;
+  if (modelEl) modelEl.textContent = slide.model;
+  if (subtitleEl) subtitleEl.textContent = slide.subtitle;
+  if (descEl) descEl.textContent = slide.description;
+  if (taglineEl) taglineEl.textContent = slide.tagline;
+  if (priceEl) priceEl.textContent = slide.price;
+  if (gradeEl) gradeEl.textContent = slide.grade;
+  if (mileageEl) mileageEl.textContent = slide.mileage;
+  if (fuelEl) fuelEl.textContent = slide.fuel;
+  if (indexCurrentEl) indexCurrentEl.textContent = `0${currentHeroSlide + 1}`;
+
+  if (progressFillEl) {
+    progressFillEl.style.width = '0%';
+    setTimeout(() => {
+      progressFillEl.style.width = '100%';
+    }, 50);
+  }
+
+  if (imageEl) {
+    imageEl.style.opacity = '0';
+    imageEl.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      imageEl.src = slide.image;
+      imageEl.alt = `${slide.brand} ${slide.model}`;
+      imageEl.style.opacity = '1';
+      imageEl.style.transform = 'scale(1)';
+    }, 200);
+  }
+
+  if (reserveBtnEl) {
+    const waMsg = encodeURIComponent(`Hello DEMO SALES WEB! I want to reserve or inspect the ${slide.brand} ${slide.model} (${slide.year}).`);
+    reserveBtnEl.href = `https://wa.me/94755331445?text=${waMsg}`;
+  }
 }
 
 function initLazyMap() {
