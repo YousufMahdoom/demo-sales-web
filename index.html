@@ -9,10 +9,6 @@
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- GSAP & ScrollTrigger CDN (Deferred for fast render) -->
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
@@ -147,7 +143,7 @@
   </header>
 
   <main>
-    <!-- ================= HERO SECTION (PINNED PARALLAX) ================= -->
+    <!-- ================= HERO SECTION ================= -->
     <section id="hero" class="relative min-h-screen lg:h-screen w-full bg-[#0b0c10] text-white overflow-hidden flex flex-col justify-between pt-24 lg:pt-20 pb-8 lg:pb-4 px-4 sm:px-8 lg:px-12 select-none">
       <!-- Glow Lights -->
       <div class="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[850px] bg-red-600/15 rounded-full blur-[190px] pointer-events-none"></div>
@@ -155,78 +151,30 @@
 
       <div class="w-full max-w-7xl mx-auto my-auto relative z-20 flex-1 flex flex-col justify-between lg:grid lg:grid-cols-12 gap-4 lg:gap-8 items-center min-h-0 py-4 lg:py-2">
         
-        <!-- Left Column (Stage 1, 2, 3 Texts) -->
-        <div class="lg:col-span-4 relative w-full lg:h-72 flex flex-col justify-center">
-          
-          <!-- Stage 1 Text -->
-          <div id="hero-text-1" class="flex flex-col justify-center space-y-2 sm:space-y-3">
-            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full glass-panel border border-red-500/30 text-[9px] sm:text-[10px] font-bold text-red-400 uppercase tracking-widest w-fit">
-              <i class="fa-solid fa-wand-magic-sparkles"></i>
-              <span>Flagship Showcase Model</span>
-            </div>
-            <h1 class="text-xl sm:text-3xl lg:text-5xl font-black uppercase tracking-tight text-white leading-none">
-              Suzuki <br />
-              <span class="text-gradient-red">Wagon R FZ</span>
-            </h1>
-            <p class="text-[10px] sm:text-xs lg:text-sm text-gray-300 max-w-sm leading-snug lg:leading-relaxed">
-              Sri Lanka's premier mild-hybrid hatchback with 30+ km/L efficiency, 100% verified Japanese auction sheet, and high-resale value.
-            </p>
-            <div class="pt-1 flex items-center gap-3">
-              <a href="#inventory" class="px-4 py-2 sm:px-6 sm:py-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 font-bold sm:font-extrabold text-[10px] sm:text-xs text-white uppercase tracking-wider shadow-lg shadow-red-600/30 flex items-center gap-1.5 sm:gap-2 transition-all">
-                <span>Explore Yard Stock</span>
-                <i class="fa-solid fa-arrow-right"></i>
-              </a>
-            </div>
+        <!-- Left Column -->
+        <div class="lg:col-span-4 relative w-full flex flex-col justify-center space-y-2 sm:space-y-3">
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full glass-panel border border-red-500/30 text-[9px] sm:text-[10px] font-bold text-red-400 uppercase tracking-widest w-fit">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>Flagship Showcase Model</span>
           </div>
-
-          <!-- Stage 2 Text -->
-          <div id="hero-text-2" class="hidden lg:flex absolute inset-0 flex-col justify-center space-y-2 sm:space-y-3 opacity-0">
-            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full glass-panel border border-red-500/30 text-[9px] sm:text-[10px] font-bold text-red-400 uppercase tracking-widest w-fit">
-              <i class="fa-solid fa-shield-halved"></i>
-              <span>Safety & Cabin Architecture</span>
-            </div>
-            <h2 class="text-xl sm:text-3xl lg:text-5xl font-black uppercase tracking-tight text-white leading-none">
-              Cabin & <br />
-              <span class="text-gradient-red">Safety Design</span>
-            </h2>
-            <p class="text-[10px] sm:text-xs lg:text-sm text-gray-300 max-w-sm leading-snug lg:leading-relaxed">
-              High-roof seating layout fitted with Head-Up Display (HUD), dual airbags, and Dual Sensor Brake Support (DSBS) collision mitigation.
-            </p>
-            <div class="pt-1 flex items-center gap-3">
-              <a href="#inventory" class="px-4 py-2 sm:px-6 sm:py-3 rounded-lg sm:rounded-xl bg-white text-black font-bold sm:font-extrabold text-[10px] sm:text-xs uppercase tracking-wider shadow-xl">
-                <span>View Design Specs</span>
-              </a>
-            </div>
+          <h1 class="text-xl sm:text-3xl lg:text-5xl font-black uppercase tracking-tight text-white leading-none">
+            Suzuki <br />
+            <span class="text-gradient-red">Wagon R FZ</span>
+          </h1>
+          <p class="text-[10px] sm:text-xs lg:text-sm text-gray-300 max-w-sm leading-snug lg:leading-relaxed">
+            Sri Lanka's premier mild-hybrid hatchback with 30+ km/L efficiency, 100% verified Japanese auction sheet, and high-resale value.
+          </p>
+          <div class="pt-1 flex items-center gap-3">
+            <a href="#inventory" class="px-4 py-2 sm:px-6 sm:py-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 font-bold sm:font-extrabold text-[10px] sm:text-xs text-white uppercase tracking-wider shadow-lg shadow-red-600/30 flex items-center gap-1.5 sm:gap-2 transition-all">
+              <span>Explore Yard Stock</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
           </div>
-
-          <!-- Stage 3 Text -->
-          <div id="hero-text-3" class="hidden lg:flex absolute inset-0 flex-col justify-center space-y-2 sm:space-y-3 opacity-0">
-            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full glass-panel border border-green-500/30 text-[9px] sm:text-[10px] font-bold text-green-400 uppercase tracking-widest w-fit">
-              <i class="fa-solid fa-bolt"></i>
-              <span>ISG Mild-Hybrid Power Core</span>
-            </div>
-            <h2 class="text-xl sm:text-3xl lg:text-5xl font-black uppercase tracking-tight text-white leading-none">
-              Hybrid <br />
-              <span class="text-green-400">Power Core</span>
-            </h2>
-            <p class="text-[10px] sm:text-xs lg:text-sm text-gray-300 max-w-sm leading-snug lg:leading-relaxed">
-              660cc Mild Hybrid ISG dual-battery system delivering unmatched fuel economy exceeding 30 km/L for daily Sri Lankan commuting.
-            </p>
-            <div class="pt-1 flex items-center gap-3">
-              <a href="https://wa.me/94755331445?text=Hello%20DEMO%20SALES%20WEB,%20I%20want%20to%20inquire%20about%20the%20Wagon%20R%20Hybrid%20Price." target="_blank" rel="noreferrer" class="px-4 py-2 sm:px-6 sm:py-3 rounded-lg sm:rounded-xl bg-green-600 hover:bg-green-500 font-bold sm:font-extrabold text-[10px] sm:text-xs text-white uppercase tracking-wider shadow-lg shadow-green-600/30 flex items-center gap-1.5 sm:gap-2">
-                <i class="fa-brands fa-whatsapp text-base"></i>
-                <span>Instant WhatsApp Quote</span>
-              </a>
-            </div>
-          </div>
-
         </div>
 
-        <!-- Center Column (Transforming Car Cards) -->
+        <!-- Center Column -->
         <div class="lg:col-span-5 relative w-full h-56 sm:h-72 lg:h-[380px] flex items-center justify-center my-4 lg:my-0">
-          
-          <!-- Car 1: Side View -->
-          <div id="hero-car-1" class="w-full h-full flex items-center justify-center p-1">
+          <div class="w-full h-full flex items-center justify-center p-1">
             <div class="relative w-full h-full rounded-3xl overflow-hidden glass-card border border-white/10 shadow-2xl bg-black/60">
               <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=75&w=800" alt="Suzuki Wagon R FZ Side View" class="w-full h-full object-cover object-center" />
               <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4 sm:p-5">
@@ -237,40 +185,11 @@
               </div>
             </div>
           </div>
-
-          <!-- Car 2: Quarter View -->
-          <div id="hero-car-2" class="hidden lg:flex absolute inset-0 w-full h-full items-center justify-center p-1 opacity-0">
-            <div class="relative w-full h-full rounded-3xl overflow-hidden glass-card border border-red-500/30 shadow-2xl bg-black/80">
-              <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=75&w=800" alt="Suzuki Wagon R Cabin Ergonomics" class="w-full h-full object-cover object-center" />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex items-end p-5">
-                <div>
-                  <span class="text-[10px] font-mono text-red-400 uppercase font-bold block">DESIGN EXHIBIT</span>
-                  <span class="text-xl font-extrabold text-white">Open Doors Ergonomic Seating</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Car 3: Engine View -->
-          <div id="hero-car-3" class="hidden lg:flex absolute inset-0 w-full h-full items-center justify-center p-1 opacity-0">
-            <div class="relative w-full h-full rounded-3xl overflow-hidden glass-card border border-green-500/40 shadow-2xl bg-black/90">
-              <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=75&w=800" alt="Suzuki Wagon R Hybrid Engine" class="w-full h-full object-cover object-center" />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex items-end p-5">
-                <div>
-                  <span class="text-[10px] font-mono text-green-400 uppercase font-bold block">ENGINE BAY ZOOM</span>
-                  <span class="text-xl font-extrabold text-white">660cc Mild Hybrid Power Core</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
 
-        <!-- Right Column (Spec Panels) -->
-        <div class="lg:col-span-3 relative w-full lg:h-72 flex flex-col justify-center">
-          
-          <!-- Spec Panel 1 -->
-          <div id="hero-spec-1" class="w-full glass-panel p-4 lg:p-5 rounded-2xl border border-white/10 bg-black/80 flex flex-col justify-between shadow-2xl backdrop-blur-md">
+        <!-- Right Column -->
+        <div class="lg:col-span-3 relative w-full flex flex-col justify-center">
+          <div class="w-full glass-panel p-4 lg:p-5 rounded-2xl border border-white/10 bg-black/80 flex flex-col justify-between shadow-2xl backdrop-blur-md">
             <div>
               <span class="text-[10px] font-mono text-gray-400 uppercase font-bold block">SHOWROOM TARGET PRICE</span>
               <span class="text-xl sm:text-2xl font-black text-red-500 mt-0.5 block">Rs. 6,850,000</span>
@@ -291,50 +210,6 @@
               </div>
             </div>
           </div>
-
-          <!-- Spec Panel 2 -->
-          <div id="hero-spec-2" class="hidden lg:flex absolute inset-0 glass-panel p-3 lg:p-5 rounded-2xl border border-red-500/40 bg-black/90 flex-col justify-between shadow-2xl opacity-0 backdrop-blur-md">
-            <div>
-              <span class="text-[10px] font-mono text-red-400 uppercase font-bold block">SAFETY & CABIN TECH</span>
-              <span class="text-xl font-black text-white mt-1 block">Collision Mitigation</span>
-            </div>
-
-            <ul class="text-xs space-y-2 text-gray-300 border-t border-white/10 pt-3">
-              <li class="flex items-center gap-2">
-                <i class="fa-solid fa-circle-check text-green-400"></i>
-                <span>HUD (Head-Up Display)</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <i class="fa-solid fa-circle-check text-green-400"></i>
-                <span>Dual Sensor Brake Support</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <i class="fa-solid fa-circle-check text-green-400"></i>
-                <span>Heat-Seated Front Seats</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Spec Panel 3 -->
-          <div id="hero-spec-3" class="hidden lg:flex absolute inset-0 glass-panel p-3 lg:p-5 rounded-2xl border border-green-500/50 bg-black/95 flex-col justify-between shadow-2xl opacity-0 backdrop-blur-md">
-            <div>
-              <span class="text-[10px] font-mono text-green-400 uppercase font-bold block">TECHNICAL BENCHMARK</span>
-              <span class="text-3xl font-black text-white mt-1 block">30+ km/L</span>
-              <span class="text-[10px] text-gray-400 block">Class-leading fuel economy</span>
-            </div>
-
-            <div class="space-y-2 text-xs border-t border-white/10 pt-3">
-              <div class="flex justify-between">
-                <span class="text-gray-400">Total Displacement</span>
-                <span class="font-extrabold text-white">658 cc</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Transmission</span>
-                <span class="font-extrabold text-white">Automatic CVT</span>
-              </div>
-            </div>
-          </div>
-
         </div>
 
       </div>

@@ -239,7 +239,6 @@ let searchQuery = '';
 // ================= DOM LOADED INITIALIZATION =================
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
-  initHeroParallax();
   initInventoryCounts();
   renderVehicles();
   renderTestimonials();
@@ -247,82 +246,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initForms();
   initModals();
 });
-
-// ================= HERO PINNED PARALLAX TIMELINE =================
-function initHeroParallax() {
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const isMobile = window.innerWidth < 1024;
-  if (isMobile) return; // Parallax timeline for desktop viewport
-
-  const heroSection = document.getElementById('hero');
-  const text1 = document.getElementById('hero-text-1');
-  const text2 = document.getElementById('hero-text-2');
-  const text3 = document.getElementById('hero-text-3');
-
-  const car1 = document.getElementById('hero-car-1');
-  const car2 = document.getElementById('hero-car-2');
-  const car3 = document.getElementById('hero-car-3');
-
-  const spec1 = document.getElementById('hero-spec-1');
-  const spec2 = document.getElementById('hero-spec-2');
-  const spec3 = document.getElementById('hero-spec-3');
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: heroSection,
-      start: 'top top',
-      end: '+=250%',
-      scrub: 0.8,
-      pin: true,
-      anticipatePin: 1
-    }
-  });
-
-  // ================= STAGE 1 -> STAGE 2 =================
-  tl.to(text1, { y: -40, opacity: 0, duration: 1 }, 0);
-  tl.to(spec1, { x: 40, opacity: 0, duration: 1 }, 0);
-  tl.to(car1, { scale: 0.8, opacity: 0, rotateY: -15, duration: 1.2 }, 0);
-
-  tl.fromTo(car2,
-    { scale: 1.15, opacity: 0, rotateY: 20 },
-    { scale: 1, opacity: 1, rotateY: 0, duration: 1.4, ease: 'power2.out' },
-    0.6
-  );
-  tl.fromTo(text2,
-    { y: 40, opacity: 0 },
-    { y: 0, opacity: 1, duration: 1.2, ease: 'power2.out' },
-    0.8
-  );
-  tl.fromTo(spec2,
-    { x: 40, opacity: 0 },
-    { x: 0, opacity: 1, duration: 1.2, ease: 'power2.out' },
-    1.0
-  );
-
-  // ================= STAGE 2 -> STAGE 3 =================
-  tl.to(text2, { y: -40, opacity: 0, duration: 1 }, 2.0);
-  tl.to(spec2, { x: 40, opacity: 0, duration: 1 }, 2.0);
-  tl.to(car2, { y: -60, scale: 0.85, opacity: 0, duration: 1.2 }, 2.0);
-
-  tl.fromTo(car3,
-    { scale: 1.2, opacity: 0, y: 80 },
-    { scale: 1, opacity: 1, y: 0, duration: 1.4, ease: 'power2.out' },
-    2.5
-  );
-  tl.fromTo(text3,
-    { y: 40, opacity: 0 },
-    { y: 0, opacity: 1, duration: 1.2, ease: 'power2.out' },
-    2.7
-  );
-  tl.fromTo(spec3,
-    { x: 40, opacity: 0 },
-    { x: 0, opacity: 1, duration: 1.2, ease: 'power2.out' },
-    2.9
-  );
-}
 
 // ================= NAVBAR SCROLL & MOBILE MENU =================
 function initNavbar() {
