@@ -276,19 +276,14 @@ function initParallax() {
   let scrollY = window.scrollY;
   let isTicking = false;
 
-  // Track mouse movement over hero section
-  heroSection.addEventListener('mousemove', (e) => {
+  // Track mouse movement globally when on/near hero section
+  window.addEventListener('mousemove', (e) => {
     const rect = heroSection.getBoundingClientRect();
-    // Center-origin normalized coordinates (-1 to 1)
-    mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-    mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-    requestUpdate();
-  });
-
-  heroSection.addEventListener('mouseleave', () => {
-    mouseX = 0;
-    mouseY = 0;
-    requestUpdate();
+    if (rect.bottom > 0 && rect.top < window.innerHeight) {
+      mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+      requestUpdate();
+    }
   });
 
   window.addEventListener('scroll', () => {
@@ -304,7 +299,6 @@ function initParallax() {
   }
 
   function updateParallax() {
-    // Smooth lerp towards target mouse position
     currentX += (mouseX - currentX) * 0.1;
     currentY += (mouseY - currentY) * 0.1;
 
@@ -318,12 +312,15 @@ function initParallax() {
       el.style.transform = `translate3d(${transX.toFixed(2)}px, ${transY.toFixed(2)}px, 0)`;
     });
 
-    if (Math.abs(mouseX - currentX) > 0.001 || Math.abs(mouseY - currentY) > 0.001) {
+    if (Math.abs(mouseX - currentX) > 0.001 || Math.abs(mouseY - currentY) > 0.001 || scrollY !== window.scrollY) {
       requestAnimationFrame(updateParallax);
     } else {
       isTicking = false;
     }
   }
+  
+  // Initial positioning call
+  requestUpdate();
 }
 
 function initLazyMap() {
