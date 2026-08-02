@@ -243,6 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals();
   initLazyMap();
   initInventoryCounts();
+  initParallax();
 
   // Defer heavy DOM rendering so initial paint finishes instantly on Safari & iPhone
   const deferRender = (fn) => {
@@ -261,6 +262,69 @@ document.addEventListener('DOMContentLoaded', () => {
     renderGallery();
   });
 });
+
+// ================= PARALLAX EFFECT =================
+function initParallax() {
+  const heroSection = document.getElementById('hero');
+  const parallaxElements = document.querySelectorAll('.parallax-layer');
+  if (!heroSection || !parallaxElements.length) return;
+
+  let mouseX = 0;
+  let mouseY = 0;
+  let currentX = 0;
+  let currentY = 0;
+  let scrollY = window.scrollY;
+  let isTicking = false;
+
+  // Track mouse movement over hero section
+  heroSection.addEventListener('mousemove', (e) => {
+    const rect = heroSection.getBoundingClientRect();
+    // Center-origin normalized coordinates (-1 to 1)
+    mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+    requestUpdate();
+  });
+
+  heroSection.addEventListener('mouseleave', () => {
+    mouseX = 0;
+    mouseY = 0;
+    requestUpdate();
+  });
+
+  window.addEventListener('scroll', () => {
+    scrollY = window.scrollY;
+    requestUpdate();
+  }, { passive: true });
+
+  function requestUpdate() {
+    if (!isTicking) {
+      requestAnimationFrame(updateParallax);
+      isTicking = true;
+    }
+  }
+
+  function updateParallax() {
+    // Smooth lerp towards target mouse position
+    currentX += (mouseX - currentX) * 0.1;
+    currentY += (mouseY - currentY) * 0.1;
+
+    parallaxElements.forEach((el) => {
+      const speed = parseFloat(el.dataset.speed || '0.05');
+      const mouseSpeed = parseFloat(el.dataset.mouseSpeed || '20');
+
+      const transX = currentX * mouseSpeed;
+      const transY = (scrollY * speed) + (currentY * mouseSpeed);
+
+      el.style.transform = `translate3d(${transX.toFixed(2)}px, ${transY.toFixed(2)}px, 0)`;
+    });
+
+    if (Math.abs(mouseX - currentX) > 0.001 || Math.abs(mouseY - currentY) > 0.001) {
+      requestAnimationFrame(updateParallax);
+    } else {
+      isTicking = false;
+    }
+  }
+}
 
 function initLazyMap() {
   const mapContainer = document.getElementById('map-container');
