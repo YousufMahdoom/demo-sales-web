@@ -267,13 +267,14 @@ document.addEventListener('DOMContentLoaded', () => {
 function initParallax() {
   const heroSection = document.getElementById('hero');
   const parallaxElements = document.querySelectorAll('.parallax-layer');
-  if (!heroSection || !parallaxElements.length) return;
+  const tiltCard = document.querySelector('.hero-tilt-card');
+  if (!heroSection) return;
 
   let mouseX = 0;
   let mouseY = 0;
   let currentX = 0;
   let currentY = 0;
-  let scrollY = window.scrollY;
+  let lastScrollY = window.scrollY;
   let isTicking = false;
 
   // Track mouse movement globally when on/near hero section
@@ -287,7 +288,7 @@ function initParallax() {
   });
 
   window.addEventListener('scroll', () => {
-    scrollY = window.scrollY;
+    lastScrollY = window.scrollY;
     requestUpdate();
   }, { passive: true });
 
@@ -299,27 +300,35 @@ function initParallax() {
   }
 
   function updateParallax() {
-    currentX += (mouseX - currentX) * 0.1;
-    currentY += (mouseY - currentY) * 0.1;
+    currentX += (mouseX - currentX) * 0.12;
+    currentY += (mouseY - currentY) * 0.12;
+
+    const scrollPos = lastScrollY;
 
     parallaxElements.forEach((el) => {
       const speed = parseFloat(el.dataset.speed || '0.05');
       const mouseSpeed = parseFloat(el.dataset.mouseSpeed || '20');
 
       const transX = currentX * mouseSpeed;
-      const transY = (scrollY * speed) + (currentY * mouseSpeed);
+      const transY = (scrollPos * speed) + (currentY * mouseSpeed);
 
       el.style.transform = `translate3d(${transX.toFixed(2)}px, ${transY.toFixed(2)}px, 0)`;
     });
 
-    if (Math.abs(mouseX - currentX) > 0.001 || Math.abs(mouseY - currentY) > 0.001 || scrollY !== window.scrollY) {
+    // 3D Card Tilt effect on flagship showcase image
+    if (tiltCard) {
+      const rotateX = (-currentY * 12).toFixed(2);
+      const rotateY = (currentX * 14).toFixed(2);
+      tiltCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    }
+
+    if (Math.abs(mouseX - currentX) > 0.0005 || Math.abs(mouseY - currentY) > 0.0005 || lastScrollY !== window.scrollY) {
       requestAnimationFrame(updateParallax);
     } else {
       isTicking = false;
     }
   }
-  
-  // Initial positioning call
+
   requestUpdate();
 }
 
