@@ -14,11 +14,11 @@ const VEHICLES_DATA = [
     condition: "Unregistered / Mint",
     price: "Rs. 6,850,000",
     isPriceContact: false,
-    image: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80&w=1000",
+    image: "public/images/wagonr-fz.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=1000"
+      "public/images/wagonr-fz.jpg",
+      "public/images/cabin-ergonomics.jpg",
+      "public/images/wagonr-stingray.jpg"
     ],
     features: [
       "HUD (Head-Up Display)",
@@ -44,10 +44,10 @@ const VEHICLES_DATA = [
     condition: "Unregistered",
     price: "Rs. 7,250,000",
     isPriceContact: false,
-    image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=1000",
+    image: "public/images/wagonr-stingray.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=1000"
+      "public/images/wagonr-stingray.jpg",
+      "public/images/cabin-ergonomics.jpg"
     ],
     features: [
       "LED Headlamps & Signature Chrome Grille",
@@ -73,9 +73,9 @@ const VEHICLES_DATA = [
     condition: "Unregistered",
     price: "Rs. 6,450,000",
     isPriceContact: false,
-    image: "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&q=80&w=1000",
+    image: "public/images/wagonr-fx.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&q=80&w=1000"
+      "public/images/wagonr-fx.jpg"
     ],
     features: [
       "Lane Departure Warning",
@@ -100,9 +100,9 @@ const VEHICLES_DATA = [
     condition: "Unregistered / Like New",
     price: "Contact for Price",
     isPriceContact: true,
-    image: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=1000",
+    image: "public/images/honda-fit.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=1000"
+      "public/images/honda-fit.jpg"
     ],
     features: [
       "Honda SENSING Suite",
@@ -127,9 +127,9 @@ const VEHICLES_DATA = [
     condition: "Registered",
     price: "Rs. 5,950,000",
     isPriceContact: false,
-    image: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=1000",
+    image: "public/images/toyota-vitz.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=1000"
+      "public/images/toyota-vitz.jpg"
     ],
     features: [
       "Toyota Safety Sense C",
@@ -154,9 +154,9 @@ const VEHICLES_DATA = [
     condition: "Unregistered",
     price: "Rs. 6,300,000",
     isPriceContact: false,
-    image: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&q=80&w=1000",
+    image: "public/images/nissan-dayz.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&q=80&w=1000"
+      "public/images/nissan-dayz.jpg"
     ],
     features: [
       "ProPILOT Autonomous Highway Assist",
@@ -174,37 +174,37 @@ const GALLERY_ITEMS = [
     id: 1,
     title: "New Suzuki Wagon R FZ Unloading",
     category: "Shipment",
-    image: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80&w=800"
+    image: "public/images/wagonr-fz.jpg"
   },
   {
     id: 2,
     title: "Kurunegala Showroom Floor",
     category: "Showroom",
-    image: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&q=80&w=800"
+    image: "public/images/showroom.jpg"
   },
   {
     id: 3,
     title: "Customer Handover Ceremony",
     category: "Deliveries",
-    image: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&q=80&w=800"
+    image: "public/images/deliveries.jpg"
   },
   {
     id: 4,
     title: "Japan Auction Vehicle Inspection",
     category: "Quality Inspection",
-    image: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&q=80&w=800"
+    image: "public/images/quality-inspection.jpg"
   },
   {
     id: 5,
     title: "Wagon R Stingray LED Styling Detail",
     category: "Showcase",
-    image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=800"
+    image: "public/images/wagonr-stingray.jpg"
   },
   {
     id: 6,
     title: "Wholesale Carrier Fleet Loading",
     category: "Wholesale",
-    image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=800"
+    image: "public/images/wholesale-fleet.jpg"
   }
 ];
 
