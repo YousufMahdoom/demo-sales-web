@@ -254,38 +254,47 @@ function initNavbar() {
   const mobileDrawer = document.getElementById('mobile-drawer');
   const menuIcon = document.getElementById('menu-icon');
 
+  let isTicking = false;
+
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) {
-      navbar.classList.remove('bg-transparent', 'py-5');
-      navbar.classList.add('glass-panel', 'py-3', 'shadow-2xl', 'border-b', 'border-white/10');
-    } else {
-      navbar.classList.add('bg-transparent', 'py-5');
-      navbar.classList.remove('glass-panel', 'py-3', 'shadow-2xl', 'border-b', 'border-white/10');
-    }
-
-    // Active link highlighting
-    const sections = ['hero', 'inventory', 'about', 'sell-trade', 'wholesale', 'gallery', 'contact'];
-    let current = 'hero';
-    sections.forEach(section => {
-      const el = document.getElementById(section);
-      if (el) {
-        const sectionTop = el.offsetTop - 120;
-        if (window.scrollY >= sectionTop) {
-          current = section;
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        if (window.scrollY > 40) {
+          navbar.classList.remove('bg-transparent', 'py-5');
+          navbar.classList.add('glass-panel', 'py-3', 'shadow-2xl', 'border-b', 'border-white/10');
+        } else {
+          navbar.classList.add('bg-transparent', 'py-5');
+          navbar.classList.remove('glass-panel', 'py-3', 'shadow-2xl', 'border-b', 'border-white/10');
         }
-      }
-    });
 
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-      if (btn.dataset.section === current) {
-        btn.classList.add('bg-red-600', 'text-white', 'shadow-md', 'shadow-red-600/30');
-        btn.classList.remove('text-gray-300', 'hover:bg-white/5');
-      } else {
-        btn.classList.remove('bg-red-600', 'text-white', 'shadow-md', 'shadow-red-600/30');
-        btn.classList.add('text-gray-300', 'hover:bg-white/5');
-      }
-    });
-  });
+        // Active link highlighting
+        const sections = ['hero', 'inventory', 'about', 'sell-trade', 'wholesale', 'gallery', 'contact'];
+        let current = 'hero';
+        sections.forEach(section => {
+          const el = document.getElementById(section);
+          if (el) {
+            const sectionTop = el.offsetTop - 120;
+            if (window.scrollY >= sectionTop) {
+              current = section;
+            }
+          }
+        });
+
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+          if (btn.dataset.section === current) {
+            btn.classList.add('bg-red-600', 'text-white', 'shadow-md', 'shadow-red-600/30');
+            btn.classList.remove('text-gray-300', 'hover:bg-white/5');
+          } else {
+            btn.classList.remove('bg-red-600', 'text-white', 'shadow-md', 'shadow-red-600/30');
+            btn.classList.add('text-gray-300', 'hover:bg-white/5');
+          }
+        });
+
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, { passive: true });
 
   mobileMenuBtn.addEventListener('click', () => {
     const isOpen = !mobileDrawer.classList.contains('hidden');
