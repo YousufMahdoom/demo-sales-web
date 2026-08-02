@@ -7,16 +7,14 @@
   <meta name="description" content="Sri Lanka's trusted dealer for Suzuki Wagon R FX, FZ, Stingray, and premium Japanese vehicle imports in Kurunegala." />
   
   <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    if (typeof tailwind !== 'undefined') {
-      tailwind.config = {
-        theme: {
-          extend: {}
-        }
-      };
-    }
+    const _origWarn = console.warn;
+    console.warn = function(...args) {
+      if (args[0] && typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com should not be used in production')) return;
+      _origWarn.apply(console, args);
+    };
   </script>
+  <script src="https://cdn.tailwindcss.com"></script>
   
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
