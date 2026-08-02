@@ -368,11 +368,16 @@ function initParallax() {
       el.style.transform = `translate3d(${transX.toFixed(2)}px, ${transY.toFixed(2)}px, 0)`;
     });
 
-    // 3D Card Tilt effect on flagship showcase image
+    // 3D Card Tilt effect & scroll scale effect on showcase image
     if (tiltCard) {
       const rotateX = (-currentY * 12).toFixed(2);
       const rotateY = (currentX * 14).toFixed(2);
-      tiltCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      // Scale down vehicle card smoothly as user scrolls past hero
+      const scrollScale = Math.max(0.85, 1.02 - (scrollPos / 1200));
+      const scrollOpacity = Math.max(0.3, 1 - (scrollPos / 600));
+      
+      tiltCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${scrollScale.toFixed(3)}, ${scrollScale.toFixed(3)}, ${scrollScale.toFixed(3)})`;
+      tiltCard.style.opacity = scrollOpacity.toFixed(2);
     }
 
     if (Math.abs(mouseX - currentX) > 0.0005 || Math.abs(mouseY - currentY) > 0.0005 || lastScrollY !== window.scrollY) {
@@ -389,9 +394,61 @@ function initParallax() {
 function initHeroSlider() {
   const prevBtn = document.getElementById('hero-prev-btn');
   const nextBtn = document.getElementById('hero-next-btn');
+  const heroSection = document.getElementById('hero');
 
   if (prevBtn) prevBtn.addEventListener('click', () => changeHeroSlide(-1));
   if (nextBtn) nextBtn.addEventListener('click', () => changeHeroSlide(1));
+
+  // Scroll-driven slide switcher with scroll lock thresholds
+  let isScrollCooldown = false;
+  let accumulatedScroll = 0;
+
+  window.addEventListener('wheel', (e) => {
+    if (!heroSection) return;
+    const rect = heroSection.getBoundingClientRect();
+    
+    // Only intercept when user is scrolling inside/at the top hero section
+    if (rect.top >= -50 && rect.bottom <= window.innerHeight + 100) {
+      if (isScrollCooldown) return;
+
+      accumulatedScroll += e.deltaY;
+
+      if (Math.abs(accumulatedScroll) > 70) {
+        if (accumulatedScroll > 0) {
+          changeHeroSlide(1);
+        } else {
+          changeHeroSlide(-1);
+        }
+        accumulatedScroll = 0;
+        isScrollCooldown = true;
+        setTimeout(() => {
+          isScrollCooldown = false;
+        }, 1200);
+      }
+    }
+  }, { passive: true });
+
+  // Touch swipe support for mobile/tablet scroll slide switching
+  let touchStartY = 0;
+  window.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  window.addEventListener('touchend', (e) => {
+    if (!heroSection || isScrollCooldown) return;
+    const rect = heroSection.getBoundingClientRect();
+    if (rect.top >= -50 && rect.bottom <= window.innerHeight + 100) {
+      const touchEndY = e.changedTouches[0].clientY;
+      const diffY = touchStartY - touchEndY;
+      if (Math.abs(diffY) > 50) {
+        changeHeroSlide(diffY > 0 ? 1 : -1);
+        isScrollCooldown = true;
+        setTimeout(() => {
+          isScrollCooldown = false;
+        }, 1000);
+      }
+    }
+  }, { passive: true });
 
   startHeroTimer();
 }
