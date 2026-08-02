@@ -245,7 +245,20 @@ document.addEventListener('DOMContentLoaded', () => {
   renderGallery();
   initForms();
   initModals();
+  initLazyMap();
 });
+
+function initLazyMap() {
+  const mapContainer = document.getElementById('map-container');
+  const loadBtn = document.getElementById('load-map-btn');
+  if (!mapContainer || !loadBtn) return;
+
+  const loadMap = () => {
+    mapContainer.innerHTML = `<iframe title="DEMO SALES WEB Location Map Kurunegala" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63301.76189912781!2d80.328325!3d7.486307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae33a1e74f17789%3A0xb23ed01a88b50f7e!2sKurunegala%2C%20Sri%20Lanka!5e0!3m2!1sen!2slk!4v1700000000000!5m2!1sen!2slk" width="100%" height="100%" style="border:0; filter: grayscale(0.6) invert(0.9) contrast(1.2);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
+  };
+
+  loadBtn.addEventListener('click', loadMap);
+}
 
 // ================= NAVBAR SCROLL & MOBILE MENU =================
 function initNavbar() {
