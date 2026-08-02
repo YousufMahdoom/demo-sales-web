@@ -6,87 +6,18 @@
   <title>DEMO SALES WEB | Suzuki Wagon R & Japanese Import Dealer Kurunegala</title>
   <meta name="description" content="Sri Lanka's trusted dealer for Suzuki Wagon R FX, FZ, Stingray, and premium Japanese vehicle imports in Kurunegala." />
   
-  <!-- Tailwind CSS CDN -->
-  <script>
-    const _origWarn = console.warn;
-    console.warn = function(...args) {
-      if (args[0] && typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com should not be used in production')) return;
-      _origWarn.apply(console, args);
-    };
-  </script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  
+  <!-- Pre-built Tailwind CSS (avoids slow in-browser JIT on iPhone Safari) -->
+  <link rel="stylesheet" href="styles.css" />
+
   <!-- Resource Hints & Hardware Optimization for iOS -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome Icons -->
+  <!-- Font Awesome Icons (non-blocking) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
-
-  <style>
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #0b0c10;
-      color: #f3f4f6;
-      -webkit-font-smoothing: antialiased;
-      -webkit-tap-highlight-color: transparent;
-    }
-    
-    .glass-panel {
-      background: rgba(18, 20, 29, 0.95);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      -webkit-transform: translate3d(0,0,0);
-      transform: translate3d(0,0,0);
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-    }
-    
-    .glass-card {
-      background: rgba(22, 25, 38, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      -webkit-transform: translate3d(0,0,0);
-      transform: translate3d(0,0,0);
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-    }
-
-    /* Restrict backdrop-filter to high performance screens (desktop) to avoid GPU throttling on iOS */
-    @media (min-width: 1024px) {
-      .glass-panel {
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-      }
-      .glass-card {
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-      }
-    }
-
-    .text-gradient-red {
-      background: linear-gradient(135deg, #ff4d4d 0%, #dc2626 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0b0c10;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #27272a;
-      border-radius: 5px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #dc2626;
-    }
-  </style>
 </head>
 <body class="min-h-screen bg-[#0b0c10] text-gray-100 font-sans selection:bg-red-600 selection:text-white">
 
@@ -748,14 +679,14 @@
   <a href="https://wa.me/94755331445?text=Hello%20DEMO%20SALES%20WEB!%20I%20am%20visiting%20your%20website%20and%20would%20like%20to%20inquire%20about%20your%20Suzuki%20Wagon%20R%20stock." target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp" class="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-full bg-green-500 hover:bg-green-600 text-white font-extrabold shadow-2xl shadow-green-500/50 transition-all duration-300 transform hover:scale-105 group">
     <div class="relative">
       <i class="fa-brands fa-whatsapp text-2xl"></i>
-      <span class="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full animate-ping"></span>
+      <span class="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full hidden sm:block animate-ping"></span>
       <span class="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full"></span>
     </div>
     <span class="text-sm tracking-wide hidden sm:inline">Chat with Us</span>
   </a>
 
   <!-- Vehicle Modal -->
-  <div id="vehicle-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+  <div id="vehicle-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 lg:bg-black/80 lg:backdrop-blur-md no-blur-mobile">
     <div class="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto glass-panel rounded-3xl border border-white/15 bg-zinc-900/95 text-white shadow-2xl p-6 sm:p-8">
       <button id="close-modal-btn" class="absolute top-5 right-5 p-2 rounded-full glass-panel hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
         <i class="fa-solid fa-xmark text-xl"></i>

@@ -239,13 +239,25 @@ let searchQuery = '';
 // ================= DOM LOADED INITIALIZATION =================
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
-  initInventoryCounts();
-  renderVehicles();
-  renderTestimonials();
-  renderGallery();
   initForms();
   initModals();
   initLazyMap();
+  initInventoryCounts();
+
+  // Defer heavy DOM rendering so forms and navigation work immediately on iPhone
+  const deferRender = (fn) => {
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(fn, { timeout: 2000 });
+    } else {
+      setTimeout(fn, 1);
+    }
+  };
+
+  deferRender(() => {
+    renderVehicles();
+    renderTestimonials();
+    renderGallery();
+  });
 });
 
 function initLazyMap() {
@@ -402,9 +414,9 @@ function renderVehicles() {
     card.innerHTML = `
       <div>
         <div class="relative aspect-[16/10] overflow-hidden bg-black/50">
-          <img src="${vehicle.image}" alt="${vehicle.title}" loading="lazy" decoding="async" class="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-500" />
+          <img src="${vehicle.image}" alt="${vehicle.title}" loading="lazy" decoding="async" class="w-full h-full object-cover object-center group-hover:scale-[1.08] transition-transform duration-500" />
           ${vehicle.badge ? `<div class="absolute top-2 left-2 glass-panel px-2 py-0.5 rounded-full text-[9px] sm:text-xs font-bold text-red-400 border border-red-500/30 uppercase tracking-wider">${vehicle.badge}</div>` : ''}
-          <div class="absolute top-2 right-2 bg-black/70 backdrop-blur-md px-1.5 py-0.5 rounded-md text-[9px] sm:text-xs font-semibold text-gray-200 border border-white/10">${vehicle.condition}</div>
+          <div class="absolute top-2 right-2 bg-black/80 lg:backdrop-blur-md no-blur-mobile px-1.5 py-0.5 rounded-md text-[9px] sm:text-xs font-semibold text-gray-200 border border-white/10">${vehicle.condition}</div>
         </div>
 
         <div class="p-3.5 sm:p-5 space-y-3 sm:space-y-4">
