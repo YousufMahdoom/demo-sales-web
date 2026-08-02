@@ -323,6 +323,8 @@ function initParallax() {
   const tiltCard = document.querySelector('.hero-tilt-card');
   if (!heroSection) return;
 
+  const isMobileOrReduced = window.innerWidth < 1024 || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   let mouseX = 0;
   let mouseY = 0;
   let currentX = 0;
@@ -330,15 +332,17 @@ function initParallax() {
   let lastScrollY = window.scrollY;
   let isTicking = false;
 
-  // Track mouse movement globally when on/near hero section
-  window.addEventListener('mousemove', (e) => {
-    const rect = heroSection.getBoundingClientRect();
-    if (rect.bottom > 0 && rect.top < window.innerHeight) {
-      mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-      mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-      requestUpdate();
-    }
-  });
+  // Track mouse movement globally when on desktop
+  if (!isMobileOrReduced) {
+    window.addEventListener('mousemove', (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+        mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+        requestUpdate();
+      }
+    });
+  }
 
   window.addEventListener('scroll', () => {
     lastScrollY = window.scrollY;

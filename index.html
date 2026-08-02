@@ -94,39 +94,39 @@
 
   <main>
     <!-- ================= AWWWARDS LUXURY HERO SECTION ================= -->
-    <section id="hero" class="relative w-full h-screen bg-[#050505] text-white overflow-hidden flex flex-col justify-between pt-20 pb-8 px-6 lg:px-12 select-none border-b border-white/5">
+    <section id="hero" class="relative w-full min-h-screen lg:h-screen bg-[#050505] text-white overflow-hidden flex flex-col justify-between pt-24 sm:pt-28 lg:pt-20 pb-6 sm:pb-8 px-4 sm:px-8 lg:px-12 select-none border-b border-white/5">
       <!-- Ambient Luxury Lighting -->
-      <div class="parallax-layer absolute -bottom-20 -left-20 w-[600px] h-[600px] bg-red-600/10 rounded-full blur-[160px] pointer-events-none" data-speed="0.15" data-mouse-speed="-25"></div>
-      <div class="parallax-layer absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-red-900/10 rounded-full blur-[180px] pointer-events-none" data-speed="0.1" data-mouse-speed="20"></div>
+      <div class="parallax-layer absolute -bottom-20 -left-20 w-[300px] sm:w-[450px] lg:w-[600px] h-[300px] sm:h-[450px] lg:h-[600px] bg-red-600/10 rounded-full blur-[100px] sm:blur-[140px] lg:blur-[160px] pointer-events-none" data-speed="0.15" data-mouse-speed="-25"></div>
+      <div class="parallax-layer absolute top-1/4 right-1/4 w-[250px] sm:w-[400px] lg:w-[500px] h-[250px] sm:h-[400px] lg:h-[500px] bg-red-900/10 rounded-full blur-[120px] sm:blur-[160px] lg:blur-[180px] pointer-events-none" data-speed="0.1" data-mouse-speed="20"></div>
 
       <!-- Luxury Vignette -->
       <div class="absolute inset-0 bg-radial-vignette pointer-events-none z-10"></div>
 
-      <!-- Main Grid Layout (100vh split) -->
-      <div class="w-full max-w-[1700px] mx-auto h-full grid grid-cols-1 lg:grid-cols-12 items-center relative z-20 gap-6">
+      <!-- Main Grid Layout (Mobile-first vertical stack, 12-col desktop grid) -->
+      <div class="w-full max-w-[1700px] mx-auto flex-1 grid grid-cols-1 lg:grid-cols-12 items-center relative z-20 gap-6 sm:gap-8 lg:gap-6 py-4">
         
-        <!-- Left Column: Typography & Headline -->
-        <div class="lg:col-span-5 flex flex-col justify-center space-y-6 pt-4 lg:pt-0">
-          <div class="parallax-layer flex items-center gap-3" data-speed="0.02" data-mouse-speed="-8">
-            <span class="w-8 h-[1px] bg-red-600"></span>
-            <span id="hero-badge" class="text-xs tracking-[0.3em] font-mono text-red-500 uppercase font-semibold">FLAGSHIP JAPANESE IMPORT</span>
+        <!-- Column 1: Typography & Headline (Mobile Top) -->
+        <div class="lg:col-span-5 flex flex-col justify-center space-y-4 sm:space-y-6 pt-2 lg:pt-0">
+          <div class="parallax-layer flex items-center gap-2.5 sm:gap-3" data-speed="0.02" data-mouse-speed="-8">
+            <span class="w-6 sm:w-8 h-[1px] bg-red-600"></span>
+            <span id="hero-badge" class="text-[10px] sm:text-xs tracking-[0.25em] sm:tracking-[0.3em] font-mono text-red-500 uppercase font-semibold">FLAGSHIP JAPANESE IMPORT</span>
           </div>
 
           <div class="parallax-layer space-y-1" data-speed="0.04" data-mouse-speed="-15">
-            <h1 class="text-5xl sm:text-7xl lg:text-[92px] font-light tracking-tighter leading-[0.9] uppercase text-white font-sans">
+            <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-[76px] xl:text-[92px] font-light tracking-tighter leading-[0.95] sm:leading-[0.9] uppercase text-white font-sans">
               <span id="hero-brand">Suzuki</span> <br />
-              <span id="hero-model" class="font-extrabold text-gradient-red tracking-tight">Wagon R FZ</span>
+              <span id="hero-model" class="font-extrabold text-gradient-red tracking-tight">Wagon R Stingray</span>
             </h1>
-            <p id="hero-subtitle" class="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase pt-2">2023 Mild Hybrid ISG • Grade 4.5/B</p>
+            <p id="hero-subtitle" class="text-[11px] sm:text-xs font-mono text-gray-500 tracking-[0.15em] sm:tracking-[0.2em] uppercase pt-1.5 sm:pt-2">2023 Mild Hybrid ISG • Grade 4.5/B</p>
           </div>
 
-          <p id="hero-desc" class="parallax-layer text-sm lg:text-base text-gray-400 max-w-md font-light leading-relaxed tracking-wide transition-all duration-300" data-speed="0.03" data-mouse-speed="-10">
+          <p id="hero-desc" class="parallax-layer text-xs sm:text-sm lg:text-base text-gray-400 max-w-md font-light leading-relaxed tracking-wide transition-all duration-300" data-speed="0.03" data-mouse-speed="-10">
             Sri Lanka’s premier mild-hybrid hatchback with 30+ km/L efficiency, 100% verified Japanese auction sheet, and high-resale value.
           </p>
 
-          <!-- CTA Controls -->
-          <div class="parallax-layer pt-4 flex items-center gap-6" data-speed="0.05" data-mouse-speed="-12">
-            <a href="#inventory" class="group relative inline-flex items-center gap-4 px-8 py-4 rounded-full border border-white/25 glass-panel text-xs font-mono uppercase tracking-[0.2em] text-white hover:border-red-500 transition-all duration-500 overflow-hidden shadow-2xl hover:scale-[1.03]">
+          <!-- CTA Controls (Touch friendly min 48px height) -->
+          <div class="parallax-layer pt-2 sm:pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-6" data-speed="0.05" data-mouse-speed="-12">
+            <a href="#inventory" class="group relative inline-flex items-center justify-center gap-4 px-6 sm:px-8 min-h-[48px] rounded-full border border-white/25 glass-panel text-xs font-mono uppercase tracking-[0.2em] text-white hover:border-red-500 transition-all duration-500 overflow-hidden shadow-2xl hover:scale-[1.03]">
               <span class="absolute inset-0 bg-red-600/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></span>
               <span class="relative z-10 font-bold">Discover Stock</span>
               <i class="fa-solid fa-arrow-right relative z-10 text-red-500 group-hover:translate-x-1 transition-transform duration-300"></i>
@@ -139,33 +139,33 @@
           </div>
         </div>
 
-        <!-- Center Column: Floating 3D Car Presentation (70% width feel) -->
-        <div class="lg:col-span-4 relative h-[380px] lg:h-[580px] flex items-center justify-center">
+        <!-- Column 2: Floating 3D Car Presentation (Mobile Center) -->
+        <div class="lg:col-span-4 relative min-h-[240px] sm:min-h-[340px] lg:h-[580px] flex items-center justify-center my-2 lg:my-0">
           <div class="parallax-layer hero-tilt-card relative w-full h-full flex items-center justify-center transition-transform duration-300 ease-out" data-speed="0.08" data-mouse-speed="28">
-            <div class="relative w-full max-w-[560px] aspect-[16/10] rounded-3xl overflow-hidden glass-card border border-white/10 shadow-[0_30px_100px_rgba(220,38,38,0.15)] bg-black/60 group">
+            <div class="relative w-full max-w-[88%] sm:max-w-[480px] lg:max-w-[560px] aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden glass-card border border-white/10 shadow-[0_20px_60px_rgba(220,38,38,0.12)] bg-black/60 group">
               <img id="hero-image" src="public/images/wagonr-stingray.jpg" fetchpriority="high" decoding="async" alt="Suzuki Wagon R Stingray" class="w-full h-full object-cover object-center scale-100 group-hover:scale-105 transition-all duration-500 ease-out" />
               <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-80"></div>
               
               <!-- Floating Card Badges -->
-              <div class="absolute top-5 left-5 flex items-center gap-2">
-                <span class="px-3 py-1 rounded-full glass-panel text-[10px] font-mono font-bold uppercase tracking-widest text-red-400 border border-red-500/30">
-                  <i class="fa-solid fa-shield-halved mr-1.5 text-red-500"></i>Auction Sheet 100% Verified
+              <div class="absolute top-3 left-3 sm:top-5 sm:left-5 flex items-center gap-2">
+                <span class="px-2.5 py-1 rounded-full glass-panel text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-widest text-red-400 border border-red-500/30">
+                  <i class="fa-solid fa-shield-halved mr-1 text-red-500"></i>Auction Sheet 100% Verified
                 </span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Right Column: Price & Luxury Specifications -->
-        <div class="lg:col-span-3 flex flex-col justify-center items-start lg:items-end text-left lg:text-right space-y-6">
-          <div class="parallax-layer glass-panel p-6 rounded-2xl border border-white/10 bg-black/60 backdrop-blur-xl w-full max-w-xs shadow-2xl space-y-4" data-speed="0.05" data-mouse-speed="-18">
+        <!-- Column 3: Price & Luxury Specifications (Mobile Bottom Stack) -->
+        <div class="lg:col-span-3 flex flex-col justify-center items-stretch lg:items-end text-left lg:text-right space-y-4 sm:space-y-6">
+          <div class="parallax-layer glass-panel p-4 sm:p-6 rounded-2xl border border-white/10 bg-black/60 backdrop-blur-xl w-full max-w-full sm:max-w-xs shadow-2xl space-y-3 sm:space-y-4" data-speed="0.05" data-mouse-speed="-18">
             <div>
-              <span class="text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em] block">Showroom Target Price</span>
-              <span id="hero-price" class="text-3xl font-extrabold text-white tracking-tight mt-1 block">Rs. 6,850,000</span>
-              <span class="text-[11px] text-red-400 font-mono block mt-0.5">Duty Paid / Immediate Delivery</span>
+              <span class="text-[9px] sm:text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em] block">Showroom Target Price</span>
+              <span id="hero-price" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-0.5 sm:mt-1 block">Rs. 6,850,000</span>
+              <span class="text-[10px] sm:text-[11px] text-red-400 font-mono block mt-0.5">Duty Paid / Immediate Delivery</span>
             </div>
 
-            <div class="space-y-2 border-t border-white/10 pt-4 text-xs font-mono">
+            <div class="space-y-1.5 sm:space-y-2 border-t border-white/10 pt-3 sm:pt-4 text-[11px] sm:text-xs font-mono">
               <div class="flex justify-between">
                 <span class="text-gray-500 uppercase">Auction Grade</span>
                 <span id="hero-grade" class="font-bold text-green-400">4.5 / B</span>
@@ -180,8 +180,8 @@
               </div>
             </div>
 
-            <a id="hero-reserve-btn" href="https://wa.me/94755331445?text=Hello%20DEMO%20SALES%20WEB,%20I%20want%20to%20reserve%20or%20inspect%20the%20Suzuki%20Wagon%20R%20FZ." target="_blank" rel="noreferrer" class="w-full py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-red-600/30 transition-all">
-              <i class="fa-brands fa-whatsapp text-sm"></i>
+            <a id="hero-reserve-btn" href="https://wa.me/94755331445?text=Hello%20DEMO%20SALES%20WEB,%20I%20want%20to%20reserve%20or%20inspect%20the%20Suzuki%20Wagon%20R%20Stingray." target="_blank" rel="noreferrer" class="w-full min-h-[48px] rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-red-600/30 transition-all">
+              <i class="fa-brands fa-whatsapp text-base"></i>
               <span>Reserve Vehicle</span>
             </a>
           </div>
@@ -190,38 +190,38 @@
       </div>
 
       <!-- Bottom Bar: Progress Indicator, Controls & Socials -->
-      <div class="relative z-20 w-full max-w-[1700px] mx-auto flex items-center justify-between pt-4 border-t border-white/10 text-xs font-mono text-gray-400">
+      <div class="relative z-20 w-full max-w-[1700px] mx-auto flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 pt-3 sm:pt-4 border-t border-white/10 text-xs font-mono text-gray-400">
         
         <!-- Left: Progress Slider -->
-        <div class="flex items-center gap-4">
-          <span id="hero-index-current" class="text-white font-bold tracking-widest">01</span>
-          <div class="w-24 sm:w-36 h-[2px] bg-white/10 rounded-full overflow-hidden relative">
+        <div class="flex items-center gap-3 sm:gap-4">
+          <span id="hero-index-current" class="text-white font-bold tracking-widest text-xs">01</span>
+          <div class="w-20 sm:w-36 h-[2px] bg-white/10 rounded-full overflow-hidden relative">
             <div id="hero-progress-fill" class="absolute top-0 left-0 h-full w-full bg-red-600 transition-all duration-500 ease-out"></div>
           </div>
-          <span class="text-gray-600">03</span>
+          <span class="text-gray-600 text-xs">03</span>
 
-          <!-- Slider Prev / Next Controls -->
-          <div class="flex items-center gap-2 ml-4">
-            <button id="hero-prev-btn" class="w-8 h-8 rounded-full border border-white/20 glass-panel flex items-center justify-center text-white hover:border-red-500 hover:text-red-500 transition-colors" aria-label="Previous Slide">
-              <i class="fa-solid fa-chevron-left text-[10px]"></i>
+          <!-- Slider Prev / Next Controls (Min 44px touch target) -->
+          <div class="flex items-center gap-2 ml-2 sm:ml-4">
+            <button id="hero-prev-btn" class="w-10 h-10 rounded-full border border-white/20 glass-panel flex items-center justify-center text-white hover:border-red-500 hover:text-red-500 transition-colors" aria-label="Previous Slide">
+              <i class="fa-solid fa-chevron-left text-xs"></i>
             </button>
-            <button id="hero-next-btn" class="w-8 h-8 rounded-full border border-white/20 glass-panel flex items-center justify-center text-white hover:border-red-500 hover:text-red-500 transition-colors" aria-label="Next Slide">
-              <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            <button id="hero-next-btn" class="w-10 h-10 rounded-full border border-white/20 glass-panel flex items-center justify-center text-white hover:border-red-500 hover:text-red-500 transition-colors" aria-label="Next Slide">
+              <i class="fa-solid fa-chevron-right text-xs"></i>
             </button>
           </div>
         </div>
 
         <!-- Center: Scroll Indicator -->
-        <div class="hidden sm:flex items-center gap-3 text-[10px] tracking-[0.25em] uppercase text-gray-400">
+        <div class="hidden md:flex items-center gap-3 text-[10px] tracking-[0.25em] uppercase text-gray-400">
           <span>Scroll To Explore</span>
           <i class="fa-solid fa-arrow-down text-red-500 animate-bounce"></i>
         </div>
 
         <!-- Right: Social Links -->
-        <div class="flex items-center gap-5 text-gray-400">
-          <a href="https://www.facebook.com/share/1Jq4RvinxM/?mibextid=wwXIfr" target="_blank" rel="noreferrer" class="hover:text-white transition-colors" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-          <a href="https://www.instagram.com/azytion?igsh=MWpodXVzcW1rczBqeg==" target="_blank" rel="noreferrer" class="hover:text-white transition-colors" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a href="https://www.tiktok.com/@azytion?_r=1&_t=ZS-98Vb3lAT3KP" target="_blank" rel="noreferrer" class="hover:text-white transition-colors" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <div class="flex items-center gap-4 sm:gap-5 text-gray-400 ml-auto sm:ml-0">
+          <a href="https://www.facebook.com/share/1Jq4RvinxM/?mibextid=wwXIfr" target="_blank" rel="noreferrer" class="p-2 hover:text-white transition-colors" aria-label="Facebook"><i class="fa-brands fa-facebook text-sm"></i></a>
+          <a href="https://www.instagram.com/azytion?igsh=MWpodXVzcW1rczBqeg==" target="_blank" rel="noreferrer" class="p-2 hover:text-white transition-colors" aria-label="Instagram"><i class="fa-brands fa-instagram text-sm"></i></a>
+          <a href="https://www.tiktok.com/@azytion?_r=1&_t=ZS-98Vb3lAT3KP" target="_blank" rel="noreferrer" class="p-2 hover:text-white transition-colors" aria-label="TikTok"><i class="fa-brands fa-tiktok text-sm"></i></a>
         </div>
       </div>
     </section>
