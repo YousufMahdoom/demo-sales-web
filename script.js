@@ -244,12 +244,14 @@ document.addEventListener('DOMContentLoaded', () => {
   initLazyMap();
   initInventoryCounts();
 
-  // Defer heavy DOM rendering so forms and navigation work immediately on iPhone
+  // Defer heavy DOM rendering so initial paint finishes instantly on Safari & iPhone
   const deferRender = (fn) => {
     if ('requestIdleCallback' in window) {
       requestIdleCallback(fn, { timeout: 2000 });
     } else {
-      setTimeout(fn, 1);
+      requestAnimationFrame(() => {
+        setTimeout(fn, 60);
+      });
     }
   };
 
