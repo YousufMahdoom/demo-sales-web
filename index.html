@@ -93,80 +93,126 @@
   </header>
 
   <main>
-    <!-- ================= HERO SECTION ================= -->
-    <section id="hero" class="relative min-h-screen lg:h-screen w-full bg-[#0b0c10] text-white overflow-hidden flex flex-col justify-between pt-24 lg:pt-20 pb-8 lg:pb-4 px-4 sm:px-8 lg:px-12 select-none">
-      <!-- Glow Lights (Optimized with Parallax) -->
-      <div class="parallax-layer hidden lg:block absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[850px] bg-red-600/15 rounded-full blur-[190px] pointer-events-none" data-speed="0.2" data-mouse-speed="-35"></div>
-      <div class="parallax-layer hidden lg:block absolute bottom-0 right-0 w-[550px] h-[550px] bg-blue-600/10 rounded-full blur-[170px] pointer-events-none" data-speed="0.15" data-mouse-speed="25"></div>
+    <!-- ================= AWWWARDS LUXURY HERO SECTION ================= -->
+    <section id="hero" class="relative w-full h-screen bg-[#050505] text-white overflow-hidden flex flex-col justify-between pt-20 pb-8 px-6 lg:px-12 select-none border-b border-white/5">
+      <!-- Ambient Luxury Lighting -->
+      <div class="parallax-layer absolute -bottom-20 -left-20 w-[600px] h-[600px] bg-red-600/10 rounded-full blur-[160px] pointer-events-none" data-speed="0.15" data-mouse-speed="-25"></div>
+      <div class="parallax-layer absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-red-900/10 rounded-full blur-[180px] pointer-events-none" data-speed="0.1" data-mouse-speed="20"></div>
 
-      <div class="w-full max-w-7xl mx-auto my-auto relative z-20 flex-1 flex flex-col justify-between lg:grid lg:grid-cols-12 gap-4 lg:gap-8 items-center min-h-0 py-4 lg:py-2">
+      <!-- Luxury Vignette -->
+      <div class="absolute inset-0 bg-radial-vignette pointer-events-none z-10"></div>
+
+      <!-- Main Grid Layout (100vh split) -->
+      <div class="w-full max-w-[1700px] mx-auto h-full grid grid-cols-1 lg:grid-cols-12 items-center relative z-20 gap-6">
         
-        <!-- Left Column -->
-        <div class="parallax-layer lg:col-span-4 relative w-full flex flex-col justify-center space-y-2 sm:space-y-3" data-speed="0.04" data-mouse-speed="-15">
-          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full glass-panel border border-red-500/30 text-[9px] sm:text-[10px] font-bold text-red-400 uppercase tracking-widest w-fit">
-            <i class="fa-solid fa-wand-magic-sparkles"></i>
-            <span>Flagship Showcase Model</span>
+        <!-- Left Column: Typography & Headline -->
+        <div class="lg:col-span-5 flex flex-col justify-center space-y-6 pt-4 lg:pt-0">
+          <div class="parallax-layer flex items-center gap-3" data-speed="0.02" data-mouse-speed="-8">
+            <span class="w-8 h-[1px] bg-red-600"></span>
+            <span class="text-xs tracking-[0.3em] font-mono text-red-500 uppercase font-semibold">FLAGSHIP JAPANESE IMPORT</span>
           </div>
-          <h1 class="text-xl sm:text-3xl lg:text-5xl font-black uppercase tracking-tight text-white leading-none">
-            Suzuki <br />
-            <span class="text-gradient-red">Wagon R FZ</span>
-          </h1>
-          <p class="text-[10px] sm:text-xs lg:text-sm text-gray-300 max-w-sm leading-snug lg:leading-relaxed">
-            Sri Lanka's premier mild-hybrid hatchback with 30+ km/L efficiency, 100% verified Japanese auction sheet, and high-resale value.
+
+          <div class="parallax-layer space-y-1" data-speed="0.04" data-mouse-speed="-15">
+            <h1 class="text-5xl sm:text-7xl lg:text-[92px] font-light tracking-tighter leading-[0.9] uppercase text-white font-sans">
+              Suzuki <br />
+              <span class="font-extrabold text-gradient-red tracking-tight">Wagon R FZ</span>
+            </h1>
+            <p class="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase pt-2">2023 Mild Hybrid ISG • Grade 4.5/B</p>
+          </div>
+
+          <p class="parallax-layer text-sm lg:text-base text-gray-400 max-w-md font-light leading-relaxed tracking-wide" data-speed="0.03" data-mouse-speed="-10">
+            Sri Lanka’s premier mild-hybrid hatchback with 30+ km/L efficiency, 100% verified Japanese auction sheet, and high-resale value.
           </p>
-          <div class="pt-1 flex items-center gap-3">
-            <a href="#inventory" class="px-4 py-2 sm:px-6 sm:py-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 font-bold sm:font-extrabold text-[10px] sm:text-xs text-white uppercase tracking-wider shadow-lg shadow-red-600/30 flex items-center gap-1.5 sm:gap-2 transition-all">
-              <span>Explore Yard Stock</span>
-              <i class="fa-solid fa-arrow-right"></i>
+
+          <!-- CTA Controls -->
+          <div class="parallax-layer pt-4 flex items-center gap-6" data-speed="0.05" data-mouse-speed="-12">
+            <a href="#inventory" class="group relative inline-flex items-center gap-4 px-8 py-4 rounded-full border border-white/25 glass-panel text-xs font-mono uppercase tracking-[0.2em] text-white hover:border-red-500 transition-all duration-500 overflow-hidden shadow-2xl hover:scale-[1.03]">
+              <span class="absolute inset-0 bg-red-600/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></span>
+              <span class="relative z-10 font-bold">Discover Stock</span>
+              <i class="fa-solid fa-arrow-right relative z-10 text-red-500 group-hover:translate-x-1 transition-transform duration-300"></i>
             </a>
+
+            <div class="hidden sm:flex flex-col">
+              <span class="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Tagline</span>
+              <span class="text-xs italic text-gray-300 font-serif">"A family of extreme performance cars"</span>
+            </div>
           </div>
         </div>
 
-        <!-- Center Column -->
-        <div class="parallax-layer lg:col-span-5 relative w-full h-56 sm:h-72 lg:h-[380px] flex items-center justify-center my-4 lg:my-0" data-speed="0.08" data-mouse-speed="30">
-          <div class="w-full h-full flex items-center justify-center p-1">
-            <div class="hero-tilt-card relative w-full h-full rounded-3xl overflow-hidden glass-card border border-white/10 shadow-2xl bg-black/60 transition-transform duration-200 ease-out">
-              <img src="public/images/wagonr-fz.jpg" fetchpriority="high" decoding="async" alt="Suzuki Wagon R FZ Side View" class="w-full h-full object-cover object-center" />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4 sm:p-5">
-                <div>
-                  <span class="text-[10px] font-mono text-red-400 uppercase font-bold block">FLAGSHIP EXHIBIT</span>
-                  <span class="text-base sm:text-xl font-extrabold text-white">Pearl White Suzuki Wagon R FZ</span>
-                </div>
+        <!-- Center Column: Floating 3D Car Presentation (70% width feel) -->
+        <div class="lg:col-span-4 relative h-[380px] lg:h-[580px] flex items-center justify-center">
+          <div class="parallax-layer hero-tilt-card relative w-full h-full flex items-center justify-center transition-transform duration-300 ease-out" data-speed="0.08" data-mouse-speed="28">
+            <div class="relative w-full max-w-[560px] aspect-[16/10] rounded-3xl overflow-hidden glass-card border border-white/10 shadow-[0_30px_100px_rgba(220,38,38,0.15)] bg-black/60 group">
+              <img src="public/images/wagonr-fz.jpg" fetchpriority="high" decoding="async" alt="Suzuki Wagon R FZ" class="w-full h-full object-cover object-center scale-100 group-hover:scale-105 transition-transform duration-1000 ease-out" />
+              <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-80"></div>
+              
+              <!-- Floating Card Badges -->
+              <div class="absolute top-5 left-5 flex items-center gap-2">
+                <span class="px-3 py-1 rounded-full glass-panel text-[10px] font-mono font-bold uppercase tracking-widest text-red-400 border border-red-500/30">
+                  <i class="fa-solid fa-shield-halved mr-1.5 text-red-500"></i>Auction Sheet 100% Verified
+                </span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Right Column -->
-        <div class="parallax-layer lg:col-span-3 relative w-full flex flex-col justify-center" data-speed="0.05" data-mouse-speed="-20">
-          <div class="w-full glass-panel p-4 lg:p-5 rounded-2xl border border-white/10 bg-black/80 flex flex-col justify-between shadow-2xl">
+        <!-- Right Column: Price & Luxury Specifications -->
+        <div class="lg:col-span-3 flex flex-col justify-center items-start lg:items-end text-left lg:text-right space-y-6">
+          <div class="parallax-layer glass-panel p-6 rounded-2xl border border-white/10 bg-black/60 backdrop-blur-xl w-full max-w-xs shadow-2xl space-y-4" data-speed="0.05" data-mouse-speed="-18">
             <div>
-              <span class="text-[10px] font-mono text-gray-400 uppercase font-bold block">SHOWROOM TARGET PRICE</span>
-              <span class="text-xl sm:text-2xl font-black text-red-500 mt-0.5 block">Rs. 6,850,000</span>
+              <span class="text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em] block">Showroom Target Price</span>
+              <span class="text-3xl font-extrabold text-white tracking-tight mt-1 block">Rs. 6,850,000</span>
+              <span class="text-[11px] text-red-400 font-mono block mt-0.5">Duty Paid / Immediate Delivery</span>
             </div>
 
-            <div class="space-y-2 border-t border-white/10 pt-2.5 mt-2.5 text-xs">
+            <div class="space-y-2 border-t border-white/10 pt-4 text-xs font-mono">
               <div class="flex justify-between">
-                <span class="text-gray-400">Auction Grade</span>
-                <span class="font-extrabold text-green-400">4.5 / B Verified</span>
+                <span class="text-gray-500 uppercase">Auction Grade</span>
+                <span class="font-bold text-green-400">4.5 / B</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-gray-400">Odometer</span>
-                <span class="font-extrabold text-white">14,500 km</span>
+                <span class="text-gray-500 uppercase">Mileage</span>
+                <span class="font-bold text-white">14,500 km</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-gray-400">Yard Location</span>
-                <span class="font-extrabold text-red-400">Kurunegala Yard</span>
+                <span class="text-gray-500 uppercase">Fuel Economy</span>
+                <span class="font-bold text-red-400">30+ km/L</span>
               </div>
             </div>
+
+            <a href="https://wa.me/94755331445?text=Hello%20DEMO%20SALES%20WEB,%20I%20want%20to%20reserve%20or%20inspect%20the%20Suzuki%20Wagon%20R%20FZ." target="_blank" rel="noreferrer" class="w-full py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-red-600/30 transition-all">
+              <i class="fa-brands fa-whatsapp text-sm"></i>
+              <span>Reserve Vehicle</span>
+            </a>
           </div>
         </div>
 
       </div>
 
-      <div class="hidden lg:flex w-full max-w-7xl mx-auto items-center justify-center gap-2 relative z-30 border-t border-white/10 pt-2 text-[11px] text-gray-400 font-mono">
-        <span class="uppercase tracking-widest">SCROLL DOWN TO EXPLORE</span>
-        <i class="fa-solid fa-chevron-down text-red-500 animate-bounce"></i>
+      <!-- Bottom Bar: Progress Indicator, Socials & Scroll Indicator -->
+      <div class="relative z-20 w-full max-w-[1700px] mx-auto flex items-center justify-between pt-4 border-t border-white/10 text-xs font-mono text-gray-400">
+        
+        <!-- Left: Progress Slider -->
+        <div class="flex items-center gap-4">
+          <span class="text-white font-bold tracking-widest">01</span>
+          <div class="w-24 sm:w-36 h-[2px] bg-white/10 rounded-full overflow-hidden relative">
+            <div class="absolute top-0 left-0 h-full w-1/3 bg-red-600 animate-pulse"></div>
+          </div>
+          <span class="text-gray-600">03</span>
+        </div>
+
+        <!-- Center: Scroll Indicator -->
+        <div class="hidden sm:flex items-center gap-3 text-[10px] tracking-[0.25em] uppercase text-gray-400">
+          <span>Scroll To Explore</span>
+          <i class="fa-solid fa-arrow-down text-red-500 animate-bounce"></i>
+        </div>
+
+        <!-- Right: Social Links -->
+        <div class="flex items-center gap-5 text-gray-400">
+          <a href="https://www.facebook.com/share/1Jq4RvinxM/?mibextid=wwXIfr" target="_blank" rel="noreferrer" class="hover:text-white transition-colors" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+          <a href="https://www.instagram.com/azytion?igsh=MWpodXVzcW1rczBqeg==" target="_blank" rel="noreferrer" class="hover:text-white transition-colors" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@azytion?_r=1&_t=ZS-98Vb3lAT3KP" target="_blank" rel="noreferrer" class="hover:text-white transition-colors" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
       </div>
     </section>
 

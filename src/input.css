@@ -66,3 +66,7 @@ body {
     -webkit-backdrop-filter: none !important;
   }
 }
+
+.bg-radial-vignette {
+  background: radial-gradient(circle at center, transparent 40%, rgba(5, 5, 5, 0.8) 100%);
+}
