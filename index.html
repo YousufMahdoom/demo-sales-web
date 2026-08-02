@@ -31,16 +31,20 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: #0b0c10;
       color: #f3f4f6;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
     }
     
     .glass-panel {
-      background: rgba(18, 20, 29, 0.85);
+      background: rgba(18, 20, 29, 0.9);
       border: 1px solid rgba(255, 255, 255, 0.08);
+      transform: translateZ(0);
     }
     
     .glass-card {
-      background: rgba(22, 25, 38, 0.8);
+      background: rgba(22, 25, 38, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.07);
+      transform: translateZ(0);
     }
 
     @media (min-width: 1024px) {
@@ -153,9 +157,9 @@
   <main>
     <!-- ================= HERO SECTION ================= -->
     <section id="hero" class="relative min-h-screen lg:h-screen w-full bg-[#0b0c10] text-white overflow-hidden flex flex-col justify-between pt-24 lg:pt-20 pb-8 lg:pb-4 px-4 sm:px-8 lg:px-12 select-none">
-      <!-- Glow Lights -->
-      <div class="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[850px] bg-red-600/15 rounded-full blur-[190px] pointer-events-none"></div>
-      <div class="absolute bottom-0 right-0 w-[550px] h-[550px] bg-blue-600/10 rounded-full blur-[170px] pointer-events-none"></div>
+      <!-- Glow Lights (Optimized for iOS WebKit GPU) -->
+      <div class="hidden lg:block absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[850px] bg-red-600/15 rounded-full blur-[190px] pointer-events-none"></div>
+      <div class="hidden lg:block absolute bottom-0 right-0 w-[550px] h-[550px] bg-blue-600/10 rounded-full blur-[170px] pointer-events-none"></div>
 
       <div class="w-full max-w-7xl mx-auto my-auto relative z-20 flex-1 flex flex-col justify-between lg:grid lg:grid-cols-12 gap-4 lg:gap-8 items-center min-h-0 py-4 lg:py-2">
         
