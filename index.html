@@ -16,15 +16,15 @@
   </script>
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <!-- Resource Hints for Mobile Loading Speed -->
-  <link rel="preconnect" href="https://images.unsplash.com">
-  <link rel="dns-prefetch" href="https://images.unsplash.com">
+  <!-- Resource Hints & Hardware Optimization for iOS -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
 
   <style>
     body {
@@ -36,17 +36,24 @@
     }
     
     .glass-panel {
-      background: rgba(18, 20, 29, 0.9);
+      background: rgba(18, 20, 29, 0.95);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      transform: translateZ(0);
+      -webkit-transform: translate3d(0,0,0);
+      transform: translate3d(0,0,0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
     
     .glass-card {
-      background: rgba(22, 25, 38, 0.85);
+      background: rgba(22, 25, 38, 0.92);
       border: 1px solid rgba(255, 255, 255, 0.07);
-      transform: translateZ(0);
+      -webkit-transform: translate3d(0,0,0);
+      transform: translate3d(0,0,0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
 
+    /* Restrict backdrop-filter to high performance screens (desktop) to avoid GPU throttling on iOS */
     @media (min-width: 1024px) {
       .glass-panel {
         backdrop-filter: blur(16px);
@@ -202,7 +209,7 @@
 
         <!-- Right Column -->
         <div class="lg:col-span-3 relative w-full flex flex-col justify-center">
-          <div class="w-full glass-panel p-4 lg:p-5 rounded-2xl border border-white/10 bg-black/80 flex flex-col justify-between shadow-2xl backdrop-blur-md">
+          <div class="w-full glass-panel p-4 lg:p-5 rounded-2xl border border-white/10 bg-black/80 flex flex-col justify-between shadow-2xl">
             <div>
               <span class="text-[10px] font-mono text-gray-400 uppercase font-bold block">SHOWROOM TARGET PRICE</span>
               <span class="text-xl sm:text-2xl font-black text-red-500 mt-0.5 block">Rs. 6,850,000</span>
@@ -817,7 +824,7 @@
   </div>
 
   <!-- Gallery Lightbox -->
-  <div id="gallery-lightbox" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+  <div id="gallery-lightbox" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95">
     <div class="relative max-w-4xl w-full glass-panel rounded-3xl border border-white/10 overflow-hidden text-white p-4">
       <button id="close-gallery-btn" class="absolute top-4 right-4 z-10 p-2 rounded-full glass-panel text-gray-400 hover:text-white">
         <i class="fa-solid fa-xmark text-xl"></i>

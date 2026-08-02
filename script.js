@@ -402,7 +402,7 @@ function renderVehicles() {
     card.innerHTML = `
       <div>
         <div class="relative aspect-[16/10] overflow-hidden bg-black/50">
-          <img src="${vehicle.image}" alt="${vehicle.title}" loading="lazy" class="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-500" />
+          <img src="${vehicle.image}" alt="${vehicle.title}" loading="lazy" decoding="async" class="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-500" />
           ${vehicle.badge ? `<div class="absolute top-2 left-2 glass-panel px-2 py-0.5 rounded-full text-[9px] sm:text-xs font-bold text-red-400 border border-red-500/30 uppercase tracking-wider">${vehicle.badge}</div>` : ''}
           <div class="absolute top-2 right-2 bg-black/70 backdrop-blur-md px-1.5 py-0.5 rounded-md text-[9px] sm:text-xs font-semibold text-gray-200 border border-white/10">${vehicle.condition}</div>
         </div>
@@ -504,7 +504,7 @@ function renderGallery() {
     div.className = "group relative aspect-[4/3] rounded-2xl overflow-hidden glass-panel border border-white/10 cursor-pointer shadow-xl transition-all duration-300 transform hover:-translate-y-1";
     div.onclick = () => openGalleryLightbox(item);
     div.innerHTML = `
-      <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+      <img src="${item.image}" alt="${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
       <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-3 sm:p-6">
         <span class="self-end p-1.5 sm:p-2 rounded-full glass-panel text-white">
           <i class="fa-solid fa-expand text-xs"></i>
