@@ -237,7 +237,7 @@ const HERO_SLIDES = [
   {
     badge: "FLAGSHIP JAPANESE IMPORT",
     brand: "SUZUKI",
-    model: "WAGON R FZ",
+    model: "WAGON R STINGRAY",
     year: "2023",
     subtitle: "2023 Mild Hybrid ISG • Grade 4.5/B",
     description: "Sri Lanka’s premier mild-hybrid hatchback with 30+ km/L efficiency, 100% verified Japanese auction sheet, and high-resale value.",
@@ -246,23 +246,23 @@ const HERO_SLIDES = [
     grade: "4.5 / B Verified",
     mileage: "14,500 km",
     fuel: "30+ km/L Hybrid",
-    image: "public/images/wagonr-fz.jpg",
-    modalId: "wr-fz-2023"
+    image: "public/images/wagonr-stingray.jpg",
+    modalId: "wr-stingray-2022"
   },
   {
     badge: "PREMIUM SPORT EDITION",
     brand: "SUZUKI",
-    model: "WAGON R STINGRAY",
+    model: "WAGON R FX",
     year: "2022",
-    subtitle: "2022 Turbocharged Hybrid T • DSBS Safety",
-    description: "Aggressive sport edition with signature LED front fascia, turbo paddle-shift boost, and full leather luxury interior.",
+    subtitle: "2022 Mild Hybrid • Safety Package",
+    description: "Extremely practical, spacious cabin and unmatched fuel economy. Perfect choice for family and daily city commute.",
     tagline: '"Unmatched turbo performance & style"',
-    price: "Rs. 7,250,000",
+    price: "Rs. 6,450,000",
     grade: "4.5 / A Verified",
-    mileage: "18,200 km",
-    fuel: "Turbo Hybrid",
-    image: "public/images/wagonr-stingray.jpg",
-    modalId: "wr-stingray-2022"
+    mileage: "11,000 km",
+    fuel: "Eco Hybrid",
+    image: "public/images/wagonr-fx.jpg",
+    modalId: "wr-fx-2023"
   },
   {
     badge: "DUAL-MOTOR HYBRID CROSSOVER",
