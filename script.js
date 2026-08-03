@@ -167,6 +167,246 @@ const VEHICLES_DATA = [
       "SOS Emergency Call System"
     ],
     description: "Loaded with high-tech autonomous driver assistance, 360-degree cameras, and premium Highway Star styling."
+  },
+  {
+    id: "toyota-hiace-2021",
+    title: "Toyota HiAce Super GL Luxury Van",
+    category: "van",
+    badge: "Executive Van",
+    year: 2021,
+    mileage: "28,000 km",
+    transmission: "Automatic",
+    engine: "2800cc 1GD Turbo Diesel",
+    fuel: "Diesel",
+    color: "Pearl White",
+    condition: "Unregistered",
+    price: "Rs. 18,500,000",
+    isPriceContact: false,
+    image: "public/images/toyota-hiace.jpg",
+    gallery: ["public/images/toyota-hiace.jpg"],
+    features: [
+      "5-Door Dual Sliding Doors",
+      "Plush Velvet Seating & Rear AC",
+      "Push Start & Smart Key",
+      "Reverse Camera & Parking Sensors"
+    ],
+    description: "Executive luxury passenger and commercial van equipped with high-torque 1GD turbo diesel engine and dual sliding doors."
+  },
+  {
+    id: "mercedes-amg-gt-2021",
+    title: "Mercedes-AMG GT Coupe",
+    category: "sports",
+    badge: "High Capacity",
+    year: 2021,
+    mileage: "18,000 km",
+    transmission: "Automatic 7-Speed DCT",
+    engine: "4000cc V8 Biturbo",
+    fuel: "Petrol",
+    color: "Selenite Grey Metallic",
+    condition: "Unregistered",
+    price: "Rs. 48,900,000",
+    isPriceContact: false,
+    image: "public/images/mercedes-amg.jpg",
+    gallery: ["public/images/mercedes-amg.jpg"],
+    features: [
+      "AMG 4.0L V8 Biturbo Engine",
+      "Panamericana Front Grille",
+      "AMG Ride Control Sport Suspension",
+      "Burmester Surround Sound System"
+    ],
+    description: "Iconic high-performance luxury sports coupe with AMG biturbo power, distinctive silver metallic finish, and track-inspired dynamics."
+  },
+  {
+    id: "suzuki-every-2022",
+    title: "Suzuki Every Join Turbo Van 4WD",
+    category: "van",
+    badge: "Compact Van",
+    year: 2022,
+    mileage: "16,000 km",
+    transmission: "Automatic",
+    engine: "660cc Turbocharged",
+    fuel: "Petrol 4WD",
+    color: "Khaki Green",
+    condition: "Unregistered",
+    price: "Rs. 5,850,000",
+    isPriceContact: false,
+    image: "public/images/suzuki-every.jpg",
+    gallery: ["public/images/suzuki-every.jpg"],
+    features: [
+      "Selectable 4WD Drive System",
+      "Join Turbo Seats & Armrests",
+      "Dual Airbags & ABS",
+      "Power Steering & Air Conditioning"
+    ],
+    description: "Kei van with Join Turbo package and 4WD capability, ideal for commercial deliveries and island transport."
+  },
+  {
+    id: "range-rover-sport-2023",
+    title: "Range Rover Sport HSE Dynamic",
+    category: "suv",
+    badge: "Kei Truck",
+    year: 2023,
+    mileage: "8,500 km",
+    transmission: "Automatic 8-Speed",
+    engine: "3000cc Ingenium Turbo",
+    fuel: "Petrol 4WD",
+    color: "Santorini Black",
+    condition: "Unregistered",
+    price: "Rs. 64,650,000",
+    isPriceContact: false,
+    image: "public/images/range-rover.jpg",
+    gallery: ["public/images/range-rover.jpg"],
+    features: [
+      "Terrain Response 2 All-Wheel Drive",
+      "Electronic Air Suspension",
+      "Meridian 3D Surround Sound",
+      "Perforated Windsor Leather Seats"
+    ],
+    description: "Luxury flagship 4x4 SUV with commanding road stance, offroad terrain capability, and opulent British interior craftsmanship."
+  },
+  {
+    id: "toyota-vitz-safety-2020",
+    title: "Toyota Vitz F Safety Edition III",
+    category: "other",
+    badge: "Heavy Duty 4x4",
+    year: 2020,
+    mileage: "24,500 km",
+    transmission: "Automatic CVT",
+    engine: "1000cc 1KR-FE",
+    fuel: "Petrol",
+    color: "Pure White",
+    condition: "Unregistered",
+    price: "Rs. 6,850,000",
+    isPriceContact: false,
+    image: "public/images/toyota-vitz.jpg",
+    gallery: ["public/images/toyota-vitz.jpg"],
+    features: [
+      "Toyota Safety Sense C Package",
+      "Auto High Beam & Lane Departure Alert",
+      "Push Button Start & Smart Entry",
+      "Reverse Camera with Parking Assist"
+    ],
+    description: "Reliable, economical Japanese hatchback featuring Safety Sense active safety suite and high fuel efficiency."
+  },
+  {
+    id: "range-rover-vogue-2021",
+    title: "Range Rover Vogue SE 4x4",
+    category: "suv",
+    badge: "Heavy Duty Truck",
+    year: 2021,
+    mileage: "22,000 km",
+    transmission: "Automatic 8-Speed",
+    engine: "3000cc D300 MHEV Turbo Diesel",
+    fuel: "Diesel",
+    color: "Santorini Black",
+    condition: "Unregistered",
+    price: "Rs. 71,800,000",
+    isPriceContact: false,
+    image: "public/images/range-rover.jpg",
+    gallery: ["public/images/range-rover.jpg"],
+    features: [
+      "Executive Class Rear Seating",
+      "Adaptive Dynamics & Air Suspension",
+      "Pixel LED Headlights with Signature DRL",
+      "360 Surround View Camera System"
+    ],
+    description: "Ultimate luxury 4x4 SUV combining effortless power, whisper-quiet cabin luxury, and legendary all-terrain prowess."
+  },
+  {
+    id: "mitsubishi-canter-2021",
+    title: "Mitsubishi Fuso Canter Box Truck",
+    category: "truck",
+    badge: "Logistics Truck",
+    year: 2021,
+    mileage: "31,000 km",
+    transmission: "DUONIC Dual-Clutch Auto",
+    engine: "3000cc 4P10 Turbo Diesel",
+    fuel: "Diesel",
+    color: "Natural White",
+    condition: "Unregistered",
+    price: "Rs. 13,200,000",
+    isPriceContact: false,
+    image: "public/images/wholesale-fleet.jpg",
+    gallery: ["public/images/wholesale-fleet.jpg"],
+    features: [
+      "Insulated Aluminum Cargo Box Container",
+      "DUONIC Automated Manual Transmission",
+      "ABS with EBD & Disc Brakes",
+      "Rear Step & Lockable Rear Doors"
+    ],
+    description: "High-capacity insulated box truck engineered for secure cargo distribution and commercial supply logistics."
+  },
+  {
+    id: "honda-fit-crosstar-2022",
+    title: "Honda Fit Crosstar e:HEV Crossover",
+    category: "suv",
+    badge: "Luxury Crossover",
+    year: 2022,
+    mileage: "15,000 km",
+    transmission: "Automatic (e-CVT)",
+    engine: "1500cc e:HEV Hybrid",
+    fuel: "Petrol Hybrid",
+    color: "Premium Crystal White",
+    condition: "Unregistered",
+    price: "Rs. 14,850,000",
+    isPriceContact: false,
+    image: "public/images/honda-fit.jpg",
+    gallery: ["public/images/honda-fit.jpg"],
+    features: [
+      "Hands-free Power Tailgate",
+      "Water-Repellent Seats",
+      "Honda SENSING Suite & Blind Spot Monitor",
+      "Roof Rails & Crossover Body Kit"
+    ],
+    description: "Next-generation Japanese hybrid crossover boasting sleek styling, dual-motor hybrid efficiency, and Honda SENSING safety."
+  },
+  {
+    id: "toyota-vitz-jewel-2023",
+    title: "Toyota Vitz F Edition Hatchback",
+    category: "other",
+    badge: "Compact Hatchback",
+    year: 2023,
+    mileage: "12,000 km",
+    transmission: "Automatic (CVT)",
+    engine: "1000cc 1KR-FE",
+    fuel: "Petrol",
+    color: "Jewel White / Silver",
+    condition: "Unregistered",
+    price: "Rs. 7,200,000",
+    isPriceContact: false,
+    image: "public/images/toyota-vitz.jpg",
+    gallery: ["public/images/toyota-vitz.jpg"],
+    features: [
+      "Multi-Reflector Halogen Headlamps",
+      "Toyota Safety Sense Package",
+      "Eco Driving Indicator",
+      "Touchscreen Audio with Bluetooth"
+    ],
+    description: "Popular compact Japanese hatchback offering easy maneuverability, high fuel efficiency, and reliable daily transport."
+  },
+  {
+    id: "demotrades-showroom-prado-2021",
+    title: "Toyota Land Cruiser Prado TX-L (Showroom Display)",
+    category: "suv",
+    badge: "Flagship SUV",
+    year: 2021,
+    mileage: "26,000 km",
+    transmission: "Automatic 6-Speed",
+    engine: "2800cc Turbo Diesel",
+    fuel: "Diesel 4WD",
+    color: "White Pearl Crystal Shine",
+    condition: "Unregistered",
+    price: "Contact for Best Price",
+    isPriceContact: true,
+    image: "public/images/showroom.jpg",
+    gallery: ["public/images/showroom.jpg"],
+    features: [
+      "7-Seater Electric Folding Seats",
+      "Beige Leather Interior & Woodgrain Trim",
+      "Crawl Control & Multi-Terrain Select",
+      "Sunroof & Cool Box"
+    ],
+    description: "Ultimate luxury 4WD SUV on display at our main showroom with 7-seat versatility, offroad capability, and commanding presence."
   }
 ];
 
@@ -849,9 +1089,11 @@ function renderVehicles() {
       const fuelVal = v.fuel.toLowerCase();
 
       if (catLower === 'hatchback') {
-        matchesCat = bodyTypeVal === 'hatchback' || titleVal.includes('wagon r') || titleVal.includes('vitz') || titleVal.includes('fit');
+        matchesCat = bodyTypeVal === 'hatchback' || titleVal.includes('wagon r') || titleVal.includes('vitz') || titleVal.includes('fit') || titleVal.includes('dayz');
       } else if (catLower === 'electric') {
         matchesCat = fuelVal.includes('hybrid') || fuelVal.includes('electric') || bodyTypeVal === 'electric';
+      } else if (catLower === 'pickup') {
+        matchesCat = v.category === 'pickup' || titleVal.includes('pickup') || titleVal.includes('hilux') || titleVal.includes('carry');
       } else {
         matchesCat = bodyTypeVal === catLower || titleVal.includes(catLower) || (v.category && v.category.toLowerCase() === catLower);
       }
