@@ -989,7 +989,8 @@ function initNavbar() {
   window.addEventListener('scroll', () => {
     if (!isTicking) {
       window.requestAnimationFrame(() => {
-        const isHomePage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/');
+        const path = window.location.pathname;
+        const isHomePage = path.endsWith('index.html') || path === '/' || path.endsWith('/') || (!path.includes('vehicles.html') && !path.includes('.html'));
 
         if (window.scrollY > 40 || !isHomePage) {
           navbar.classList.remove('bg-transparent', 'py-5');
