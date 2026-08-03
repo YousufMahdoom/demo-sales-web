@@ -17,8 +17,7 @@ const VEHICLES_DATA = [
     image: "public/images/wagonr-fz.jpg",
     gallery: [
       "public/images/wagonr-fz.jpg",
-      "public/images/cabin-ergonomics.jpg",
-      "public/images/wagonr-stingray.jpg"
+      "public/images/cabin-ergonomics.jpg"
     ],
     features: [
       "HUD (Head-Up Display)",
@@ -87,31 +86,31 @@ const VEHICLES_DATA = [
     description: "Extremely practical, spacious cabin and unmatched fuel economy. Perfect choice for family and daily city commute."
   },
   {
-    id: "honda-fit-crosstar",
-    title: "Honda Fit Crosstar e:HEV Hybrid",
-    category: "other",
-    badge: "Luxury Hatch",
+    id: "bmw-m4-coupe-2022",
+    title: "BMW M4 Competition Coupe",
+    category: "luxury",
+    badge: "Supercar / Exotic",
     year: 2022,
     mileage: "22,000 km",
-    transmission: "Automatic (e-CVT)",
-    engine: "1500cc Dual-Motor Hybrid",
-    fuel: "Petrol Hybrid",
-    color: "Two-Tone Premium Sunlit White",
+    transmission: "Automatic (8-Speed M Steptronic)",
+    engine: "3000cc Twin-Turbo Inline-6",
+    fuel: "Petrol (503 HP)",
+    color: "Isle of Man Green Metallic",
     condition: "Unregistered / Like New",
-    price: "Contact for Price",
+    price: "Contact for Best Price",
     isPriceContact: true,
     image: "public/images/honda-fit.jpg",
     gallery: [
       "public/images/honda-fit.jpg"
     ],
     features: [
-      "Honda SENSING Suite",
-      "Water-repellent Fabric Seats",
-      "Roof Rails & Rugged Body Styling",
-      "Digital Instrument Cluster",
-      "Brake Hold & Electric Parking Brake"
+      "M TwinPower Turbo 503 HP Engine",
+      "M Carbon Bucket Sport Seats",
+      "Adaptive M Suspension & M Differential",
+      "Harman Kardon Surround Sound System",
+      "Head-Up Display & M Drive Professional"
     ],
-    description: "Premium Japanese hybrid crossover edition with high ground clearance, dual-motor hybrid smoothness, and class-leading cabin versatility."
+    description: "High-performance BMW M4 Competition Coupe in Isle of Man Green. Engineered with Twin-Turbo 503 HP power, carbon fiber aerodynamics, and luxury sports interior."
   },
   {
     id: "toyota-vitz-2019",
@@ -287,6 +286,12 @@ let heroSlideTimer = null;
 // ================= GLOBAL STATE =================
 let selectedCategory = 'all';
 let searchQuery = '';
+let filterBrand = 'all';
+let filterModel = 'all';
+let filterYear = 'all';
+let filterFuel = 'all';
+let filterTrans = 'all';
+let filterPrice = 'all';
 
 // ================= DOM LOADED INITIALIZATION =================
 document.addEventListener('DOMContentLoaded', () => {
@@ -297,6 +302,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initInventoryCounts();
   initParallax();
   initHeroSlider();
+  initCountdownTimer();
+  initFinanceCalculator();
+  initStatsCounters();
+  initFaqAccordion();
 
   // Defer heavy DOM rendering so initial paint finishes instantly on Safari & iPhone
   const deferRender = (fn) => {
@@ -315,6 +324,242 @@ document.addEventListener('DOMContentLoaded', () => {
     renderGallery();
   });
 });
+
+// ================= COUNTDOWN TIMER =================
+function initCountdownTimer() {
+  const daysEl = document.getElementById('countdown-days');
+  const hoursEl = document.getElementById('countdown-hours');
+  const minsEl = document.getElementById('countdown-mins');
+  const secsEl = document.getElementById('countdown-secs');
+  if (!daysEl) return;
+
+  let totalSeconds = (5 * 86400) + (14 * 3600) + (38 * 60) + 42;
+
+  setInterval(() => {
+    if (totalSeconds > 0) totalSeconds--;
+    const d = Math.floor(totalSeconds / 86400);
+    const h = Math.floor((totalSeconds % 86400) / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    const s = totalSeconds % 60;
+
+    daysEl.textContent = String(d).padStart(2, '0');
+    hoursEl.textContent = String(h).padStart(2, '0');
+    minsEl.textContent = String(m).padStart(2, '0');
+    secsEl.textContent = String(s).padStart(2, '0');
+  }, 1000);
+}
+
+// ================= STATS COUNTER ANIMATION =================
+function initStatsCounters() {
+  const counters = document.querySelectorAll('.stat-counter');
+  if (counters.length === 0) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const counter = entry.target;
+        const target = parseInt(counter.dataset.target, 10);
+        let start = 0;
+        const duration = 2000;
+        const stepTime = 30;
+        const increment = target / (duration / stepTime);
+
+        const timer = setInterval(() => {
+          start += increment;
+          if (start >= target) {
+            counter.textContent = target + (target === 100 || target === 99 ? '' : '+');
+            clearInterval(timer);
+          } else {
+            counter.textContent = Math.floor(start) + (target === 100 || target === 99 ? '' : '+');
+          }
+        }, stepTime);
+        observer.unobserve(counter);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach(c => observer.observe(c));
+}
+
+// ================= FINANCE CALCULATOR =================
+function initFinanceCalculator() {
+  const priceSlider = document.getElementById('calc-price-slider');
+  const downSlider = document.getElementById('calc-down-slider');
+  const tenureSelect = document.getElementById('calc-tenure');
+  const rateInput = document.getElementById('calc-rate');
+
+  const priceVal = document.getElementById('calc-price-val');
+  const downVal = document.getElementById('calc-down-val');
+  const monthlyResult = document.getElementById('calc-monthly-result');
+
+  if (!priceSlider || !downSlider || !monthlyResult) return;
+
+  function calculateLoan() {
+    const price = parseFloat(priceSlider.value);
+    const downPercent = parseFloat(downSlider.value);
+    const downAmount = price * (downPercent / 100);
+    const principal = price - downAmount;
+    
+    const tenureYears = parseInt(tenureSelect.value, 10);
+    const months = tenureYears * 12;
+    const annualRate = parseFloat(rateInput.value) || 14.5;
+    const monthlyRate = (annualRate / 100) / 12;
+
+    priceVal.textContent = `Rs. ${price.toLocaleString()}`;
+    downVal.textContent = `Rs. ${Math.round(downAmount).toLocaleString()} (${downPercent}%)`;
+
+    if (monthlyRate === 0) {
+      const emi = principal / months;
+      monthlyResult.textContent = `Rs. ${Math.round(emi).toLocaleString()} / mo`;
+    } else {
+      const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+      monthlyResult.textContent = `Rs. ${Math.round(emi).toLocaleString()} / mo`;
+    }
+  }
+
+  priceSlider.addEventListener('input', calculateLoan);
+  downSlider.addEventListener('input', calculateLoan);
+  tenureSelect.addEventListener('change', calculateLoan);
+  rateInput.addEventListener('input', calculateLoan);
+
+  calculateLoan();
+}
+
+// ================= FAQ ACCORDION =================
+function initFaqAccordion() {
+  const faqToggles = document.querySelectorAll('.faq-toggle');
+  faqToggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const content = toggle.nextElementSibling;
+      const icon = toggle.querySelector('i');
+      const isOpen = !content.classList.contains('hidden');
+
+      document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+      document.querySelectorAll('.faq-toggle i').forEach(i => i.classList.remove('rotate-180'));
+
+      if (!isOpen) {
+        content.classList.remove('hidden');
+        if (icon) icon.classList.add('rotate-180');
+      }
+    });
+  });
+}
+
+// ================= INVENTORY RENDER & MULTI-FILTERS =================
+function initInventoryCounts() {
+  const toggleBtn = document.getElementById('toggle-filter-btn');
+  const drawerPanel = document.getElementById('filter-drawer-panel');
+
+  if (toggleBtn && drawerPanel) {
+    toggleBtn.addEventListener('click', () => {
+      drawerPanel.classList.toggle('hidden');
+    });
+  }
+
+  // Category Cards Listener
+  const catCardBtns = document.querySelectorAll('.cat-card-btn');
+  catCardBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      catCardBtns.forEach(b => b.classList.remove('border-red-500', 'bg-red-600/10'));
+      btn.classList.add('border-red-500', 'bg-red-600/10');
+      
+      selectedCategory = btn.dataset.catSelect || 'all';
+      renderVehicles();
+    });
+  });
+
+  // Dropdown Select Filters
+  const brandSelect = document.getElementById('filter-brand');
+  const modelSelect = document.getElementById('filter-model');
+  const yearSelect = document.getElementById('filter-year');
+  const fuelSelect = document.getElementById('filter-fuel');
+  const transSelect = document.getElementById('filter-trans');
+  const priceSelect = document.getElementById('filter-price');
+  const searchInput = document.getElementById('vehicle-search');
+
+  if (brandSelect) brandSelect.addEventListener('change', (e) => { filterBrand = e.target.value; renderVehicles(); });
+  if (modelSelect) modelSelect.addEventListener('change', (e) => { filterModel = e.target.value; renderVehicles(); });
+  if (yearSelect) yearSelect.addEventListener('change', (e) => { filterYear = e.target.value; renderVehicles(); });
+  if (fuelSelect) fuelSelect.addEventListener('change', (e) => { filterFuel = e.target.value; renderVehicles(); });
+  if (transSelect) transSelect.addEventListener('change', (e) => { filterTrans = e.target.value; renderVehicles(); });
+  if (priceSelect) priceSelect.addEventListener('change', (e) => { filterPrice = e.target.value; renderVehicles(); });
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase();
+      renderVehicles();
+    });
+  }
+
+  const clearAllBtn = document.getElementById('clear-all-filters-btn');
+  const resetFallbackBtn = document.getElementById('reset-filter-btn');
+
+  const resetAllFilters = () => {
+    selectedCategory = 'all';
+    searchQuery = '';
+    filterBrand = 'all';
+    filterModel = 'all';
+    filterYear = 'all';
+    filterFuel = 'all';
+    filterTrans = 'all';
+    filterPrice = 'all';
+
+    if (brandSelect) brandSelect.value = 'all';
+    if (modelSelect) modelSelect.value = 'all';
+    if (yearSelect) yearSelect.value = 'all';
+    if (fuelSelect) fuelSelect.value = 'all';
+    if (transSelect) transSelect.value = 'all';
+    if (priceSelect) priceSelect.value = 'all';
+    if (searchInput) searchInput.value = '';
+
+    catCardBtns.forEach(b => b.classList.remove('border-red-500', 'bg-red-600/10'));
+    if (catCardBtns[0]) catCardBtns[0].classList.add('border-red-500', 'bg-red-600/10');
+
+    renderVehicles();
+  };
+
+  if (clearAllBtn) clearAllBtn.addEventListener('click', resetAllFilters);
+  if (resetFallbackBtn) resetFallbackBtn.addEventListener('click', resetAllFilters);
+}
+
+function updateActiveChips() {
+  const chipsContainer = document.getElementById('active-chips');
+  const labelEl = document.getElementById('active-tag-label');
+  const clearBtn = document.getElementById('clear-all-filters-btn');
+  const badgeEl = document.getElementById('active-filter-badge');
+  if (!chipsContainer) return;
+
+  chipsContainer.innerHTML = '';
+  let activeCount = 0;
+
+  const addChip = (label, resetFn) => {
+    activeCount++;
+    const chip = document.createElement('span');
+    chip.className = "inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600/20 border border-red-500/40 text-red-400 text-xs font-semibold";
+    chip.innerHTML = `<span>${label}</span><button class="hover:text-white font-bold ml-1">&times;</button>`;
+    chip.querySelector('button').onclick = resetFn;
+    chipsContainer.appendChild(chip);
+  };
+
+  if (selectedCategory !== 'all') addChip(`Category: ${selectedCategory}`, () => { selectedCategory = 'all'; renderVehicles(); });
+  if (filterBrand !== 'all') addChip(`Brand: ${filterBrand}`, () => { filterBrand = 'all'; const el = document.getElementById('filter-brand'); if(el) el.value='all'; renderVehicles(); });
+  if (filterModel !== 'all') addChip(`Model: ${filterModel}`, () => { filterModel = 'all'; const el = document.getElementById('filter-model'); if(el) el.value='all'; renderVehicles(); });
+  if (filterYear !== 'all') addChip(`Min Year: ${filterYear}`, () => { filterYear = 'all'; const el = document.getElementById('filter-year'); if(el) el.value='all'; renderVehicles(); });
+  if (filterFuel !== 'all') addChip(`Fuel: ${filterFuel}`, () => { filterFuel = 'all'; const el = document.getElementById('filter-fuel'); if(el) el.value='all'; renderVehicles(); });
+  if (filterTrans !== 'all') addChip(`Trans: ${filterTrans}`, () => { filterTrans = 'all'; const el = document.getElementById('filter-trans'); if(el) el.value='all'; renderVehicles(); });
+  if (filterPrice !== 'all') addChip(`Price: Under ${(parseInt(filterPrice)/1000000).toFixed(1)}M`, () => { filterPrice = 'all'; const el = document.getElementById('filter-price'); if(el) el.value='all'; renderVehicles(); });
+  if (searchQuery !== '') addChip(`Search: "${searchQuery}"`, () => { searchQuery = ''; const el = document.getElementById('vehicle-search'); if(el) el.value=''; renderVehicles(); });
+
+  if (activeCount > 0) {
+    if (labelEl) labelEl.classList.remove('hidden');
+    if (clearBtn) clearBtn.classList.remove('hidden');
+    if (badgeEl) badgeEl.classList.remove('hidden');
+  } else {
+    if (labelEl) labelEl.classList.add('hidden');
+    if (clearBtn) clearBtn.classList.add('hidden');
+    if (badgeEl) badgeEl.classList.add('hidden');
+  }
+}
 
 // ================= PARALLAX EFFECT =================
 function initParallax() {
@@ -502,12 +747,14 @@ function initNavbar() {
   window.addEventListener('scroll', () => {
     if (!isTicking) {
       window.requestAnimationFrame(() => {
-        if (window.scrollY > 40) {
+        const isHomePage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/');
+
+        if (window.scrollY > 40 || !isHomePage) {
           navbar.classList.remove('bg-transparent', 'py-5');
-          navbar.classList.add('glass-panel', 'py-3', 'shadow-2xl', 'border-b', 'border-white/10');
+          navbar.classList.add('glass-panel', 'py-3', 'shadow-2xl', 'border-b', 'border-white/10', 'bg-black/80', 'backdrop-blur-xl');
         } else {
           navbar.classList.add('bg-transparent', 'py-5');
-          navbar.classList.remove('glass-panel', 'py-3', 'shadow-2xl', 'border-b', 'border-white/10');
+          navbar.classList.remove('glass-panel', 'py-3', 'shadow-2xl', 'border-b', 'border-white/10', 'bg-black/80', 'backdrop-blur-xl');
         }
 
         // Active link highlighting
@@ -530,6 +777,16 @@ function initNavbar() {
           } else {
             btn.classList.remove('bg-red-600', 'text-white', 'shadow-md', 'shadow-red-600/30');
             btn.classList.add('text-gray-300', 'hover:bg-white/5');
+          }
+        });
+
+        document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+          if (btn.dataset.section === current) {
+            btn.classList.add('bg-red-600', 'text-white', 'font-semibold');
+            btn.classList.remove('text-gray-300', 'font-medium', 'hover:bg-white/5');
+          } else {
+            btn.classList.remove('bg-red-600', 'text-white', 'font-semibold');
+            btn.classList.add('text-gray-300', 'font-medium', 'hover:bg-white/5');
           }
         });
 
@@ -574,62 +831,60 @@ function initNavbar() {
   });
 }
 
-// ================= INVENTORY RENDER & FILTERS =================
-function initInventoryCounts() {
-  document.getElementById('count-all').textContent = VEHICLES_DATA.length;
-  document.getElementById('count-wagonr').textContent = VEHICLES_DATA.filter(v => v.category === 'wagonr').length;
-  document.getElementById('count-other').textContent = VEHICLES_DATA.filter(v => v.category === 'other').length;
-
-  const catBtns = document.querySelectorAll('.cat-btn');
-  catBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      catBtns.forEach(b => {
-        b.classList.remove('bg-red-600', 'text-white', 'shadow-lg', 'shadow-red-600/30');
-        b.classList.add('text-gray-400', 'hover:text-white', 'hover:bg-white/5');
-      });
-      btn.classList.add('bg-red-600', 'text-white', 'shadow-lg', 'shadow-red-600/30');
-      btn.classList.remove('text-gray-400', 'hover:text-white', 'hover:bg-white/5');
-      
-      selectedCategory = btn.dataset.cat;
-      renderVehicles();
-    });
-  });
-
-  const searchInput = document.getElementById('vehicle-search');
-  searchInput.addEventListener('input', (e) => {
-    searchQuery = e.target.value.toLowerCase();
-    renderVehicles();
-  });
-
-  document.getElementById('reset-filter-btn').addEventListener('click', () => {
-    selectedCategory = 'all';
-    searchQuery = '';
-    searchInput.value = '';
-    catBtns[0].click();
-  });
-}
-
 function renderVehicles() {
   const container = document.getElementById('vehicles-grid');
   const noResults = document.getElementById('no-results');
+  if (!container) return;
   container.innerHTML = '';
 
   const filtered = VEHICLES_DATA.filter(v => {
-    const matchesCat = selectedCategory === 'all' || v.category === selectedCategory;
-    const matchesSearch = v.title.toLowerCase().includes(searchQuery) ||
+    // Body Type Category matching
+    let matchesCat = true;
+    if (selectedCategory !== 'all') {
+      const catLower = selectedCategory.toLowerCase();
+      const bodyTypeVal = (v.bodyType || '').toLowerCase();
+      const titleVal = v.title.toLowerCase();
+      const fuelVal = v.fuel.toLowerCase();
+
+      if (catLower === 'hatchback') {
+        matchesCat = bodyTypeVal === 'hatchback' || titleVal.includes('wagon r') || titleVal.includes('vitz') || titleVal.includes('fit');
+      } else if (catLower === 'electric') {
+        matchesCat = fuelVal.includes('hybrid') || fuelVal.includes('electric') || bodyTypeVal === 'electric';
+      } else {
+        matchesCat = bodyTypeVal === catLower || titleVal.includes(catLower) || (v.category && v.category.toLowerCase() === catLower);
+      }
+    }
+
+    const matchesBrand = filterBrand === 'all' || v.title.toLowerCase().includes(filterBrand);
+    const matchesModel = filterModel === 'all' || v.title.toLowerCase().includes(filterModel);
+    const matchesYear = filterYear === 'all' || v.year >= parseInt(filterYear, 10);
+    const matchesFuel = filterFuel === 'all' || v.fuel.toLowerCase().includes(filterFuel);
+    const matchesTrans = filterTrans === 'all' || v.transmission.toLowerCase().includes(filterTrans);
+    const matchesPrice = filterPrice === 'all' || (v.price !== 'Contact for Price' && parseInt(v.price.replace(/[^0-9]/g, ''), 10) <= parseInt(filterPrice, 10));
+
+    const matchesSearch = searchQuery === '' ||
+                          v.title.toLowerCase().includes(searchQuery) ||
                           v.color.toLowerCase().includes(searchQuery) ||
-                          v.engine.toLowerCase().includes(searchQuery);
-    return matchesCat && matchesSearch;
+                          v.engine.toLowerCase().includes(searchQuery) ||
+                          v.fuel.toLowerCase().includes(searchQuery);
+
+    return matchesCat && matchesBrand && matchesModel && matchesYear && matchesFuel && matchesTrans && matchesPrice && matchesSearch;
   });
 
+  updateActiveChips();
+
   if (filtered.length === 0) {
-    noResults.classList.remove('hidden');
+    if (noResults) noResults.classList.remove('hidden');
     return;
   } else {
-    noResults.classList.add('hidden');
+    if (noResults) noResults.classList.add('hidden');
   }
 
-  filtered.forEach(vehicle => {
+  // If on home page (index.html), show only top 6 latest arrivals
+  const isHomePage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/');
+  const displayList = isHomePage ? filtered.slice(0, 6) : filtered;
+
+  displayList.forEach(vehicle => {
     const waMsg = encodeURIComponent(`Hello DEMO SALES WEB! I am interested in the ${vehicle.title} (${vehicle.year}). Please send me full pricing details and photos.`);
     
     const card = document.createElement('div');
@@ -665,7 +920,7 @@ function renderVehicles() {
             </p>
           </div>
 
-          <div class="hidden sm:grid grid-cols-3 gap-1.5 sm:gap-2 py-2 border-y border-white/5">
+          <div class="grid grid-cols-3 gap-1.5 sm:gap-2 py-2 border-y border-white/5">
             <div class="p-1.5 sm:p-2 rounded-xl bg-white/5 flex flex-col items-center justify-center text-center">
               <span class="text-[9px] sm:text-[10px] uppercase font-semibold text-gray-400 flex items-center gap-1">
                 <i class="fa-regular fa-calendar text-red-400 text-[10px]"></i>
@@ -723,6 +978,7 @@ function renderVehicles() {
 // ================= TESTIMONIALS RENDER =================
 function renderTestimonials() {
   const container = document.getElementById('testimonials-grid');
+  if (!container) return;
   container.innerHTML = '';
   TESTIMONIALS.forEach(t => {
     const card = document.createElement('div');
@@ -746,6 +1002,7 @@ function renderTestimonials() {
 // ================= GALLERY RENDER =================
 function renderGallery() {
   const container = document.getElementById('gallery-grid');
+  if (!container) return;
   container.innerHTML = '';
   GALLERY_ITEMS.forEach(item => {
     const div = document.createElement('div');
@@ -770,50 +1027,75 @@ function renderGallery() {
 // ================= FORMS HANDLING =================
 function initForms() {
   // Trade Form
-  document.getElementById('trade-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('trade-name').value;
-    const phone = document.getElementById('trade-phone').value;
-    const model = document.getElementById('trade-model').value;
-    const year = document.getElementById('trade-year').value;
-    const mileage = document.getElementById('trade-mileage').value;
-    const price = document.getElementById('trade-price').value;
-    const notes = document.getElementById('trade-notes').value;
+  const tradeForm = document.getElementById('trade-form');
+  if (tradeForm) {
+    tradeForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('trade-name').value;
+      const phone = document.getElementById('trade-phone').value;
+      const model = document.getElementById('trade-model').value;
+      const year = document.getElementById('trade-year').value;
+      const mileage = document.getElementById('trade-mileage').value;
+      const price = document.getElementById('trade-price').value;
+      const notes = document.getElementById('trade-notes').value;
 
-    const waMsg = encodeURIComponent(
-      `Hello DEMO SALES WEB! I want to Sell / Trade-in my vehicle:\n\n` +
-      `• Name: ${name}\n` +
-      `• Phone: ${phone}\n` +
-      `• Vehicle: ${model} (${year})\n` +
-      `• Mileage: ${mileage} km\n` +
-      `• Expected Valuation: ${price}\n` +
-      `• Notes: ${notes}`
-    );
-    window.open(`https://wa.me/94755331445?text=${waMsg}`, '_blank');
-  });
+      const waMsg = encodeURIComponent(
+        `Hello DEMO SALES WEB! I want to Sell / Trade-in my vehicle:\n\n` +
+        `• Name: ${name}\n` +
+        `• Phone: ${phone}\n` +
+        `• Vehicle: ${model} (${year})\n` +
+        `• Mileage: ${mileage} km\n` +
+        `• Expected Valuation: ${price}\n` +
+        `• Notes: ${notes}`
+      );
+      window.open(`https://wa.me/94755331445?text=${waMsg}`, '_blank');
+    });
+  }
 
   // Contact Form
-  document.getElementById('contact-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('contact-name').value;
-    const phone = document.getElementById('contact-phone').value;
-    const email = document.getElementById('contact-email').value;
-    const msg = document.getElementById('contact-msg').value;
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('contact-name').value;
+      const phone = document.getElementById('contact-phone').value;
+      const email = document.getElementById('contact-email').value;
+      const msg = document.getElementById('contact-msg').value;
 
-    const waMsg = encodeURIComponent(
-      `Hello DEMO SALES WEB!\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nMessage: ${msg}`
-    );
-    window.open(`https://wa.me/94755331445?text=${waMsg}`, '_blank');
-  });
+      const waMsg = encodeURIComponent(
+        `Hello DEMO SALES WEB!\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nMessage: ${msg}`
+      );
+      window.open(`https://wa.me/94755331445?text=${waMsg}`, '_blank');
+    });
+  }
 }
 
 // ================= MODAL CONTROLS =================
 function initModals() {
   const vehicleModal = document.getElementById('vehicle-modal');
   const galleryLightbox = document.getElementById('gallery-lightbox');
+  const comparisonModal = document.getElementById('comparison-modal');
 
-  document.getElementById('close-modal-btn').addEventListener('click', closeModal);
-  document.getElementById('close-gallery-btn').addEventListener('click', closeGallery);
+  const openCompBtn = document.getElementById('open-comparison-btn');
+  const closeCompBtn = document.getElementById('close-comparison-btn');
+
+  if (openCompBtn) {
+    openCompBtn.addEventListener('click', () => {
+      if (comparisonModal) comparisonModal.classList.remove('hidden');
+    });
+  }
+
+  if (closeCompBtn) {
+    closeCompBtn.addEventListener('click', () => {
+      if (comparisonModal) comparisonModal.classList.add('hidden');
+    });
+  }
+
+  const closeModalBtn = document.getElementById('close-modal-btn');
+  const closeGalleryBtn = document.getElementById('close-gallery-btn');
+
+  if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+  if (closeGalleryBtn) closeGalleryBtn.addEventListener('click', closeGallery);
 
   // Close when clicking dark backdrop area outside modal panel
   if (vehicleModal) {
@@ -828,11 +1110,18 @@ function initModals() {
     });
   }
 
+  if (comparisonModal) {
+    comparisonModal.addEventListener('click', (e) => {
+      if (e.target === comparisonModal) comparisonModal.classList.add('hidden');
+    });
+  }
+
   // Close on Escape keypress for accessibility
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeModal();
       closeGallery();
+      if (comparisonModal) comparisonModal.classList.add('hidden');
     }
   });
 }
@@ -885,13 +1174,17 @@ function openVehicleModal(id) {
   );
   document.getElementById('modal-wa-btn').href = `https://wa.me/94755331445?text=${waMsg}`;
 
-  document.getElementById('vehicle-modal').classList.remove('hidden');
+  const modal = document.getElementById('vehicle-modal');
+  modal.classList.remove('hidden');
+  modal.classList.add('animate-fade-in');
   document.body.style.overflow = 'hidden';
   document.documentElement.style.overflow = 'hidden';
 }
 
 function closeModal() {
-  document.getElementById('vehicle-modal').classList.add('hidden');
+  const modal = document.getElementById('vehicle-modal');
+  modal.classList.add('hidden');
+  modal.classList.remove('animate-fade-in');
   document.body.style.overflow = '';
   document.documentElement.style.overflow = '';
 }
@@ -900,9 +1193,13 @@ function openGalleryLightbox(item) {
   document.getElementById('lightbox-img').src = item.image;
   document.getElementById('lightbox-category').textContent = item.category;
   document.getElementById('lightbox-title').textContent = item.title;
-  document.getElementById('gallery-lightbox').classList.remove('hidden');
+  const modal = document.getElementById('gallery-lightbox');
+  modal.classList.remove('hidden');
+  modal.classList.add('animate-fade-in');
 }
 
 function closeGallery() {
-  document.getElementById('gallery-lightbox').classList.add('hidden');
+  const modal = document.getElementById('gallery-lightbox');
+  modal.classList.add('hidden');
+  modal.classList.remove('animate-fade-in');
 }

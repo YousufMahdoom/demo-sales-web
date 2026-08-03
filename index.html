@@ -6,6 +6,16 @@
   <title>DEMO SALES WEB | Suzuki Wagon R & Japanese Import Dealer Kurunegala</title>
   <meta name="description" content="Sri Lanka's trusted dealer for Suzuki Wagon R FX, FZ, Stingray, and premium Japanese vehicle imports in Kurunegala." />
   
+  <!-- SEO & Social Meta Tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="DEMO SALES WEB | Suzuki Wagon R & Japanese Import Dealer Kurunegala" />
+  <meta property="og:description" content="Sri Lanka's trusted dealer for Suzuki Wagon R FX, FZ, Stingray, and premium Japanese vehicle imports in Kurunegala." />
+  <meta property="og:image" content="public/images/wagonr-stingray.jpg" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="DEMO SALES WEB | Premium Japanese Vehicles Kurunegala" />
+  <meta property="twitter:description" content="Direct Japanese imports, verified auction sheets, and wholesale supply in Sri Lanka." />
+  <meta property="twitter:image" content="public/images/wagonr-stingray.jpg" />
+
   <!-- Pre-built Tailwind CSS -->
   <link rel="stylesheet" href="styles.css?v=2" />
 
@@ -43,7 +53,7 @@
         <!-- Desktop Nav Links -->
         <nav class="hidden md:flex items-center gap-1 bg-white/5 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10">
           <a href="#hero" class="nav-btn px-4 py-2 rounded-full text-sm font-medium text-white bg-red-600 shadow-md shadow-red-600/30 transition-all duration-200" data-section="hero">Home</a>
-          <a href="#inventory" class="nav-btn px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-200" data-section="inventory">Inventory</a>
+          <a href="vehicles.html" class="nav-btn px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-200">Showroom Stock</a>
           <a href="#about" class="nav-btn px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-200" data-section="about">About Us</a>
           <a href="#sell-trade" class="nav-btn px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-200" data-section="sell-trade">Sell / Trade-in</a>
           <a href="#wholesale" class="nav-btn px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-200" data-section="wholesale">Wholesale</a>
@@ -72,13 +82,13 @@
 
     <!-- Mobile Drawer -->
     <div id="mobile-drawer" class="hidden md:hidden glass-panel border-b border-white/10 px-4 pt-3 pb-6 mt-3 space-y-2">
-      <a href="#hero" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-semibold bg-red-600 text-white">Home</a>
-      <a href="#inventory" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5">Inventory</a>
-      <a href="#about" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5">About Us</a>
-      <a href="#sell-trade" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5">Sell / Trade-in</a>
-      <a href="#wholesale" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5">Wholesale</a>
-      <a href="#gallery" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5">Gallery</a>
-      <a href="#contact" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5">Contact</a>
+      <a href="#hero" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-semibold bg-red-600 text-white" data-section="hero">Home</a>
+      <a href="vehicles.html" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5">Showroom Stock</a>
+      <a href="#about" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5" data-section="about">About Us</a>
+      <a href="#sell-trade" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5" data-section="sell-trade">Sell / Trade-in</a>
+      <a href="#wholesale" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5" data-section="wholesale">Wholesale</a>
+      <a href="#gallery" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5" data-section="gallery">Gallery</a>
+      <a href="#contact" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5" data-section="contact">Contact</a>
       <div class="pt-4 border-t border-white/10 grid grid-cols-2 gap-2">
         <a href="tel:0755331445" class="flex items-center justify-center gap-2 py-3 rounded-xl glass-panel text-sm font-medium text-white">
           <i class="fa-solid fa-phone text-red-500"></i>
@@ -226,45 +236,34 @@
       </div>
     </section>
 
-    <!-- ================= INVENTORY SECTION ================= -->
+    <!-- ================= LATEST ARRIVALS SHOWCASE (HOME PAGE) ================= -->
     <section id="inventory" class="py-24 relative z-10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
         <div class="text-center max-w-3xl mx-auto space-y-4">
-          <span class="text-xs font-bold text-red-500 uppercase tracking-widest block">AVAILABLE SHOWROOM STOCK</span>
+          <span class="text-xs font-bold text-red-500 uppercase tracking-widest block">FRESH SHOWROOM ARRIVALS</span>
           <h2 class="text-3xl sm:text-5xl font-extrabold text-white">
-            Explore Our <span class="text-gradient-red">Vehicle Collection</span>
+            Latest <span class="text-gradient-red">Showroom Vehicles</span>
           </h2>
           <p class="text-gray-400 text-base">
-            Browse our latest Suzuki Wagon R models (FX, FZ, Stingray) and premium Japanese imports ready for immediate delivery in Kurunegala.
+            Explore our newest Suzuki Wagon R models (FX, FZ, Stingray) and premium Japanese imports ready for immediate delivery.
           </p>
         </div>
 
-        <!-- Filters Bar -->
-        <div class="mt-12 glass-panel p-4 rounded-2xl border border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div class="flex flex-wrap items-center gap-2 w-full md:w-auto" id="category-filter-bar">
-            <button data-cat="all" class="cat-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-red-600 text-white shadow-lg shadow-red-600/30">
-              All Vehicles (<span id="count-all">0</span>)
-            </button>
-            <button data-cat="wagonr" class="cat-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all text-gray-400 hover:text-white hover:bg-white/5">
-              Suzuki Wagon R (<span id="count-wagonr">0</span>)
-            </button>
-            <button data-cat="other" class="cat-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all text-gray-400 hover:text-white hover:bg-white/5">
-              Other Japanese Imports (<span id="count-other">0</span>)
-            </button>
-          </div>
-
-          <!-- Search Input -->
-          <div class="relative w-full md:w-72">
-            <i class="fa-solid fa-magnifying-glass text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-            <input type="text" id="vehicle-search" placeholder="Search model, color..." class="w-full bg-black/40 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors" />
-          </div>
+        <!-- Vehicles Grid (Shows top 6 latest arrivals) -->
+        <div id="vehicles-grid" class="mt-12 grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
+          <!-- Dynamic JS injects 6 vehicles -->
         </div>
 
-        <!-- Vehicles Grid -->
-        <div id="vehicles-grid" class="mt-8 grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-          <!-- Dynamic JS inject -->
+        <!-- See More Button -->
+        <div class="mt-12 text-center">
+          <a href="vehicles.html" class="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-mono text-xs sm:text-sm uppercase tracking-wider font-extrabold shadow-lg shadow-red-600/30 transition-all hover:scale-105">
+            <span>Explore All Inventory Vehicles</span>
+            <i class="fa-solid fa-arrow-right text-sm"></i>
+          </a>
         </div>
+      </div>
+    </section>
 
         <!-- No Results Fallback -->
         <div id="no-results" class="hidden text-center py-16 glass-panel rounded-3xl mt-8 border border-white/5">
@@ -501,6 +500,261 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SPECIAL OFFERS & COUNTDOWN BANNER ================= -->
+    <section class="py-12 relative z-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="glass-card rounded-3xl p-6 sm:p-10 border border-red-500/30 bg-gradient-to-r from-red-950/40 via-black to-black relative overflow-hidden shadow-2xl">
+          <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+            <div class="space-y-2 text-center lg:text-left">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-panel border border-red-500/40 text-[10px] font-mono font-bold text-red-400 uppercase tracking-widest">
+                <i class="fa-solid fa-fire text-red-500 animate-pulse"></i>
+                <span>Limited Time Promotion</span>
+              </div>
+              <h3 class="text-2xl sm:text-4xl font-extrabold text-white">August Direct Import Clearance Deal</h3>
+              <p class="text-xs sm:text-sm text-gray-300">Free 1-Year Hybrid Battery & Engine Warranty + Free First 3 Service Package on Suzuki Wagon R Stock.</p>
+            </div>
+
+            <!-- Countdown Timer -->
+            <div class="flex items-center gap-3 sm:gap-4 font-mono text-center">
+              <div class="glass-panel px-3 py-2 sm:px-4 sm:py-3 rounded-2xl border border-white/10 min-w-[64px]">
+                <span id="countdown-days" class="text-xl sm:text-3xl font-extrabold text-red-500 block">05</span>
+                <span class="text-[9px] sm:text-[10px] uppercase text-gray-400">Days</span>
+              </div>
+              <span class="text-xl font-bold text-gray-500">:</span>
+              <div class="glass-panel px-3 py-2 sm:px-4 sm:py-3 rounded-2xl border border-white/10 min-w-[64px]">
+                <span id="countdown-hours" class="text-xl sm:text-3xl font-extrabold text-white block">14</span>
+                <span class="text-[9px] sm:text-[10px] uppercase text-gray-400">Hours</span>
+              </div>
+              <span class="text-xl font-bold text-gray-500">:</span>
+              <div class="glass-panel px-3 py-2 sm:px-4 sm:py-3 rounded-2xl border border-white/10 min-w-[64px]">
+                <span id="countdown-mins" class="text-xl sm:text-3xl font-extrabold text-white block">38</span>
+                <span class="text-[9px] sm:text-[10px] uppercase text-gray-400">Mins</span>
+              </div>
+              <span class="text-xl font-bold text-gray-500">:</span>
+              <div class="glass-panel px-3 py-2 sm:px-4 sm:py-3 rounded-2xl border border-white/10 min-w-[64px]">
+                <span id="countdown-secs" class="text-xl sm:text-3xl font-extrabold text-red-400 block">42</span>
+                <span class="text-[9px] sm:text-[10px] uppercase text-gray-400">Secs</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ANIMATED STATS SECTION ================= -->
+    <section class="py-12 relative z-10 bg-black/60 border-y border-white/5">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <div class="glass-panel p-6 rounded-2xl border border-white/5">
+            <span class="stat-counter text-3xl sm:text-5xl font-extrabold text-gradient-red" data-target="1450">0</span>
+            <span class="text-xs font-mono text-gray-400 uppercase tracking-wider block mt-1">Vehicles Delivered</span>
+          </div>
+          <div class="glass-panel p-6 rounded-2xl border border-white/5">
+            <span class="stat-counter text-3xl sm:text-5xl font-extrabold text-white" data-target="100">0</span>
+            <span class="text-xs font-mono text-gray-400 uppercase tracking-wider block mt-1">% Verified Sheets</span>
+          </div>
+          <div class="glass-panel p-6 rounded-2xl border border-white/5">
+            <span class="stat-counter text-3xl sm:text-5xl font-extrabold text-gradient-red" data-target="12">0</span>
+            <span class="text-xs font-mono text-gray-400 uppercase tracking-wider block mt-1">Years of Trust</span>
+          </div>
+          <div class="glass-panel p-6 rounded-2xl border border-white/5">
+            <span class="stat-counter text-3xl sm:text-5xl font-extrabold text-white" data-target="99">0</span>
+            <span class="text-xs font-mono text-gray-400 uppercase tracking-wider block mt-1">% Customer Satisfaction</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FINANCE & LEASING CALCULATOR ================= -->
+    <section id="finance-calculator" class="py-16 sm:py-24 relative z-10 bg-black/40 border-t border-white/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
+          <div class="lg:col-span-5 space-y-4 sm:space-y-6">
+            <span class="text-xs font-mono font-bold text-red-500 uppercase tracking-widest block">
+              INSTANT PAYMENT ESTIMATOR
+            </span>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+              Vehicle Finance & <span class="text-gradient-red">Lease Calculator</span>
+            </h2>
+            <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+              Estimate your monthly installment for any Suzuki Wagon R or imported vehicle. Adjust your vehicle price, down payment, and tenure to see estimated monthly payments instantly.
+            </p>
+
+            <div class="glass-panel p-4 sm:p-5 rounded-2xl border border-white/10 space-y-3 text-xs sm:text-sm text-gray-300">
+              <p class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-green-400"></i> <span>Easy leasing approvals through top Sri Lankan financial partners.</span></p>
+              <p class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-green-400"></i> <span>Up to 70% financing available on unregistered Wagon R models.</span></p>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7">
+            <div class="glass-card p-6 sm:p-8 rounded-3xl border border-white/10 space-y-6 shadow-2xl">
+              <div class="space-y-6">
+                <div>
+                  <div class="flex justify-between text-xs sm:text-sm font-mono mb-3">
+                    <span class="text-gray-400 uppercase font-semibold flex items-center gap-2">
+                      <i class="fa-solid fa-money-bill-wave text-red-500"></i>
+                      <span>Vehicle Price (LKR)</span>
+                    </span>
+                    <span id="calc-price-val" class="font-bold text-white bg-white/5 px-3 py-1 rounded-lg border border-white/10">Rs. 6,850,000</span>
+                  </div>
+                  <input type="range" id="calc-price-slider" min="4000000" max="15000000" step="100000" value="6850000" class="w-full accent-red-600 cursor-pointer h-2 bg-black/60 rounded-lg" />
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs sm:text-sm font-mono mb-3">
+                    <span class="text-gray-400 uppercase font-semibold flex items-center gap-2">
+                      <i class="fa-solid fa-piggy-bank text-red-500"></i>
+                      <span>Down Payment (20% - 50%)</span>
+                    </span>
+                    <span id="calc-down-val" class="font-bold text-white bg-white/5 px-3 py-1 rounded-lg border border-white/10">Rs. 2,055,000 (30%)</span>
+                  </div>
+                  <input type="range" id="calc-down-slider" min="10" max="60" step="5" value="30" class="w-full accent-red-600 cursor-pointer h-2 bg-black/60 rounded-lg" />
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-2">
+                  <div>
+                    <label for="calc-tenure" class="text-[11px] font-mono text-gray-400 uppercase block mb-2 font-semibold flex items-center gap-1.5">
+                      <i class="fa-solid fa-calendar-days text-red-500"></i>
+                      <span>Loan Period (Years)</span>
+                    </label>
+                    <select id="calc-tenure" class="w-full bg-black/60 border border-white/10 rounded-xl px-3.5 py-3 text-xs sm:text-sm text-white focus:outline-none focus:border-red-500 hover:border-white/20 transition-all cursor-pointer">
+                      <option value="3" class="bg-zinc-900 text-white">3 Years (36 Months)</option>
+                      <option value="4" class="bg-zinc-900 text-white">4 Years (48 Months)</option>
+                      <option value="5" selected class="bg-zinc-900 text-white">5 Years (60 Months)</option>
+                      <option value="6" class="bg-zinc-900 text-white">6 Years (72 Months)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="calc-rate" class="text-[11px] font-mono text-gray-400 uppercase block mb-2 font-semibold flex items-center gap-1.5">
+                      <i class="fa-solid fa-percent text-red-500"></i>
+                      <span>Annual Interest Rate (%)</span>
+                    </label>
+                    <input type="number" id="calc-rate" value="14.5" step="0.1" class="w-full bg-black/60 border border-white/10 rounded-xl px-3.5 py-3 text-xs sm:text-sm text-white focus:outline-none focus:border-red-500 hover:border-white/20 transition-all" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-5 sm:p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4 mt-6">
+                <div>
+                  <span class="text-xs font-mono text-gray-400 uppercase block font-semibold mb-1">Estimated Monthly Installment</span>
+                  <span id="calc-monthly-result" class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gradient-red block tracking-tight">Rs. 112,850 / mo</span>
+                </div>
+                <a href="https://wa.me/94755331445?text=Hello%20DEMO%20SALES%20WEB,%20I%20would%20like%20to%20apply%20for%20leasing%20finance." target="_blank" rel="noreferrer" class="px-5 py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono text-xs font-bold uppercase tracking-wider shadow-lg shadow-red-600/30 flex-shrink-0 transition-all text-center inline-block">
+                  Apply for Lease
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VEHICLE COMPARISON TOOL BAR ================= -->
+    <section class="py-6 relative z-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="glass-card p-6 sm:p-8 rounded-3xl border border-white/15 bg-zinc-900/90 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="flex items-center gap-4 sm:gap-6 text-center md:text-left flex-col sm:flex-row">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-red-600 to-red-700 text-white flex items-center justify-center shadow-lg shadow-red-600/40 shrink-0">
+              <i class="fa-solid fa-code-compare text-2xl sm:text-3xl"></i>
+            </div>
+            <div class="space-y-1.5">
+              <h4 class="text-white font-extrabold text-lg sm:text-2xl tracking-tight">Compare Suzuki Wagon R Trim Models</h4>
+              <p class="text-xs sm:text-sm text-gray-300 font-normal leading-relaxed">Side-by-side comparison matrix of Wagon R FX vs Wagon R FZ vs Wagon R Stingray</p>
+            </div>
+          </div>
+          <button id="open-comparison-btn" class="w-full md:w-auto px-7 py-4 rounded-2xl border border-red-500/50 bg-red-600/20 text-white hover:bg-red-600 hover:border-red-600 text-xs sm:text-sm font-extrabold uppercase tracking-wider transition-all duration-300 shadow-xl shadow-red-600/20 hover:scale-105 shrink-0 flex items-center justify-center gap-2.5">
+            <i class="fa-solid fa-layer-group text-red-400 text-base"></i>
+            <span>Open Comparison Matrix</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BRANDS CAROUSEL ================= -->
+    <section class="py-12 sm:py-16 relative z-10 bg-black/30 border-b border-white/5">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5 sm:space-y-6">
+        <span class="text-xs font-mono text-red-500 font-bold uppercase tracking-[0.25em] block">TOP JAPANESE AUTOMOTIVE BRANDS WE IMPORT</span>
+        <div class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4">
+          <div class="px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl glass-panel border border-white/10 text-white font-extrabold text-xs sm:text-sm tracking-wider hover:border-red-500 hover:text-red-400 transition-all cursor-default shadow-md flex items-center gap-2">
+            <i class="fa-solid fa-star text-red-500 text-xs"></i>
+            <span>SUZUKI</span>
+          </div>
+          <div class="px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl glass-panel border border-white/10 text-white font-extrabold text-xs sm:text-sm tracking-wider hover:border-red-500 hover:text-red-400 transition-all cursor-default shadow-md flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-red-500 text-xs"></i>
+            <span>TOYOTA</span>
+          </div>
+          <div class="px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl glass-panel border border-white/10 text-white font-extrabold text-xs sm:text-sm tracking-wider hover:border-red-500 hover:text-red-400 transition-all cursor-default shadow-md flex items-center gap-2">
+            <i class="fa-solid fa-bolt text-red-500 text-xs"></i>
+            <span>HONDA</span>
+          </div>
+          <div class="px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl glass-panel border border-white/10 text-white font-extrabold text-xs sm:text-sm tracking-wider hover:border-red-500 hover:text-red-400 transition-all cursor-default shadow-md flex items-center gap-2">
+            <i class="fa-solid fa-car-side text-red-500 text-xs"></i>
+            <span>NISSAN</span>
+          </div>
+          <div class="px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl glass-panel border border-white/10 text-white font-extrabold text-xs sm:text-sm tracking-wider hover:border-red-500 hover:text-red-400 transition-all cursor-default shadow-md flex items-center gap-2">
+            <i class="fa-solid fa-gauge-high text-red-500 text-xs"></i>
+            <span>MAZDA</span>
+          </div>
+          <div class="px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl glass-panel border border-white/10 text-white font-extrabold text-xs sm:text-sm tracking-widest hover:border-red-500 hover:text-red-400 transition-all cursor-default shadow-md flex items-center gap-2">
+            <i class="fa-solid fa-gem text-red-500 text-xs"></i>
+            <span>MITSUBISHI</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ SECTION ================= -->
+    <section id="faq" class="py-16 sm:py-20 relative z-10 bg-black/60">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+        <div class="text-center space-y-2.5 sm:space-y-3">
+          <span class="text-xs font-bold text-red-500 uppercase tracking-widest block font-mono">FREQUENTLY ASKED QUESTIONS</span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">Got Questions? <span class="text-gradient-red">We've Got Answers</span></h2>
+        </div>
+
+        <div class="space-y-3 sm:space-y-4" id="faq-accordion">
+          <div class="faq-item glass-card rounded-2xl border border-white/10 overflow-hidden shadow-lg transition-all">
+            <button class="faq-toggle w-full p-4 sm:p-5 text-left flex items-center justify-between text-white font-extrabold text-sm sm:text-base focus:outline-none hover:text-red-400 transition-colors">
+              <span>How do I verify the original Japanese Auction Sheet?</span>
+              <i class="fa-solid fa-chevron-down text-red-500 transition-transform duration-300 text-sm ml-2"></i>
+            </button>
+            <div class="faq-content hidden px-4 sm:px-5 pb-5 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-white/10 pt-4 bg-black/40">
+              We provide 100% verified original auction sheet documents with every imported vehicle. You can double-check the chassis number on official Japanese verification portals prior to purchase.
+            </div>
+          </div>
+
+          <div class="faq-item glass-card rounded-2xl border border-white/10 overflow-hidden shadow-lg transition-all">
+            <button class="faq-toggle w-full p-4 sm:p-5 text-left flex items-center justify-between text-white font-extrabold text-sm sm:text-base focus:outline-none hover:text-red-400 transition-colors">
+              <span>What is the real-world fuel economy of Suzuki Wagon R Mild Hybrid?</span>
+              <i class="fa-solid fa-chevron-down text-red-500 transition-transform duration-300 text-sm ml-2"></i>
+            </button>
+            <div class="faq-content hidden px-4 sm:px-5 pb-5 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-white/10 pt-4 bg-black/40">
+              The Suzuki Wagon R FX, FZ, and Stingray mild-hybrid ISG engines deliver approximately 26 to 32 km/L depending on Sri Lankan traffic conditions and driving habits.
+            </div>
+          </div>
+
+          <div class="faq-item glass-card rounded-2xl border border-white/10 overflow-hidden shadow-lg transition-all">
+            <button class="faq-toggle w-full p-4 sm:p-5 text-left flex items-center justify-between text-white font-bold text-sm sm:text-base focus:outline-none hover:text-red-400 transition-colors">
+              <span>Do you offer trade-ins for existing registered cars?</span>
+              <i class="fa-solid fa-chevron-down text-red-500 transition-transform duration-300 text-sm ml-2"></i>
+            </button>
+            <div class="faq-content hidden px-4 sm:px-5 pb-5 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-white/10 pt-4 bg-black/40">
+              Yes, we accept trade-ins for popular Japanese models (Vitz, Wagon R, Alto, etc.) at fair current market valuations with immediate balance payment settlement.
+            </div>
+          </div>
+
+          <div class="faq-item glass-card rounded-2xl border border-white/15 bg-zinc-900/90 overflow-hidden shadow-lg transition-all">
+            <button class="faq-toggle w-full p-4 sm:p-5 text-left flex items-center justify-between text-white font-bold text-sm sm:text-base focus:outline-none hover:text-red-400 transition-colors">
+              <span>Can sub-dealers order wholesale bulk vehicle containers?</span>
+              <i class="fa-solid fa-chevron-down text-red-500 transition-transform duration-300 text-sm ml-2"></i>
+            </button>
+            <div class="faq-content hidden px-4 sm:px-5 pb-5 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-white/10 pt-4 bg-black/40">
+              Yes! DEMO SALES WEB is a direct importer in Kurunegala. Sub-dealers can place bulk orders (3+ units) with custom import clearance documentation and discounted margin pricing.
             </div>
           </div>
         </div>
@@ -809,6 +1063,73 @@
               <span>Call Showroom Sales</span>
             </a>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vehicle Comparison Modal -->
+  <div id="comparison-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 lg:backdrop-blur-md">
+    <div class="relative w-full max-w-5xl max-h-[85vh] overflow-y-auto glass-panel rounded-3xl border border-white/15 bg-zinc-900/95 text-white shadow-2xl p-6 sm:p-8">
+      <button id="close-comparison-btn" class="absolute top-4 right-4 p-2.5 rounded-full glass-panel hover:bg-white/10 text-gray-300 hover:text-white transition-colors" aria-label="Close comparison">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+
+      <div class="space-y-6">
+        <div>
+          <span class="text-xs font-mono font-bold text-red-400 uppercase tracking-widest block mb-1">MODEL SPECIFICATION MATRIX</span>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-white">Suzuki Wagon R Trim Comparison</h3>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-white/10 bg-black/40">
+          <table class="w-full text-left text-xs sm:text-sm border-collapse">
+            <thead>
+              <tr class="border-b border-white/10 bg-white/5">
+                <th class="p-4 text-gray-400 font-mono uppercase text-xs">Feature / Spec</th>
+                <th class="p-4 text-white font-bold bg-white/5">Wagon R FX (Safety)</th>
+                <th class="p-4 text-red-400 font-bold bg-red-600/10 border-x border-red-500/20">Wagon R FZ (Hybrid)</th>
+                <th class="p-4 text-red-500 font-bold bg-white/5">Wagon R Stingray (Turbo)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="p-4 font-mono text-gray-400 text-xs uppercase font-semibold">Target Price</td>
+                <td class="p-4 font-extrabold text-white">Rs. 6,450,000</td>
+                <td class="p-4 font-extrabold text-red-400 bg-red-600/5 border-x border-red-500/10">Rs. 6,850,000</td>
+                <td class="p-4 font-extrabold text-white">Rs. 7,250,000</td>
+              </tr>
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="p-4 font-mono text-gray-400 text-xs uppercase font-semibold">Engine & Power</td>
+                <td class="p-4 text-gray-300">660cc Mild Hybrid</td>
+                <td class="p-4 text-gray-200 bg-red-600/5 border-x border-red-500/10">660cc Mild Hybrid ISG</td>
+                <td class="p-4 text-gray-300">660cc Turbo Hybrid</td>
+              </tr>
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="p-4 font-mono text-gray-400 text-xs uppercase font-semibold">Fuel Efficiency</td>
+                <td class="p-4 text-green-400 font-bold">28+ km/L</td>
+                <td class="p-4 text-green-400 font-bold bg-red-600/5 border-x border-red-500/10">30+ km/L</td>
+                <td class="p-4 text-green-400 font-bold">26+ km/L</td>
+              </tr>
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="p-4 font-mono text-gray-400 text-xs uppercase font-semibold">Lighting Package</td>
+                <td class="p-4 text-gray-300">Halogen Lamps</td>
+                <td class="p-4 text-gray-200 bg-red-600/5 border-x border-red-500/10">LED Headlamps + Fog</td>
+                <td class="p-4 text-gray-300">Full Signature LED Strip</td>
+              </tr>
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="p-4 font-mono text-gray-400 text-xs uppercase font-semibold">Head-Up Display (HUD)</td>
+                <td class="p-4 text-gray-500">Not Included</td>
+                <td class="p-4 text-green-400 font-bold bg-red-600/5 border-x border-red-500/10"><i class="fa-solid fa-check text-green-400 mr-1.5"></i> Included</td>
+                <td class="p-4 text-green-400 font-bold"><i class="fa-solid fa-check text-green-400 mr-1.5"></i> Included</td>
+              </tr>
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="p-4 font-mono text-gray-400 text-xs uppercase font-semibold">Paddle Shifters</td>
+                <td class="p-4 text-gray-500">Not Included</td>
+                <td class="p-4 text-gray-500 bg-red-600/5 border-x border-red-500/10">Not Included</td>
+                <td class="p-4 text-green-400 font-bold"><i class="fa-solid fa-check text-green-400 mr-1.5"></i> 7-Speed Paddle</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
