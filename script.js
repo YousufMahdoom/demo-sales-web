@@ -798,8 +798,32 @@ function initForms() {
 
 // ================= MODAL CONTROLS =================
 function initModals() {
+  const vehicleModal = document.getElementById('vehicle-modal');
+  const galleryLightbox = document.getElementById('gallery-lightbox');
+
   document.getElementById('close-modal-btn').addEventListener('click', closeModal);
   document.getElementById('close-gallery-btn').addEventListener('click', closeGallery);
+
+  // Close when clicking dark backdrop area outside modal panel
+  if (vehicleModal) {
+    vehicleModal.addEventListener('click', (e) => {
+      if (e.target === vehicleModal) closeModal();
+    });
+  }
+
+  if (galleryLightbox) {
+    galleryLightbox.addEventListener('click', (e) => {
+      if (e.target === galleryLightbox) closeGallery();
+    });
+  }
+
+  // Close on Escape keypress for accessibility
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+      closeGallery();
+    }
+  });
 }
 
 function openVehicleModal(id) {
@@ -851,10 +875,12 @@ function openVehicleModal(id) {
   document.getElementById('modal-wa-btn').href = `https://wa.me/94755331445?text=${waMsg}`;
 
   document.getElementById('vehicle-modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
   document.getElementById('vehicle-modal').classList.add('hidden');
+  document.body.style.overflow = '';
 }
 
 function openGalleryLightbox(item) {
