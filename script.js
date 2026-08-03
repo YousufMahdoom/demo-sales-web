@@ -86,31 +86,33 @@ const VEHICLES_DATA = [
     description: "Extremely practical, spacious cabin and unmatched fuel economy. Perfect choice for family and daily city commute."
   },
   {
-    id: "bmw-m4-coupe-2022",
-    title: "BMW M4 Competition Coupe",
-    category: "luxury",
-    badge: "Supercar / Exotic",
+    id: "honda-fit-crosstar-2022",
+    title: "Honda Fit Crosstar e:HEV",
+    category: "other",
+    badge: "Premium Crossover",
     year: 2022,
     mileage: "22,000 km",
-    transmission: "Automatic (8-Speed M Steptronic)",
-    engine: "3000cc Twin-Turbo Inline-6",
-    fuel: "Petrol (503 HP)",
-    color: "Isle of Man Green Metallic",
-    condition: "Unregistered / Like New",
+    transmission: "Automatic (e-CVT)",
+    engine: "1500cc e:HEV Dual-Motor Hybrid",
+    fuel: "Petrol Hybrid (e:HEV)",
+    color: "Sunlit White Pearl",
+    condition: "Unregistered",
     price: "Contact for Best Price",
     isPriceContact: true,
     image: "public/images/honda-fit.jpg",
     gallery: [
-      "public/images/honda-fit.jpg"
+      "public/images/honda-fit.jpg",
+      "public/images/cabin-ergonomics.jpg"
     ],
     features: [
-      "M TwinPower Turbo 503 HP Engine",
-      "M Carbon Bucket Sport Seats",
-      "Adaptive M Suspension & M Differential",
-      "Harman Kardon Surround Sound System",
-      "Head-Up Display & M Drive Professional"
+      "Honda SENSING Safety Suite",
+      "Dual-Motor e:HEV Hybrid System",
+      "Water-Repellent Fabric Seats",
+      "9-inch Touchscreen with Navigation",
+      "High Ground Clearance Crossover Styling",
+      "LED Headlamps & Roof Rails"
     ],
-    description: "High-performance BMW M4 Competition Coupe in Isle of Man Green. Engineered with Twin-Turbo 503 HP power, carbon fiber aerodynamics, and luxury sports interior."
+    description: "Premium Japanese hybrid crossover edition with high ground clearance, water-repellent fabric, and Honda SENSING advanced driver assistance."
   },
   {
     id: "toyota-vitz-2019",
@@ -920,7 +922,7 @@ function renderVehicles() {
             </p>
           </div>
 
-          <div class="grid grid-cols-3 gap-1.5 sm:gap-2 py-2 border-y border-white/5">
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 sm:gap-2 py-2 border-y border-white/5">
             <div class="p-1.5 sm:p-2 rounded-xl bg-white/5 flex flex-col items-center justify-center text-center">
               <span class="text-[9px] sm:text-[10px] uppercase font-semibold text-gray-400 flex items-center gap-1">
                 <i class="fa-regular fa-calendar text-red-400 text-[10px]"></i>
@@ -933,14 +935,14 @@ function renderVehicles() {
                 <i class="fa-solid fa-gauge-high text-red-400 text-[10px]"></i>
                 <span>Mileage</span>
               </span>
-              <span class="text-xs sm:text-sm font-bold text-white mt-0.5 truncate max-w-full">${vehicle.mileage.replace(' km', '')} <span class="text-[9px] text-gray-400 font-normal">km</span></span>
+              <span class="text-xs sm:text-sm font-bold text-white mt-0.5 truncate max-w-full">${vehicle.mileage}</span>
             </div>
-            <div class="p-1.5 sm:p-2 rounded-xl bg-white/5 flex flex-col items-center justify-center text-center">
+            <div class="col-span-2 sm:col-span-1 p-1.5 sm:p-2 rounded-xl bg-white/5 flex flex-row sm:flex-col items-center justify-between sm:justify-center text-left sm:text-center px-3 sm:px-2">
               <span class="text-[9px] sm:text-[10px] uppercase font-semibold text-gray-400 flex items-center gap-1">
                 <i class="fa-solid fa-gas-pump text-red-400 text-[10px]"></i>
                 <span>Fuel</span>
               </span>
-              <span class="text-xs sm:text-sm font-bold text-white mt-0.5 truncate max-w-full" title="${vehicle.fuel}">${vehicle.fuel.split(' ')[0]}</span>
+              <span class="text-xs sm:text-sm font-bold text-white sm:mt-0.5 truncate max-w-full" title="${vehicle.fuel}">${vehicle.fuel}</span>
             </div>
           </div>
 
