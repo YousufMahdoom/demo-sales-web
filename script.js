@@ -665,21 +665,27 @@ function renderVehicles() {
             </p>
           </div>
 
-          <div class="grid grid-cols-3 gap-1 sm:gap-2 py-1.5 sm:py-2 border-y border-white/5">
-            <div class="text-center p-1 sm:p-2 rounded-lg sm:rounded-xl bg-white/5">
-              <i class="fa-regular fa-calendar text-red-400 text-xs block mb-1"></i>
-              <span class="text-[9px] sm:text-[11px] text-gray-400 block">Year</span>
-              <span class="text-[10px] sm:text-xs font-bold text-white">${vehicle.year}</span>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5 sm:gap-2 py-1.5 sm:py-2 border-y border-white/5">
+            <div class="flex sm:flex-col items-center justify-between sm:justify-center p-2 sm:p-2 rounded-lg sm:rounded-xl bg-white/5 text-left sm:text-center px-3 sm:px-2">
+              <div class="flex items-center gap-2 sm:block sm:gap-0">
+                <i class="fa-regular fa-calendar text-red-400 text-xs sm:mb-1"></i>
+                <span class="text-[11px] sm:text-[11px] text-gray-400 font-medium">Year</span>
+              </div>
+              <span class="text-xs sm:text-xs font-bold text-white">${vehicle.year}</span>
             </div>
-            <div class="text-center p-1 sm:p-2 rounded-lg sm:rounded-xl bg-white/5">
-              <i class="fa-solid fa-gauge-high text-red-400 text-xs block mb-1"></i>
-              <span class="text-[9px] sm:text-[11px] text-gray-400 block">Mileage</span>
-              <span class="text-[10px] sm:text-xs font-bold text-white truncate block">${vehicle.mileage}</span>
+            <div class="flex sm:flex-col items-center justify-between sm:justify-center p-2 sm:p-2 rounded-lg sm:rounded-xl bg-white/5 text-left sm:text-center px-3 sm:px-2">
+              <div class="flex items-center gap-2 sm:block sm:gap-0">
+                <i class="fa-solid fa-gauge-high text-red-400 text-xs sm:mb-1"></i>
+                <span class="text-[11px] sm:text-[11px] text-gray-400 font-medium">Mileage</span>
+              </div>
+              <span class="text-xs sm:text-xs font-bold text-white">${vehicle.mileage}</span>
             </div>
-            <div class="text-center p-1 sm:p-2 rounded-lg sm:rounded-xl bg-white/5">
-              <i class="fa-solid fa-gas-pump text-red-400 text-xs block mb-1"></i>
-              <span class="text-[9px] sm:text-[11px] text-gray-400 block">Fuel</span>
-              <span class="text-[10px] sm:text-xs font-bold text-white truncate block px-1">${vehicle.fuel.split(' ')[0]}</span>
+            <div class="flex sm:flex-col items-center justify-between sm:justify-center p-2 sm:p-2 rounded-lg sm:rounded-xl bg-white/5 text-left sm:text-center px-3 sm:px-2">
+              <div class="flex items-center gap-2 sm:block sm:gap-0">
+                <i class="fa-solid fa-gas-pump text-red-400 text-xs sm:mb-1"></i>
+                <span class="text-[11px] sm:text-[11px] text-gray-400 font-medium">Fuel</span>
+              </div>
+              <span class="text-xs sm:text-xs font-bold text-white">${vehicle.fuel}</span>
             </div>
           </div>
 
