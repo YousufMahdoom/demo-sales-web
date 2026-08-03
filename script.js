@@ -717,7 +717,7 @@ function initInventoryCounts() {
   const fuelSelect = document.getElementById('filter-fuel');
   const transSelect = document.getElementById('filter-trans');
   const priceSelect = document.getElementById('filter-price');
-  const searchInput = document.getElementById('vehicle-search');
+  const searchInput = document.getElementById('search-input');
 
   if (brandSelect) brandSelect.addEventListener('change', (e) => { filterBrand = e.target.value; renderVehicles(); });
   if (modelSelect) modelSelect.addEventListener('change', (e) => { filterModel = e.target.value; renderVehicles(); });
@@ -790,7 +790,7 @@ function updateActiveChips() {
   if (filterFuel !== 'all') addChip(`Fuel: ${filterFuel}`, () => { filterFuel = 'all'; const el = document.getElementById('filter-fuel'); if (el) el.value = 'all'; renderVehicles(); });
   if (filterTrans !== 'all') addChip(`Trans: ${filterTrans}`, () => { filterTrans = 'all'; const el = document.getElementById('filter-trans'); if (el) el.value = 'all'; renderVehicles(); });
   if (filterPrice !== 'all') addChip(`Price: Under ${(parseInt(filterPrice) / 1000000).toFixed(1)}M`, () => { filterPrice = 'all'; const el = document.getElementById('filter-price'); if (el) el.value = 'all'; renderVehicles(); });
-  if (searchQuery !== '') addChip(`Search: "${searchQuery}"`, () => { searchQuery = ''; const el = document.getElementById('vehicle-search'); if (el) el.value = ''; renderVehicles(); });
+  if (searchQuery !== '') addChip(`Search: "${searchQuery}"`, () => { searchQuery = ''; const el = document.getElementById('search-input'); if (el) el.value = ''; renderVehicles(); });
 
   if (activeCount > 0) {
     if (labelEl) labelEl.classList.remove('hidden');
@@ -1125,15 +1125,20 @@ function renderVehicles() {
     if (noResults) noResults.classList.add('hidden');
   }
 
-  // If on home page (index.html), show only top 6 latest arrivals
-  const isHomePage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/');
-  const displayList = isHomePage ? filtered.slice(0, 6) : filtered;
+  // If on home page (index.html / root), show only top 6 latest arrivals; vehicles.html shows all
+  const path = window.location.pathname;
+  const isVehiclesPage = path.includes('vehicles');
+  const displayList = isVehiclesPage ? filtered : filtered.slice(0, 6);
 
   displayList.forEach(vehicle => {
     const waMsg = encodeURIComponent(`Hello DEMO SALES WEB! I am interested in the ${vehicle.title} (${vehicle.year}). Please send me full pricing details and photos.`);
 
+    // Grid cell wrapper — needed so h-full works in CSS grid
+    const cell = document.createElement('div');
+    cell.className = "h-full";
+
     const card = document.createElement('div');
-    card.className = "glass-card rounded-2xl overflow-hidden flex flex-col justify-between group transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer border border-white/10 hover:border-red-500/50 shadow-xl";
+    card.className = "vehicle-card bg-[#141722] rounded-3xl overflow-hidden border border-white/10 h-full flex flex-col group transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer hover:border-red-500/50 shadow-xl";
 
     // Clicking card opens modal unless clicking directly on WhatsApp link
     card.onclick = (e) => {
@@ -1142,8 +1147,8 @@ function renderVehicles() {
     };
 
     card.innerHTML = `
-      <div>
-        <div class="relative aspect-[16/10] overflow-hidden bg-black/50">
+      <div class="flex flex-col flex-1">
+        <div class="relative aspect-[16/10] overflow-hidden">
           <img src="${vehicle.image}" alt="${vehicle.title}" loading="lazy" decoding="async" class="w-full h-full object-cover object-center group-hover:scale-[1.08] transition-transform duration-500" />
           ${vehicle.badge ? `<div class="absolute top-2 left-2 glass-panel px-2 py-0.5 rounded-full text-[9px] sm:text-xs font-bold text-red-400 border border-red-500/30 uppercase tracking-wider">${vehicle.badge}</div>` : ''}
           <div class="absolute top-2 right-2 bg-black/80 lg:backdrop-blur-md no-blur-mobile px-1.5 py-0.5 rounded-md text-[9px] sm:text-xs font-semibold text-gray-200 border border-white/10">${vehicle.condition}</div>
@@ -1155,7 +1160,7 @@ function renderVehicles() {
           </div>
         </div>
 
-        <div class="p-3.5 sm:p-5 space-y-3 sm:space-y-4">
+        <div class="p-3.5 sm:p-5 space-y-3 sm:space-y-4 flex-1 flex flex-col">
           <div>
             <h3 class="text-sm sm:text-xl font-bold text-white group-hover:text-red-400 transition-colors line-clamp-1">${vehicle.title}</h3>
             <p class="text-[10px] sm:text-xs text-gray-400 mt-0.5 sm:mt-1 flex items-center gap-1.5 sm:gap-2">
@@ -1165,34 +1170,34 @@ function renderVehicles() {
             </p>
           </div>
 
-          <div class="hidden sm:grid grid-cols-3 gap-1 py-2 border-y border-white/5">
+          <div class="grid grid-cols-3 gap-1 py-2 border-y border-white/5">
             <div class="p-1 rounded-lg bg-white/5 flex flex-col items-center justify-center text-center">
               <span class="text-[9px] uppercase font-semibold text-gray-400 flex items-center gap-1">
                 <i class="fa-regular fa-calendar text-red-400 text-[10px]"></i>
-                <span class="hidden sm:inline">Year</span>
+                <span>Year</span>
               </span>
               <span class="text-[11px] sm:text-xs font-bold text-white mt-0.5">${vehicle.year}</span>
             </div>
             <div class="p-1 rounded-lg bg-white/5 flex flex-col items-center justify-center text-center">
               <span class="text-[9px] uppercase font-semibold text-gray-400 flex items-center gap-1">
                 <i class="fa-solid fa-gauge-high text-red-400 text-[10px]"></i>
-                <span class="hidden sm:inline">Mileage</span>
+                <span>Mileage</span>
               </span>
               <span class="text-[11px] sm:text-xs font-bold text-white mt-0.5 truncate max-w-full" title="${vehicle.mileage}">${vehicle.mileage}</span>
             </div>
             <div class="p-1 rounded-lg bg-white/5 flex flex-col items-center justify-center text-center">
               <span class="text-[9px] uppercase font-semibold text-gray-400 flex items-center gap-1">
                 <i class="fa-solid fa-gas-pump text-red-400 text-[10px]"></i>
-                <span class="hidden sm:inline">Fuel</span>
+                <span>Fuel</span>
               </span>
               <span class="text-[11px] sm:text-xs font-bold text-white mt-0.5 truncate max-w-full" title="${vehicle.fuel}">${vehicle.fuel}</span>
             </div>
           </div>
 
-          <ul class="hidden sm:block space-y-1.5 pt-1">
+          <ul class="space-y-1.5 pt-1 flex-1">
             ${vehicle.features.slice(0, 3).map(f => `
               <li class="text-xs text-gray-300 flex items-center gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0"></span>
                 <span class="truncate">${f}</span>
               </li>
             `).join('')}
@@ -1216,7 +1221,9 @@ function renderVehicles() {
         </a>
       </div>
     `;
-    container.appendChild(card);
+
+    cell.appendChild(card);
+    container.appendChild(cell);
   });
 }
 
