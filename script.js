@@ -535,6 +535,20 @@ let filterFuel = 'all';
 let filterTrans = 'all';
 let filterPrice = 'all';
 
+// ================= SHUFFLE UTILITY =================
+// Fisher-Yates shuffle — returns a new shuffled copy of the array
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Shuffled snapshot — randomised once per page load; stays stable across filter changes
+let SHUFFLED_VEHICLES = shuffleArray(VEHICLES_DATA);
+
 // ================= DOM LOADED INITIALIZATION =================
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
@@ -757,6 +771,8 @@ function initInventoryCounts() {
     catCardBtns.forEach(b => b.classList.remove('border-red-500', 'bg-red-600/10'));
     if (catCardBtns[0]) catCardBtns[0].classList.add('border-red-500', 'bg-red-600/10');
 
+    // Re-shuffle for a fresh random order on reset
+    SHUFFLED_VEHICLES = shuffleArray(VEHICLES_DATA);
     renderVehicles();
   };
 
@@ -1080,7 +1096,8 @@ function renderVehicles() {
   if (!container) return;
   container.innerHTML = '';
 
-  const filtered = VEHICLES_DATA.filter(v => {
+  // Filter from the shuffled snapshot so random order is preserved across re-renders
+  const filtered = SHUFFLED_VEHICLES.filter(v => {
     // Body Type Category matching
     let matchesCat = true;
     if (selectedCategory !== 'all') {
