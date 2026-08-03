@@ -1164,27 +1164,27 @@ function renderVehicles() {
             </p>
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 sm:gap-2 py-2 border-y border-white/5">
-            <div class="p-1.5 sm:p-2 rounded-xl bg-white/5 flex flex-col items-center justify-center text-center">
-              <span class="text-[9px] sm:text-[10px] uppercase font-semibold text-gray-400 flex items-center gap-1">
+          <div class="hidden sm:grid grid-cols-3 gap-1 py-2 border-y border-white/5">
+            <div class="p-1 rounded-lg bg-white/5 flex flex-col items-center justify-center text-center">
+              <span class="text-[9px] uppercase font-semibold text-gray-400 flex items-center gap-1">
                 <i class="fa-regular fa-calendar text-red-400 text-[10px]"></i>
-                <span>Year</span>
+                <span class="hidden sm:inline">Year</span>
               </span>
-              <span class="text-xs sm:text-sm font-bold text-white mt-0.5">${vehicle.year}</span>
+              <span class="text-[11px] sm:text-xs font-bold text-white mt-0.5">${vehicle.year}</span>
             </div>
-            <div class="p-1.5 sm:p-2 rounded-xl bg-white/5 flex flex-col items-center justify-center text-center">
-              <span class="text-[9px] sm:text-[10px] uppercase font-semibold text-gray-400 flex items-center gap-1">
+            <div class="p-1 rounded-lg bg-white/5 flex flex-col items-center justify-center text-center">
+              <span class="text-[9px] uppercase font-semibold text-gray-400 flex items-center gap-1">
                 <i class="fa-solid fa-gauge-high text-red-400 text-[10px]"></i>
-                <span>Mileage</span>
+                <span class="hidden sm:inline">Mileage</span>
               </span>
-              <span class="text-xs sm:text-sm font-bold text-white mt-0.5 truncate max-w-full">${vehicle.mileage}</span>
+              <span class="text-[11px] sm:text-xs font-bold text-white mt-0.5 truncate max-w-full" title="${vehicle.mileage}">${vehicle.mileage}</span>
             </div>
-            <div class="col-span-2 sm:col-span-1 p-1.5 sm:p-2 rounded-xl bg-white/5 flex flex-row sm:flex-col items-center justify-between sm:justify-center text-left sm:text-center px-3 sm:px-2">
-              <span class="text-[9px] sm:text-[10px] uppercase font-semibold text-gray-400 flex items-center gap-1">
+            <div class="p-1 rounded-lg bg-white/5 flex flex-col items-center justify-center text-center">
+              <span class="text-[9px] uppercase font-semibold text-gray-400 flex items-center gap-1">
                 <i class="fa-solid fa-gas-pump text-red-400 text-[10px]"></i>
-                <span>Fuel</span>
+                <span class="hidden sm:inline">Fuel</span>
               </span>
-              <span class="text-xs sm:text-sm font-bold text-white sm:mt-0.5 truncate max-w-full" title="${vehicle.fuel}">${vehicle.fuel}</span>
+              <span class="text-[11px] sm:text-xs font-bold text-white mt-0.5 truncate max-w-full" title="${vehicle.fuel}">${vehicle.fuel}</span>
             </div>
           </div>
 
