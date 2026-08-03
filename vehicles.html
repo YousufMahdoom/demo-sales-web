@@ -45,10 +45,8 @@
         <!-- Desktop Nav Links -->
         <nav class="hidden md:flex items-center gap-0.5 bg-white/5 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
           <a href="index.html" class="nav-btn px-3 py-1.5 rounded-full text-xs font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-200">Home</a>
-          <a href="vehicles.html" class="nav-btn px-3 py-1.5 rounded-full text-xs font-medium text-white bg-red-600 shadow-md shadow-red-600/30 transition-all duration-200">Showroom Stock</a>
+          <a href="vehicles.html" class="nav-btn px-3 py-1.5 rounded-full text-xs font-medium text-white bg-red-600 shadow-md shadow-red-600/30 transition-all duration-200">Vehicles</a>
           <a href="index.html#about" class="nav-btn px-3 py-1.5 rounded-full text-xs font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-200">About Us</a>
-          <a href="index.html#sell-trade" class="nav-btn px-3 py-1.5 rounded-full text-xs font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-200">Sell / Trade-in</a>
-          <a href="index.html#wholesale" class="nav-btn px-3 py-1.5 rounded-full text-xs font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-200">Wholesale</a>
           <a href="index.html#gallery" class="nav-btn px-3 py-1.5 rounded-full text-xs font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-200">Gallery</a>
           <a href="index.html#contact" class="nav-btn px-3 py-1.5 rounded-full text-xs font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-200">Contact</a>
         </nav>
@@ -57,11 +55,9 @@
         <div class="hidden lg:flex items-center gap-3">
           <a href="tel:0755331445" class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-gray-200 hover:text-white glass-panel hover:border-white/20 transition-all">
             <i class="fa-solid fa-phone text-red-500"></i>
-            <span>Call Us</span>
           </a>
           <a href="https://wa.me/94755331445?text=Hello%20DEMO%20SALES%20WEB,%20I%20am%20inquiring%20about%20vehicles." target="_blank" rel="noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-green-600 hover:bg-green-500 shadow-lg shadow-green-600/30 transition-all">
             <i class="fa-brands fa-whatsapp text-lg"></i>
-            <span>WhatsApp</span>
           </a>
         </div>
 
@@ -75,10 +71,9 @@
     <!-- Mobile Drawer -->
     <div id="mobile-drawer" class="hidden md:hidden glass-panel border-b border-white/10 px-4 pt-3 pb-6 mt-3 space-y-2">
       <a href="index.html" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5">Home</a>
-      <a href="vehicles.html" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-semibold bg-red-600 text-white">Showroom Stock</a>
+      <a href="vehicles.html" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-semibold bg-red-600 text-white">Vehicles</a>
       <a href="index.html#about" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5">About Us</a>
-      <a href="index.html#sell-trade" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5">Sell / Trade-in</a>
-      <a href="index.html#wholesale" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5">Wholesale</a>
+      
       <a href="index.html#gallery" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5">Gallery</a>
       <a href="index.html#contact" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:bg-white/5">Contact</a>
     </div>
@@ -107,65 +102,64 @@
         </div>
 
         <!-- Filter Action Controls & Active Chips Bar -->
-        <div class="mt-8 flex flex-wrap items-center justify-between gap-4">
-          <button id="toggle-filter-btn" class="px-5 py-2.5 rounded-xl glass-panel border border-white/15 text-white font-mono text-xs font-semibold uppercase tracking-wider hover:border-red-500 transition-all flex items-center gap-2 shadow-lg">
-            <i class="fa-solid fa-sliders text-red-500"></i>
-            <span>Filter Inventory</span>
-            <span id="active-filter-badge" class="hidden w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-          </button>
-
-          <!-- Active Filter Tags / Reset Button -->
-          <div id="active-tags-container" class="flex flex-wrap items-center gap-2 text-xs">
-            <span id="active-tag-label" class="text-gray-400 font-mono text-[10px] uppercase hidden">Active Filters:</span>
-            <div id="active-chips" class="flex flex-wrap items-center gap-1.5"></div>
-            <button id="clear-all-filters-btn" class="hidden text-xs text-red-400 hover:text-red-300 font-bold ml-2 underline">Clear All</button>
-          </div>
-        </div>
-
-        <!-- Collapsible Multi-Field Filters Drawer -->
-        <div id="filter-drawer-panel" class="hidden mt-6 glass-panel p-6 rounded-2xl border border-white/10 space-y-6 shadow-2xl transition-all">
-          <!-- Single Row Vehicle Body Type Category Filter -->
-          <div>
-            <span class="text-[10px] font-mono text-gray-400 uppercase block mb-3 font-bold tracking-wider">Vehicle Body Type</span>
-            <div class="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-zinc-700" id="category-cards-grid">
-              <button data-cat-select="all" class="cat-card-btn shrink-0 flex-1 min-w-[100px] px-3.5 py-3 rounded-xl glass-panel-glow border border-red-500/50 bg-red-600/10 flex flex-col items-center justify-center text-center transition-all group">
-                <i class="fa-solid fa-car text-sm text-red-500 group-hover:scale-110 transition-transform mb-1.5"></i>
+        <div class="mt-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <!-- Mobile Direct Category Filter Row -->
+          <div class="w-full overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-zinc-700">
+            <div class="flex items-center gap-2 min-w-max" id="category-cards-grid">
+              <button data-cat-select="all" class="cat-card-btn px-4 py-2.5 rounded-xl glass-panel-glow border border-red-500/50 bg-red-600/10 flex items-center gap-2 transition-all group">
+                <i class="fa-solid fa-car text-xs text-red-500 group-hover:scale-110 transition-transform"></i>
                 <span class="text-xs font-bold text-white whitespace-nowrap">All Stock</span>
               </button>
-              <button data-cat-select="hatchback" class="cat-card-btn shrink-0 flex-1 min-w-[100px] px-3.5 py-3 rounded-xl glass-panel-glow border border-white/10 hover:border-red-500 flex flex-col items-center justify-center text-center transition-all group">
-                <i class="fa-solid fa-car-side text-sm text-gray-400 group-hover:text-red-400 group-hover:scale-110 transition-all mb-1.5"></i>
+              <button data-cat-select="hatchback" class="cat-card-btn px-4 py-2.5 rounded-xl glass-panel-glow border border-white/10 hover:border-red-500 flex items-center gap-2 transition-all group">
+                <i class="fa-solid fa-car-side text-xs text-gray-400 group-hover:text-red-400 transition-all"></i>
                 <span class="text-xs font-bold text-white whitespace-nowrap">Hatchback</span>
               </button>
-              <button data-cat-select="suv" class="cat-card-btn shrink-0 flex-1 min-w-[100px] px-3.5 py-3 rounded-xl glass-panel-glow border border-white/10 hover:border-red-500 flex flex-col items-center justify-center text-center transition-all group">
-                <i class="fa-solid fa-truck-monster text-sm text-gray-400 group-hover:text-red-400 group-hover:scale-110 transition-all mb-1.5"></i>
+              <button data-cat-select="suv" class="cat-card-btn px-4 py-2.5 rounded-xl glass-panel-glow border border-white/10 hover:border-red-500 flex items-center gap-2 transition-all group">
+                <i class="fa-solid fa-truck-monster text-xs text-gray-400 group-hover:text-red-400 transition-all"></i>
                 <span class="text-xs font-bold text-white whitespace-nowrap">Compact SUV</span>
               </button>
-              <button data-cat-select="sedan" class="cat-card-btn shrink-0 flex-1 min-w-[100px] px-3.5 py-3 rounded-xl glass-panel-glow border border-white/10 hover:border-red-500 flex flex-col items-center justify-center text-center transition-all group">
-                <i class="fa-solid fa-car-rear text-sm text-gray-400 group-hover:text-red-400 group-hover:scale-110 transition-all mb-1.5"></i>
+              <button data-cat-select="sedan" class="cat-card-btn px-4 py-2.5 rounded-xl glass-panel-glow border border-white/10 hover:border-red-500 flex items-center gap-2 transition-all group">
+                <i class="fa-solid fa-car-rear text-xs text-gray-400 group-hover:text-red-400 transition-all"></i>
                 <span class="text-xs font-bold text-white whitespace-nowrap">Sedan</span>
               </button>
-              <button data-cat-select="van" class="cat-card-btn shrink-0 flex-1 min-w-[100px] px-3.5 py-3 rounded-xl glass-panel-glow border border-white/10 hover:border-red-500 flex flex-col items-center justify-center text-center transition-all group">
-                <i class="fa-solid fa-van-shuttle text-sm text-gray-400 group-hover:text-red-400 group-hover:scale-110 transition-all mb-1.5"></i>
+              <button data-cat-select="van" class="cat-card-btn px-4 py-2.5 rounded-xl glass-panel-glow border border-white/10 hover:border-red-500 flex items-center gap-2 transition-all group">
+                <i class="fa-solid fa-van-shuttle text-xs text-gray-400 group-hover:text-red-400 transition-all"></i>
                 <span class="text-xs font-bold text-white whitespace-nowrap">Van / Mini</span>
               </button>
-              <button data-cat-select="electric" class="cat-card-btn shrink-0 flex-1 min-w-[100px] px-3.5 py-3 rounded-xl glass-panel-glow border border-white/10 hover:border-red-500 flex flex-col items-center justify-center text-center transition-all group">
-                <i class="fa-solid fa-bolt text-sm text-gray-400 group-hover:text-red-400 group-hover:scale-110 transition-all mb-1.5"></i>
+              <button data-cat-select="electric" class="cat-card-btn px-4 py-2.5 rounded-xl glass-panel-glow border border-white/10 hover:border-red-500 flex items-center gap-2 transition-all group">
+                <i class="fa-solid fa-bolt text-xs text-gray-400 group-hover:text-red-400 transition-all"></i>
                 <span class="text-xs font-bold text-white whitespace-nowrap">Hybrid / EV</span>
               </button>
-              <button data-cat-select="pickup" class="cat-card-btn shrink-0 flex-1 min-w-[100px] px-3.5 py-3 rounded-xl glass-panel-glow border border-white/10 hover:border-red-500 flex flex-col items-center justify-center text-center transition-all group">
-                <i class="fa-solid fa-truck-pickup text-sm text-gray-400 group-hover:text-red-400 group-hover:scale-110 transition-all mb-1.5"></i>
+              <button data-cat-select="pickup" class="cat-card-btn px-4 py-2.5 rounded-xl glass-panel-glow border border-white/10 hover:border-red-500 flex items-center gap-2 transition-all group">
+                <i class="fa-solid fa-truck-pickup text-xs text-gray-400 group-hover:text-red-400 transition-all"></i>
                 <span class="text-xs font-bold text-white whitespace-nowrap">Utility Truck</span>
               </button>
-              <button data-cat-select="luxury" class="cat-card-btn shrink-0 flex-1 min-w-[100px] px-3.5 py-3 rounded-xl glass-panel-glow border border-white/10 hover:border-red-500 flex flex-col items-center justify-center text-center transition-all group">
-                <i class="fa-solid fa-crown text-sm text-gray-400 group-hover:text-red-400 group-hover:scale-110 transition-all mb-1.5"></i>
+              <button data-cat-select="luxury" class="cat-card-btn px-4 py-2.5 rounded-xl glass-panel-glow border border-white/10 hover:border-red-500 flex items-center gap-2 transition-all group">
+                <i class="fa-solid fa-crown text-xs text-gray-400 group-hover:text-red-400 transition-all"></i>
                 <span class="text-xs font-bold text-white whitespace-nowrap">Premium Trim</span>
               </button>
             </div>
           </div>
 
+          <div class="flex items-center gap-4 w-full md:w-auto justify-between">
+            <button id="toggle-filter-btn" class="px-5 py-2.5 rounded-xl glass-panel border border-white/15 text-white font-mono text-xs font-semibold uppercase tracking-wider hover:border-red-500 transition-all flex items-center gap-2 shadow-lg">
+              <i class="fa-solid fa-sliders text-red-500"></i>
+              <span>Filter Specs</span>
+              <span id="active-filter-badge" class="hidden w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+            </button>
+
+            <!-- Active Filter Tags / Reset Button -->
+            <div id="active-tags-container" class="flex flex-wrap items-center gap-2 text-xs">
+              <span id="active-tag-label" class="text-gray-400 font-mono text-[10px] uppercase hidden">Active Filters:</span>
+              <div id="active-chips" class="flex flex-wrap items-center gap-1.5"></div>
+              <button id="clear-all-filters-btn" class="hidden text-xs text-red-400 hover:text-red-300 font-bold ml-2 underline">Clear All</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Collapsible Multi-Field Filters Drawer -->
+        <div id="filter-drawer-panel" class="hidden mt-6 glass-panel p-6 rounded-2xl border border-white/10 space-y-6 shadow-2xl transition-all">
           <!-- Multi-Field Selectors (Specifications & Price arranged in two structured rows) -->
-          <div class="space-y-4">
-            <span class="text-[10px] font-mono text-gray-400 uppercase block font-bold tracking-wider">Specifications & Price</span>
             
             <!-- Row 1: Key Specifications (Brand, Model, Min Year, Fuel Type) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -310,7 +304,6 @@
             <li><a href="index.html" class="hover:text-red-400 transition-colors">Home Showcase</a></li>
             <li><a href="vehicles.html" class="hover:text-red-400 transition-colors">Wagon R Inventory</a></li>
             <li><a href="index.html#about" class="hover:text-red-400 transition-colors">About Dealership</a></li>
-            <li><a href="index.html#sell-trade" class="hover:text-red-400 transition-colors">Sell & Trade-in</a></li>
           </ul>
         </div>
 
