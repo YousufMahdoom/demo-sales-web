@@ -628,13 +628,26 @@ function renderVehicles() {
     const waMsg = encodeURIComponent(`Hello DEMO SALES WEB! I am interested in the ${vehicle.title} (${vehicle.year}). Please send me full pricing details and photos.`);
     
     const card = document.createElement('div');
-    card.className = "glass-card rounded-2xl overflow-hidden flex flex-col justify-between group transition-all duration-300 transform hover:-translate-y-1.5";
+    card.className = "glass-card rounded-2xl overflow-hidden flex flex-col justify-between group transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer border border-white/10 hover:border-red-500/50 shadow-xl";
+    
+    // Clicking card opens modal unless clicking directly on WhatsApp link
+    card.onclick = (e) => {
+      if (e.target.closest('a[target="_blank"]')) return;
+      openVehicleModal(vehicle.id);
+    };
+
     card.innerHTML = `
       <div>
         <div class="relative aspect-[16/10] overflow-hidden bg-black/50">
           <img src="${vehicle.image}" alt="${vehicle.title}" loading="lazy" decoding="async" class="w-full h-full object-cover object-center group-hover:scale-[1.08] transition-transform duration-500" />
           ${vehicle.badge ? `<div class="absolute top-2 left-2 glass-panel px-2 py-0.5 rounded-full text-[9px] sm:text-xs font-bold text-red-400 border border-red-500/30 uppercase tracking-wider">${vehicle.badge}</div>` : ''}
           <div class="absolute top-2 right-2 bg-black/80 lg:backdrop-blur-md no-blur-mobile px-1.5 py-0.5 rounded-md text-[9px] sm:text-xs font-semibold text-gray-200 border border-white/10">${vehicle.condition}</div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+            <span class="text-xs font-bold text-white flex items-center gap-1.5">
+              <span>Click to view details</span>
+              <i class="fa-solid fa-arrow-right text-red-400 text-xs"></i>
+            </span>
+          </div>
         </div>
 
         <div class="p-3.5 sm:p-5 space-y-3 sm:space-y-4">
@@ -686,16 +699,10 @@ function renderVehicles() {
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-1.5 sm:gap-2">
-          <button onclick="openVehicleModal('${vehicle.id}')" class="py-2 px-1.5 sm:py-2.5 sm:px-3 rounded-lg sm:rounded-xl glass-panel text-white hover:bg-white/10 text-[10px] sm:text-xs font-bold transition-all flex items-center justify-center gap-1 sm:gap-1.5 border border-white/10">
-            <span>Full Specs</span>
-            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-          </button>
-          <a href="https://wa.me/94755331445?text=${waMsg}" target="_blank" rel="noreferrer" class="py-2 px-1.5 sm:py-2.5 sm:px-3 rounded-lg sm:rounded-xl bg-green-600 hover:bg-green-500 text-white text-[10px] sm:text-xs font-bold transition-all flex items-center justify-center gap-1 sm:gap-1.5 shadow-lg shadow-green-600/20">
-            <i class="fa-brands fa-whatsapp text-sm"></i>
-            <span>Inquire</span>
-          </a>
-        </div>
+        <a href="https://wa.me/94755331445?text=${waMsg}" target="_blank" rel="noreferrer" class="w-full py-2.5 px-3 rounded-xl bg-green-600 hover:bg-green-500 text-white text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-lg shadow-green-600/20">
+          <i class="fa-brands fa-whatsapp text-sm"></i>
+          <span>Inquire via WhatsApp</span>
+        </a>
       </div>
     `;
     container.appendChild(card);
