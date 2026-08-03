@@ -491,34 +491,34 @@ const HERO_SLIDES = [
     modalId: "bmw-m3-2023"
   },
   {
-    badge: "M PERFORMANCE COUPE",
-    brand: "BMW",
-    model: "M4 COMPETITION",
+    badge: "ITALIAN SUPERCAR",
+    brand: "FERRARI",
+    model: "F8 TRIBUTO",
     year: "2022",
-    subtitle: "3000cc Twin-Turbo I6 • Carbon Package",
-    description: "Aggressive two-door sport coupe boasting carbon fiber aero package, M Sport adaptive suspension, and Harman Kardon surround audio.",
-    tagline: '"Unmatched sport coupe performance & luxury"',
-    price: "Rs. 42,500,000",
-    grade: "4.5 / A Verified",
-    mileage: "12,000 km",
-    fuel: "M TwinPower Petrol",
-    image: "public/images/bmw-m3-hero.jpg",
-    modalId: "bmw-m4-2022"
+    subtitle: "3.9L V8 Twin-Turbo • 710 HP • Rosso Corsa",
+    description: "Exotic Italian mid-engine supercar delivering 710 HP from its award-winning twin-turbo V8 powertrain with racing aerodynamics.",
+    tagline: '"Exotic Italian passion & pure track performance"',
+    price: "Rs. 145,000,000",
+    grade: "5.0 / Mint",
+    mileage: "4,200 km",
+    fuel: "3.9L V8 Turbo",
+    image: "public/images/ferrari-hero.jpg",
+    modalId: "ferrari-f8-2022"
   },
   {
-    badge: "LUXURY EXECUTIVE SEDAN",
-    brand: "BMW",
-    model: "530e M SPORT HYBRID",
+    badge: "GERMAN SUPERSPORT",
+    brand: "AUDI",
+    model: "R8 V10 PERFORMANCE",
     year: "2023",
-    subtitle: "2.0L Plug-in Hybrid • M Sport Package",
-    description: "Executive luxury hybrid sedan delivering seamless plug-in electric efficiency with sport suspension and laser headlight technology.",
-    tagline: '"Executive luxury meets electric efficiency"',
-    price: "Rs. 28,900,000",
+    subtitle: "5.2L Naturally Aspirated V10 • 602 HP • quattro",
+    description: "Breathtaking V10 supercar featuring naturally aspirated rev-happy engine, legendary quattro all-wheel drive, and sleek futuristic design.",
+    tagline: '"Breathtaking V10 acoustics & quattro stability"',
+    price: "Rs. 98,000,000",
     grade: "5.0 / Mint",
-    mileage: "14,000 km",
-    fuel: "eDrive Plug-in Hybrid",
-    image: "public/images/bmw-m3-hero.jpg",
-    modalId: "bmw-530e-2023"
+    mileage: "6,800 km",
+    fuel: "5.2L V10 Petrol",
+    image: "public/images/audi-r8-hero.jpg",
+    modalId: "audi-r8-2023"
   }
 ];
 
@@ -641,7 +641,7 @@ function initFinanceCalculator() {
     const downPercent = parseFloat(downSlider.value);
     const downAmount = price * (downPercent / 100);
     const principal = price - downAmount;
-    
+
     const tenureYears = parseInt(tenureSelect.value, 10);
     const months = tenureYears * 12;
     const annualRate = parseFloat(rateInput.value) || 14.5;
@@ -704,7 +704,7 @@ function initInventoryCounts() {
     btn.addEventListener('click', () => {
       catCardBtns.forEach(b => b.classList.remove('border-red-500', 'bg-red-600/10'));
       btn.classList.add('border-red-500', 'bg-red-600/10');
-      
+
       selectedCategory = btn.dataset.catSelect || 'all';
       renderVehicles();
     });
@@ -784,13 +784,13 @@ function updateActiveChips() {
   };
 
   if (selectedCategory !== 'all') addChip(`Category: ${selectedCategory}`, () => { selectedCategory = 'all'; renderVehicles(); });
-  if (filterBrand !== 'all') addChip(`Brand: ${filterBrand}`, () => { filterBrand = 'all'; const el = document.getElementById('filter-brand'); if(el) el.value='all'; renderVehicles(); });
-  if (filterModel !== 'all') addChip(`Model: ${filterModel}`, () => { filterModel = 'all'; const el = document.getElementById('filter-model'); if(el) el.value='all'; renderVehicles(); });
-  if (filterYear !== 'all') addChip(`Min Year: ${filterYear}`, () => { filterYear = 'all'; const el = document.getElementById('filter-year'); if(el) el.value='all'; renderVehicles(); });
-  if (filterFuel !== 'all') addChip(`Fuel: ${filterFuel}`, () => { filterFuel = 'all'; const el = document.getElementById('filter-fuel'); if(el) el.value='all'; renderVehicles(); });
-  if (filterTrans !== 'all') addChip(`Trans: ${filterTrans}`, () => { filterTrans = 'all'; const el = document.getElementById('filter-trans'); if(el) el.value='all'; renderVehicles(); });
-  if (filterPrice !== 'all') addChip(`Price: Under ${(parseInt(filterPrice)/1000000).toFixed(1)}M`, () => { filterPrice = 'all'; const el = document.getElementById('filter-price'); if(el) el.value='all'; renderVehicles(); });
-  if (searchQuery !== '') addChip(`Search: "${searchQuery}"`, () => { searchQuery = ''; const el = document.getElementById('vehicle-search'); if(el) el.value=''; renderVehicles(); });
+  if (filterBrand !== 'all') addChip(`Brand: ${filterBrand}`, () => { filterBrand = 'all'; const el = document.getElementById('filter-brand'); if (el) el.value = 'all'; renderVehicles(); });
+  if (filterModel !== 'all') addChip(`Model: ${filterModel}`, () => { filterModel = 'all'; const el = document.getElementById('filter-model'); if (el) el.value = 'all'; renderVehicles(); });
+  if (filterYear !== 'all') addChip(`Min Year: ${filterYear}`, () => { filterYear = 'all'; const el = document.getElementById('filter-year'); if (el) el.value = 'all'; renderVehicles(); });
+  if (filterFuel !== 'all') addChip(`Fuel: ${filterFuel}`, () => { filterFuel = 'all'; const el = document.getElementById('filter-fuel'); if (el) el.value = 'all'; renderVehicles(); });
+  if (filterTrans !== 'all') addChip(`Trans: ${filterTrans}`, () => { filterTrans = 'all'; const el = document.getElementById('filter-trans'); if (el) el.value = 'all'; renderVehicles(); });
+  if (filterPrice !== 'all') addChip(`Price: Under ${(parseInt(filterPrice) / 1000000).toFixed(1)}M`, () => { filterPrice = 'all'; const el = document.getElementById('filter-price'); if (el) el.value = 'all'; renderVehicles(); });
+  if (searchQuery !== '') addChip(`Search: "${searchQuery}"`, () => { searchQuery = ''; const el = document.getElementById('vehicle-search'); if (el) el.value = ''; renderVehicles(); });
 
   if (activeCount > 0) {
     if (labelEl) labelEl.classList.remove('hidden');
@@ -867,7 +867,7 @@ function initParallax() {
       // Smooth continuous scale down as user scrolls down page
       const scrollScale = Math.max(0.88, 1 - (scrollPos / 1400));
       const scrollOpacity = Math.max(0, 1 - (scrollPos / 550));
-      
+
       tiltCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${scrollScale.toFixed(3)}, ${scrollScale.toFixed(3)}, ${scrollScale.toFixed(3)})`;
       tiltCard.style.opacity = scrollOpacity.toFixed(2);
     }
@@ -1107,10 +1107,10 @@ function renderVehicles() {
     const matchesPrice = filterPrice === 'all' || (v.price !== 'Contact for Price' && parseInt(v.price.replace(/[^0-9]/g, ''), 10) <= parseInt(filterPrice, 10));
 
     const matchesSearch = searchQuery === '' ||
-                          v.title.toLowerCase().includes(searchQuery) ||
-                          v.color.toLowerCase().includes(searchQuery) ||
-                          v.engine.toLowerCase().includes(searchQuery) ||
-                          v.fuel.toLowerCase().includes(searchQuery);
+      v.title.toLowerCase().includes(searchQuery) ||
+      v.color.toLowerCase().includes(searchQuery) ||
+      v.engine.toLowerCase().includes(searchQuery) ||
+      v.fuel.toLowerCase().includes(searchQuery);
 
     return matchesCat && matchesBrand && matchesModel && matchesYear && matchesFuel && matchesTrans && matchesPrice && matchesSearch;
   });
@@ -1130,10 +1130,10 @@ function renderVehicles() {
 
   displayList.forEach(vehicle => {
     const waMsg = encodeURIComponent(`Hello DEMO SALES WEB! I am interested in the ${vehicle.title} (${vehicle.year}). Please send me full pricing details and photos.`);
-    
+
     const card = document.createElement('div');
     card.className = "glass-card rounded-2xl overflow-hidden flex flex-col justify-between group transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer border border-white/10 hover:border-red-500/50 shadow-xl";
-    
+
     // Clicking card opens modal unless clicking directly on WhatsApp link
     card.onclick = (e) => {
       if (e.target.closest('a[target="_blank"]')) return;
@@ -1379,7 +1379,7 @@ function openVehicleModal(id) {
   document.getElementById('modal-title').textContent = vehicle.title;
   document.getElementById('modal-description').textContent = vehicle.description;
   document.getElementById('modal-price').textContent = vehicle.isPriceContact ? "Contact for Direct Quote" : vehicle.price;
-  
+
   document.getElementById('modal-year').textContent = vehicle.year;
   document.getElementById('modal-mileage').textContent = vehicle.mileage;
   document.getElementById('modal-trans').textContent = vehicle.transmission;
