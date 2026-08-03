@@ -881,11 +881,13 @@ function openVehicleModal(id) {
 
   document.getElementById('vehicle-modal').classList.remove('hidden');
   document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
 }
 
 function closeModal() {
   document.getElementById('vehicle-modal').classList.add('hidden');
   document.body.style.overflow = '';
+  document.documentElement.style.overflow = '';
 }
 
 function openGalleryLightbox(item) {
