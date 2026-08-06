@@ -1,3 +1,12 @@
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
+export function getImagePath(path: string): string {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  if (BASE_PATH && path.startsWith(BASE_PATH)) return path;
+  return `${BASE_PATH}${path.startsWith('/') ? '' : '/'}${path}`;
+}
+
 export interface Vehicle {
   id: string;
   title: string;
@@ -33,10 +42,10 @@ export const VEHICLES_DATA: Vehicle[] = [
     condition: "Unregistered / Mint",
     price: "Rs. 6,850,000",
     isPriceContact: false,
-    image: "/images/wagonr-fz.jpg",
+    image: getImagePath("/images/wagonr-fz.jpg"),
     gallery: [
-      "/images/wagonr-fz.jpg",
-      "/images/cabin-ergonomics.jpg",
+      getImagePath("/images/wagonr-fz.jpg"),
+      getImagePath("/images/cabin-ergonomics.jpg"),
     ],
     features: [
       "HUD (Head-Up Display)",
@@ -63,10 +72,10 @@ export const VEHICLES_DATA: Vehicle[] = [
     condition: "Unregistered",
     price: "Rs. 7,250,000",
     isPriceContact: false,
-    image: "/images/wagonr-stingray.jpg",
+    image: getImagePath("/images/wagonr-stingray.jpg"),
     gallery: [
-      "/images/wagonr-stingray.jpg",
-      "/images/cabin-ergonomics.jpg",
+      getImagePath("/images/wagonr-stingray.jpg"),
+      getImagePath("/images/cabin-ergonomics.jpg"),
     ],
     features: [
       "LED Headlamps & Signature Chrome Grille",
@@ -93,8 +102,8 @@ export const VEHICLES_DATA: Vehicle[] = [
     condition: "Unregistered",
     price: "Rs. 6,450,000",
     isPriceContact: false,
-    image: "/images/wagonr-fx.jpg",
-    gallery: ["/images/wagonr-fx.jpg"],
+    image: getImagePath("/images/wagonr-fx.jpg"),
+    gallery: [getImagePath("/images/wagonr-fx.jpg")],
     features: [
       "Lane Departure Warning",
       "Seat Heaters (Driver & Passenger)",
@@ -119,10 +128,10 @@ export const VEHICLES_DATA: Vehicle[] = [
     condition: "Unregistered",
     price: "Contact for Best Price",
     isPriceContact: true,
-    image: "/images/honda-fit.jpg",
+    image: getImagePath("/images/honda-fit.jpg"),
     gallery: [
-      "/images/honda-fit.jpg",
-      "/images/cabin-ergonomics.jpg",
+      getImagePath("/images/honda-fit.jpg"),
+      getImagePath("/images/cabin-ergonomics.jpg"),
     ],
     features: [
       "Honda SENSING Safety Suite",
@@ -149,8 +158,8 @@ export const VEHICLES_DATA: Vehicle[] = [
     condition: "Registered",
     price: "Rs. 5,950,000",
     isPriceContact: false,
-    image: "/images/toyota-vitz.jpg",
-    gallery: ["/images/toyota-vitz.jpg"],
+    image: getImagePath("/images/toyota-vitz.jpg"),
+    gallery: [getImagePath("/images/toyota-vitz.jpg")],
     features: [
       "Toyota Safety Sense C",
       "Auto High Beam & Lane Assist",
@@ -175,8 +184,8 @@ export const VEHICLES_DATA: Vehicle[] = [
     condition: "Unregistered",
     price: "Rs. 6,300,000",
     isPriceContact: false,
-    image: "/images/nissan-dayz.jpg",
-    gallery: ["/images/nissan-dayz.jpg"],
+    image: getImagePath("/images/nissan-dayz.jpg"),
+    gallery: [getImagePath("/images/nissan-dayz.jpg")],
     features: [
       "ProPILOT Autonomous Highway Assist",
       "360 Around View Camera Monitor",
@@ -201,8 +210,8 @@ export const VEHICLES_DATA: Vehicle[] = [
     condition: "Unregistered",
     price: "Rs. 18,500,000",
     isPriceContact: false,
-    image: "/images/toyota-hiace.jpg",
-    gallery: ["/images/toyota-hiace.jpg"],
+    image: getImagePath("/images/toyota-hiace.jpg"),
+    gallery: [getImagePath("/images/toyota-hiace.jpg")],
     features: [
       "5-Door Dual Sliding Doors",
       "Plush Velvet Seating & Rear AC",
@@ -226,8 +235,8 @@ export const VEHICLES_DATA: Vehicle[] = [
     condition: "Unregistered",
     price: "Rs. 48,900,000",
     isPriceContact: false,
-    image: "/images/mercedes-amg.jpg",
-    gallery: ["/images/mercedes-amg.jpg"],
+    image: getImagePath("/images/mercedes-amg.jpg"),
+    gallery: [getImagePath("/images/mercedes-amg.jpg")],
     features: [
       "AMG 4.0L V8 Biturbo Engine",
       "Panamericana Front Grille",
@@ -251,8 +260,8 @@ export const VEHICLES_DATA: Vehicle[] = [
     condition: "Unregistered",
     price: "Rs. 5,850,000",
     isPriceContact: false,
-    image: "/images/suzuki-every.jpg",
-    gallery: ["/images/suzuki-every.jpg"],
+    image: getImagePath("/images/suzuki-every.jpg"),
+    gallery: [getImagePath("/images/suzuki-every.jpg")],
     features: [
       "Selectable 4WD Drive System",
       "Join Turbo Seats & Armrests",
@@ -276,8 +285,8 @@ export const VEHICLES_DATA: Vehicle[] = [
     condition: "Unregistered",
     price: "Rs. 64,650,000",
     isPriceContact: false,
-    image: "/images/range-rover.jpg",
-    gallery: ["/images/range-rover.jpg"],
+    image: getImagePath("/images/range-rover.jpg"),
+    gallery: [getImagePath("/images/range-rover.jpg")],
     features: [
       "Terrain Response 2 All-Wheel Drive",
       "Electronic Air Suspension",
@@ -324,56 +333,56 @@ export interface GalleryItem {
 export const GALLERY_IMAGES: GalleryItem[] = [
   {
     id: 'g1',
-    src: '/images/wagonr-fz.jpg',
+    src: getImagePath('/images/wagonr-fz.jpg'),
     title: 'Suzuki Wagon R FZ Showroom Unit',
     category: 'showroom',
     badge: 'Showroom Stock',
   },
   {
     id: 'g2',
-    src: '/images/wagonr-stingray.jpg',
+    src: getImagePath('/images/wagonr-stingray.jpg'),
     title: 'Wagon R Stingray HYBRID T Edition',
     category: 'showroom',
     badge: 'Flagship Display',
   },
   {
     id: 'g3',
-    src: '/images/deliveries.jpg',
+    src: getImagePath('/images/deliveries.jpg'),
     title: 'Happy Customer Handover Ceremony',
     category: 'deliveries',
     badge: 'Island Delivery',
   },
   {
     id: 'g4',
-    src: '/images/showroom.jpg',
+    src: getImagePath('/images/showroom.jpg'),
     title: 'Kurunegala Main Showroom Complex',
     category: 'showroom',
     badge: 'Showroom Facility',
   },
   {
     id: 'g5',
-    src: '/images/quality-inspection.jpg',
+    src: getImagePath('/images/quality-inspection.jpg'),
     title: '150-Point Japanese Quality Inspection',
     category: 'inspection',
     badge: 'Grade 4.5 Verified',
   },
   {
     id: 'g6',
-    src: '/images/wholesale-fleet.jpg',
+    src: getImagePath('/images/wholesale-fleet.jpg'),
     title: 'Direct Japanese Import Container Arrival',
     category: 'imports',
     badge: 'Direct Japanese Import',
   },
   {
     id: 'g7',
-    src: '/images/cabin-ergonomics.jpg',
+    src: getImagePath('/images/cabin-ergonomics.jpg'),
     title: 'Interior Ergonomics & Touch Controls',
     category: 'inspection',
     badge: 'Japanese Spec',
   },
   {
     id: 'g8',
-    src: '/images/honda-fit.jpg',
+    src: getImagePath('/images/honda-fit.jpg'),
     title: 'Honda Fit Crosstar e:HEV Crossover',
     category: 'imports',
     badge: 'New Import Arrival',

@@ -9,6 +9,7 @@ import {
   useSpring,
 } from 'framer-motion';
 import Image from 'next/image';
+import { getImagePath } from '@/lib/data';
 
 type Slide = {
   id: string;
@@ -37,7 +38,7 @@ const HERO_SLIDES: Slide[] = [
     mileage: '14,500 km',
     engineSpec: '660cc Hybrid',
     fuelEconomy: '30+ km/L',
-    image: '/images/wagonr-fz.jpg',
+    image: getImagePath('/images/wagonr-fz.jpg'),
     waLink:
       'https://wa.me/94755331445?text=Hello%20DEMO%20SALES%20WEB,%20I%20want%20to%20reserve%20the%20Wagon%20R%20FZ.',
   },
@@ -52,7 +53,7 @@ const HERO_SLIDES: Slide[] = [
     mileage: '18,200 km',
     engineSpec: '660cc Turbo',
     fuelEconomy: '28+ km/L',
-    image: '/images/wagonr-stingray.jpg',
+    image: getImagePath('/images/wagonr-stingray.jpg'),
     waLink:
       'https://wa.me/94755331445?text=Hello%20DEMO%20SALES%20WEB,%20I%20want%20to%20reserve%20the%20Wagon%20R%20Stingray.',
   },
@@ -67,7 +68,7 @@ const HERO_SLIDES: Slide[] = [
     mileage: '11,000 km',
     engineSpec: '660cc Hybrid',
     fuelEconomy: '30+ km/L',
-    image: '/images/wagonr-fx.jpg',
+    image: getImagePath('/images/wagonr-fx.jpg'),
     waLink:
       'https://wa.me/94755331445?text=Hello%20DEMO%20SALES%20WEB,%20I%20want%20to%20reserve%20the%20Wagon%20R%20FX.',
   },
@@ -82,7 +83,7 @@ const HERO_SLIDES: Slide[] = [
     mileage: '8,500 km',
     engineSpec: '3.0L Twin-Turbo',
     fuelEconomy: '503 HP',
-    image: '/images/bmw-m3-hero.jpg',
+    image: getImagePath('/images/bmw-m3-hero.jpg'),
     waLink:
       'https://wa.me/94755331445?text=Hello%20DEMO%20SALES%20WEB,%20I%20want%20to%20inquire%20about%20the%20BMW%20M3.',
   },

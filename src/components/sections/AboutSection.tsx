@@ -3,7 +3,7 @@
 import { motion, useInView, useMotionValue, useTransform, animate } from 'framer-motion';
 import { useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { TESTIMONIALS } from '@/lib/data';
+import { TESTIMONIALS, getImagePath } from '@/lib/data';
 
 const EASE_OUT_QUART = [0.25, 1, 0.5, 1] as const;
 const EASE_SPRING = [0.34, 1.56, 0.64, 1] as const;
@@ -141,7 +141,7 @@ export default function AboutSection() {
               <div className="relative">
                 <div className="aspect-[4/3] rounded-3xl overflow-hidden glass-panel border border-white/10 p-2 shadow-2xl relative">
                   <Image
-                    src="/images/showroom.jpg"
+                    src={getImagePath("/images/showroom.jpg")}
                     alt="DEMO SALES WEB Showroom Kurunegala"
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
