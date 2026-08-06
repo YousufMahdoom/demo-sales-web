@@ -3,11 +3,18 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 const EASE_OUT_QUART = [0.25, 1, 0.5, 1] as const;
 
-const NAV_LINKS = [
+interface NavItem {
+  href: string;
+  label: string;
+  section?: string;
+  isPage?: boolean;
+}
+
+const NAV_LINKS: NavItem[] = [
   { href: '/', label: 'Home', section: 'hero' },
   { href: '/vehicles', label: 'Vehicles', isPage: true },
   { href: '/#about', label: 'About Us', section: 'about' },
@@ -19,18 +26,22 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+
   const pathname = usePathname();
+  const router = useRouter();
+
+  const isVehiclesPage = pathname ? pathname.includes('/vehicles') : false;
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
 
-      if (pathname === '/') {
+      if (!isVehiclesPage) {
         // Active section detection on home page
         const sections = ['hero', 'inventory', 'about', 'sell-trade', 'gallery', 'contact'];
         for (const id of [...sections].reverse()) {
           const el = document.getElementById(id);
-          if (el && window.scrollY >= el.offsetTop - 120) {
+          if (el && window.scrollY >= el.offsetTop - 140) {
             setActiveSection(id);
             break;
           }
@@ -40,7 +51,28 @@ export default function Navbar() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [pathname]);
+  }, [isVehiclesPage]);
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    link: NavItem
+  ) => {
+    if (mobileOpen) setMobileOpen(false);
+
+    if (link.section) {
+      if (!isVehiclesPage) {
+        e.preventDefault();
+        const el = document.getElementById(link.section);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+          setActiveSection(link.section);
+        }
+      } else {
+        e.preventDefault();
+        router.push(`/#${link.section}`);
+      }
+    }
+  };
 
   return (
     <>
@@ -59,7 +91,16 @@ export default function Navbar() {
           <div className="flex items-center justify-between">
 
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 cursor-pointer group">
+            <Link
+              href="/"
+              onClick={(e) => {
+                if (!isVehiclesPage) {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+              className="flex items-center gap-3 cursor-pointer group"
+            >
               <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center shadow-lg shadow-red-600/30 group-hover:scale-110 transition-transform duration-300">
                 <i className="fa-solid fa-car text-white text-lg" />
               </div>
@@ -76,15 +117,15 @@ export default function Navbar() {
             {/* Desktop Nav */}
             <nav className="hidden md:flex items-center gap-1 bg-white/5 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10">
               {NAV_LINKS.map((link) => {
-                const isVehiclesPage = pathname === '/vehicles' && link.isPage;
-                const isHomeSectionActive =
-                  pathname === '/' && link.section && activeSection === link.section;
-                const isActive = isVehiclesPage || isHomeSectionActive;
+                const isActive = link.isPage
+                  ? isVehiclesPage
+                  : !isVehiclesPage && link.section && activeSection === link.section;
 
                 return (
                   <Link
-                    key={link.href}
+                    key={link.label}
                     href={link.href}
+                    onClick={(e) => handleNavClick(e, link)}
                     className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                       isActive
                         ? 'text-white font-semibold'
@@ -152,16 +193,15 @@ export default function Navbar() {
             >
               <div className="pt-3 pb-6 space-y-2">
                 {NAV_LINKS.map((link) => {
-                  const isVehiclesPage = pathname === '/vehicles' && link.isPage;
-                  const isHomeSectionActive =
-                    pathname === '/' && link.section && activeSection === link.section;
-                  const isActive = isVehiclesPage || isHomeSectionActive;
+                  const isActive = link.isPage
+                    ? isVehiclesPage
+                    : !isVehiclesPage && link.section && activeSection === link.section;
 
                   return (
                     <Link
-                      key={link.href}
+                      key={link.label}
                       href={link.href}
-                      onClick={() => setMobileOpen(false)}
+                      onClick={(e) => handleNavClick(e, link)}
                       className={`block w-full text-left px-4 py-3 rounded-xl text-base font-medium transition-all ${
                         isActive
                           ? 'bg-red-600 text-white font-semibold'
