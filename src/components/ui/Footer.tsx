@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const FOOTER_LINKS = [
   { label: 'Home Showcase', href: '/' },
@@ -71,12 +72,12 @@ export default function Footer() {
             <ul className="space-y-2.5 text-gray-400">
               {FOOTER_LINKS.map((link) => (
                 <li key={link.label}>
-                  <a
+                  <Link
                     href={link.href}
                     className="hover:text-red-400 transition-colors duration-200 hover:pl-1 block"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
