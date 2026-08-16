@@ -138,7 +138,7 @@ export default function HeroSection() {
     return null;
   }, []);
 
-  // Adaptive Canvas drawing function (full car visible on mobile portrait + cover on wide screens)
+  // Dual-Layer Atmospheric Canvas drawing (Full bleed ambience + sharp foreground car)
   const drawFrame = useCallback((index: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -156,32 +156,57 @@ export default function HeroSection() {
     const imgRatio = imgWidth / imgHeight; // 1.777 (16:9)
     const canvasRatio = canvasWidth / canvasHeight;
 
-    let drawWidth: number;
-    let drawHeight: number;
-    let offsetX = 0;
-    let offsetY = 0;
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    // Mobile / Portrait & Square screens: fit full width so the entire car is completely visible
-    if (canvasRatio < 1.45) {
-      drawWidth = canvasWidth;
-      drawHeight = canvasWidth / imgRatio;
-      offsetX = 0;
-      offsetY = (canvasHeight - drawHeight) / 2;
+    // 1. LAYER 1: Full-Bleed Atmospheric Studio Background (fills all blank/black bars)
+    ctx.save();
+    let bgWidth = canvasWidth;
+    let bgHeight = canvasHeight;
+    if (imgRatio > canvasRatio) {
+      bgWidth = canvasHeight * imgRatio;
     } else {
-      // Widescreen Desktop / Tablets: cover fit with centered alignment
+      bgHeight = canvasWidth / imgRatio;
+    }
+    const bgOffsetX = (canvasWidth - bgWidth) / 2;
+    const bgOffsetY = (canvasHeight - bgHeight) / 2;
+
+    // Apply smooth ambient blur and contrast to extend background
+    ctx.filter = 'blur(35px) brightness(0.55) contrast(1.1)';
+    ctx.drawImage(img, bgOffsetX, bgOffsetY, bgWidth, bgHeight);
+    ctx.restore();
+
+    // 2. LAYER 2: Crisp Foreground Main Vehicle Frame
+    ctx.save();
+    let fgWidth: number;
+    let fgHeight: number;
+    let fgOffsetX: number;
+    let fgOffsetY: number;
+
+    if (canvasRatio < 1.45) {
+      // Portrait / Square Mobile: fit full width with nice vertical breathing room
+      fgWidth = canvasWidth * 0.98;
+      fgHeight = fgWidth / imgRatio;
+      fgOffsetX = (canvasWidth - fgWidth) / 2;
+      fgOffsetY = (canvasHeight - fgHeight) / 2;
+    } else {
+      // Widescreen Desktop / Tablets: cover fit
       if (imgRatio > canvasRatio) {
-        drawWidth = canvasHeight * imgRatio;
-        offsetX = (canvasWidth - drawWidth) / 2;
-        drawHeight = canvasHeight;
+        fgWidth = canvasHeight * imgRatio;
+        fgHeight = canvasHeight;
+        fgOffsetX = (canvasWidth - fgWidth) / 2;
+        fgOffsetY = 0;
       } else {
-        drawHeight = canvasWidth / imgRatio;
-        offsetY = (canvasHeight - drawHeight) / 2;
-        drawWidth = canvasWidth;
+        fgWidth = canvasWidth;
+        fgHeight = canvasWidth / imgRatio;
+        fgOffsetX = 0;
+        fgOffsetY = (canvasHeight - fgHeight) / 2;
       }
     }
 
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+    // Draw foreground car with subtle depth
+    ctx.filter = 'brightness(0.98) contrast(1.06) saturate(1.05)';
+    ctx.drawImage(img, fgOffsetX, fgOffsetY, fgWidth, fgHeight);
+    ctx.restore();
   }, [getNearestLoadedFrame]);
 
   // Progressive Preloading
@@ -369,11 +394,11 @@ export default function HeroSection() {
         )}
       </AnimatePresence>
 
-      {/* Sticky Hero Showcase Frame using 100dvh for complete mobile browser bar compatibility */}
+      {/* Sticky Hero Showcase Frame */}
       <div className="sticky top-0 w-full h-[100dvh] overflow-hidden flex flex-col justify-between select-none bg-[#020202]">
         
-        {/* TOP HUD BAR: Generous top padding (pt-22 sm:pt-24) so it NEVER overlaps the fixed navbar */}
-        <header className="relative z-20 w-full max-w-[1600px] mx-auto px-3 sm:px-8 pt-22 sm:pt-24 pb-1 sm:pb-2 flex items-center justify-between pointer-events-auto shrink-0 gap-2">
+        {/* TOP HUD BAR: Ample top clearance (pt-24 sm:pt-28) ensuring 0 collision with the top navbar */}
+        <header className="relative z-20 w-full max-w-[1600px] mx-auto px-3 sm:px-8 pt-24 sm:pt-28 pb-1 sm:pb-2 flex items-center justify-between pointer-events-auto shrink-0 gap-2">
           {/* Stage Switcher Pills */}
           <div className="flex items-center gap-1 sm:gap-1.5 glass px-1.5 sm:px-2.5 py-1 rounded-full border border-white/10 shadow-lg backdrop-blur-xl max-w-full overflow-x-auto no-scrollbar">
             {STAGES.map((stg, index) => {
@@ -383,7 +408,7 @@ export default function HeroSection() {
                   key={stg.id}
                   onClick={() => jumpToStage(stg.frameStart)}
                   aria-label={`Jump to ${stg.label} stage`}
-                  className={`flex items-center gap-1 px-2 sm:px-3 py-1 rounded-full text-[9px] sm:text-xs font-mono font-bold transition-all cursor-pointer whitespace-nowrap min-h-[28px] ${
+                  className={`flex items-center gap-1 px-2.5 sm:px-3.5 py-1 rounded-full text-[10px] sm:text-xs font-mono font-bold transition-all cursor-pointer whitespace-nowrap min-h-[28px] ${
                     isCurrent
                       ? 'bg-red-600 text-white shadow-md shadow-red-600/40'
                       : 'text-gray-400 hover:text-white hover:bg-white/5'
@@ -410,15 +435,15 @@ export default function HeroSection() {
           </div>
         </header>
 
-        {/* 100% FULL CAR VIEWPORT (Adaptive contain on mobile portrait, cover on desktop) */}
-        <div ref={canvasContainerRef} className="relative flex-1 w-full min-h-0 overflow-hidden flex items-center justify-center px-1">
+        {/* FULL BLEED CAR VIEWPORT (Dual-Layer: Atmospheric Background + Sharp Foreground Car) */}
+        <div ref={canvasContainerRef} className="relative flex-1 w-full min-h-0 overflow-hidden flex items-center justify-center">
           <canvas
             ref={canvasRef}
-            className="w-full h-full object-contain brightness-[0.95] contrast-[1.05] saturate-[1.05]"
+            className="w-full h-full object-cover"
           />
           {/* Subtle Ambient Gradients on top/bottom edges of canvas */}
-          <div className="absolute inset-x-0 top-0 h-8 sm:h-16 bg-gradient-to-b from-[#020202] to-transparent pointer-events-none" />
-          <div className="absolute inset-x-0 bottom-0 h-8 sm:h-16 bg-gradient-to-t from-[#050508] to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 top-0 h-12 sm:h-20 bg-gradient-to-b from-[#020202] via-[#020202]/60 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-12 sm:h-20 bg-gradient-to-t from-[#050508] via-[#050508]/60 to-transparent pointer-events-none" />
         </div>
 
         {/* BOTTOM COCKPIT DOCK: POSITIONED UNDER THE CAR (With right padding so FAB does not overlap) */}
@@ -570,6 +595,7 @@ export default function HeroSection() {
     </div>
   );
 }
+
 
 
 
