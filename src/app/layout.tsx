@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     title: "DEMO SALES WEB | Premium Japanese Vehicles",
     description:
       "Sri Lanka's trusted dealer for Suzuki Wagon R and premium Japanese imports.",
-    images: ["/images/wagonr-stingray.jpg"],
+    images: [getImagePath("/images/wagonr-stingray.jpg")],
   },
 };
 
