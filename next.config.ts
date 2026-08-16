@@ -8,6 +8,14 @@ const nextConfig: NextConfig = {
   output: "export",
   basePath: basePath,
   assetPrefix: basePath ? `${basePath}/` : "",
+  allowedDevOrigins: [
+    "172.20.10.9",
+    "172.20.10.9:3000",
+    "localhost",
+    "localhost:3000",
+    "127.0.0.1",
+    "127.0.0.1:3000",
+  ],
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath,
   },
@@ -18,3 +26,4 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
