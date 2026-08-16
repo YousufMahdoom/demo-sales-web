@@ -232,6 +232,11 @@ export default function HeroSection() {
           return;
         }
         const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.decoding = 'async';
+        if (idx < 24) {
+          img.fetchPriority = 'high';
+        }
         img.src = getFramePath(idx);
         img.onload = () => {
           registerImage(idx, img);
