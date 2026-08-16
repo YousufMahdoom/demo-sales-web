@@ -138,7 +138,7 @@ export default function HeroSection() {
     return null;
   }, []);
 
-  // Canvas drawing function with cover fit & crisp centering
+  // Adaptive Canvas drawing function (full car visible on mobile portrait + cover on wide screens)
   const drawFrame = useCallback((index: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -153,20 +153,31 @@ export default function HeroSection() {
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
 
-    const imgRatio = imgWidth / imgHeight;
+    const imgRatio = imgWidth / imgHeight; // 1.777 (16:9)
     const canvasRatio = canvasWidth / canvasHeight;
 
-    let drawWidth = canvasWidth;
-    let drawHeight = canvasHeight;
+    let drawWidth: number;
+    let drawHeight: number;
     let offsetX = 0;
     let offsetY = 0;
 
-    if (imgRatio > canvasRatio) {
-      drawWidth = canvasHeight * imgRatio;
-      offsetX = (canvasWidth - drawWidth) / 2;
-    } else {
+    // Mobile / Portrait & Square screens: fit full width so the entire car is completely visible
+    if (canvasRatio < 1.45) {
+      drawWidth = canvasWidth;
       drawHeight = canvasWidth / imgRatio;
+      offsetX = 0;
       offsetY = (canvasHeight - drawHeight) / 2;
+    } else {
+      // Widescreen Desktop / Tablets: cover fit with centered alignment
+      if (imgRatio > canvasRatio) {
+        drawWidth = canvasHeight * imgRatio;
+        offsetX = (canvasWidth - drawWidth) / 2;
+        drawHeight = canvasHeight;
+      } else {
+        drawHeight = canvasWidth / imgRatio;
+        offsetY = (canvasHeight - drawHeight) / 2;
+        drawWidth = canvasWidth;
+      }
     }
 
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -361,10 +372,10 @@ export default function HeroSection() {
       {/* Sticky Hero Showcase Frame using 100dvh for complete mobile browser bar compatibility */}
       <div className="sticky top-0 w-full h-[100dvh] overflow-hidden flex flex-col justify-between select-none bg-[#020202]">
         
-        {/* TOP HUD BAR: Responsive Header (Stage buttons & Live Telemetry) */}
-        <header className="relative z-20 w-full max-w-[1600px] mx-auto px-3 sm:px-8 pt-18 sm:pt-22 pb-1 sm:pb-2 flex items-center justify-between pointer-events-auto shrink-0 gap-2">
+        {/* TOP HUD BAR: Generous top padding (pt-22 sm:pt-24) so it NEVER overlaps the fixed navbar */}
+        <header className="relative z-20 w-full max-w-[1600px] mx-auto px-3 sm:px-8 pt-22 sm:pt-24 pb-1 sm:pb-2 flex items-center justify-between pointer-events-auto shrink-0 gap-2">
           {/* Stage Switcher Pills */}
-          <div className="flex items-center gap-1 sm:gap-2 glass px-1.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-white/10 shadow-lg backdrop-blur-xl max-w-full overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-1 sm:gap-1.5 glass px-1.5 sm:px-2.5 py-1 rounded-full border border-white/10 shadow-lg backdrop-blur-xl max-w-full overflow-x-auto no-scrollbar">
             {STAGES.map((stg, index) => {
               const isCurrent = currentStageIndex === index;
               return (
@@ -372,79 +383,74 @@ export default function HeroSection() {
                   key={stg.id}
                   onClick={() => jumpToStage(stg.frameStart)}
                   aria-label={`Jump to ${stg.label} stage`}
-                  className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 rounded-full text-[9px] sm:text-xs font-mono font-bold transition-all cursor-pointer whitespace-nowrap min-h-[28px] sm:min-h-[32px] ${
+                  className={`flex items-center gap-1 px-2 sm:px-3 py-1 rounded-full text-[9px] sm:text-xs font-mono font-bold transition-all cursor-pointer whitespace-nowrap min-h-[28px] ${
                     isCurrent
-                      ? 'bg-red-600 text-white shadow-md shadow-red-600/40 scale-102'
+                      ? 'bg-red-600 text-white shadow-md shadow-red-600/40'
                       : 'text-gray-400 hover:text-white hover:bg-white/5'
                   }`}
                 >
                   <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isCurrent ? 'bg-white animate-pulse' : 'bg-gray-500'}`} />
-                  <span className="hidden sm:inline">0{stg.id}</span>
-                  <span>{stg.label}</span>
+                  <span className="hidden xs:inline">{stg.label}</span>
+                  <span className="xs:hidden">0{stg.id}</span>
                 </button>
               );
             })}
           </div>
 
           {/* Live Telemetry & Frame Counter */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5 text-[9px] sm:text-xs font-mono glass px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-white/10 text-gray-400 shadow-lg backdrop-blur-xl shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 text-[9px] sm:text-xs font-mono glass px-2.5 sm:px-3 py-1 rounded-full border border-white/10 text-gray-400 shadow-lg backdrop-blur-xl shrink-0">
             <span className="inline-flex items-center gap-1 text-red-400 font-bold">
               <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping" />
-              <span className="hidden sm:inline">HUD </span>LIVE
+              LIVE
             </span>
             <span className="text-white/20">|</span>
             <span className="text-white">
-              <span className="hidden sm:inline">FRAME: </span><strong className="text-red-400">{String(activeFrame).padStart(3, '0')}</strong><span className="text-gray-500">/239</span>
+              <strong className="text-red-400">{String(activeFrame).padStart(3, '0')}</strong><span className="text-gray-500">/239</span>
             </span>
-            {!isFullyLoaded && (
-              <span className="hidden md:inline text-amber-400 font-semibold">
-                ({progressPercent}%)
-              </span>
-            )}
           </div>
         </header>
 
-        {/* 100% UNOBSTRUCTED CAR VIEWPORT (No text or cards over this area) */}
-        <div ref={canvasContainerRef} className="relative flex-1 w-full min-h-0 overflow-hidden flex items-center justify-center">
+        {/* 100% FULL CAR VIEWPORT (Adaptive contain on mobile portrait, cover on desktop) */}
+        <div ref={canvasContainerRef} className="relative flex-1 w-full min-h-0 overflow-hidden flex items-center justify-center px-1">
           <canvas
             ref={canvasRef}
-            className="w-full h-full object-cover brightness-[0.90] contrast-[1.06] saturate-[1.04]"
+            className="w-full h-full object-contain brightness-[0.95] contrast-[1.05] saturate-[1.05]"
           />
           {/* Subtle Ambient Gradients on top/bottom edges of canvas */}
-          <div className="absolute inset-x-0 top-0 h-10 sm:h-16 bg-gradient-to-b from-[#020202] to-transparent pointer-events-none" />
-          <div className="absolute inset-x-0 bottom-0 h-10 sm:h-16 bg-gradient-to-t from-[#050508] to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 top-0 h-8 sm:h-16 bg-gradient-to-b from-[#020202] to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-8 sm:h-16 bg-gradient-to-t from-[#050508] to-transparent pointer-events-none" />
         </div>
 
-        {/* BOTTOM COCKPIT DOCK: POSITIONED ENTIRELY UNDER THE CAR WITH SAFE-AREA PADDING */}
+        {/* BOTTOM COCKPIT DOCK: POSITIONED UNDER THE CAR (With right padding so FAB does not overlap) */}
         <footer className="relative z-30 w-full bg-[#050508]/96 border-t border-white/10 backdrop-blur-2xl px-3 sm:px-8 py-2.5 sm:py-3.5 shadow-2xl shrink-0 pointer-events-auto pb-[calc(0.6rem+env(safe-area-inset-bottom,0px))]">
-          <div className="max-w-[1600px] mx-auto flex flex-col gap-2 sm:gap-2.5">
+          <div className="max-w-[1600px] mx-auto flex flex-col gap-1.5 sm:gap-2.5">
             
-            {/* Top Row inside Dock: Stage info + Live Metrics + CTAs (Zero overlap with car above) */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 sm:gap-4">
+            {/* Top Row inside Dock: Stage info + Live Metrics + CTAs */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-1.5 sm:gap-4 pr-14 sm:pr-0">
               
               {/* Stage Identity & Title */}
-              <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
+              <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentStage.id}
-                    initial={{ opacity: 0, x: -10 }}
+                    initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 10 }}
+                    exit={{ opacity: 0, x: 8 }}
                     transition={{ duration: 0.2 }}
                     className="flex flex-col min-w-0"
                   >
-                    <div className="flex items-center gap-1.5 sm:gap-2">
-                      <span className={`inline-flex items-center gap-1 px-1.5 sm:px-2 py-0.5 rounded-md text-[8px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border ${currentStage.tagColor}`}>
-                        <i className={`fa-solid ${currentStage.badgeIcon} text-[8px] sm:text-[9px]`} />
+                    <div className="flex items-center gap-1.5">
+                      <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[8px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border ${currentStage.tagColor}`}>
+                        <i className={`fa-solid ${currentStage.badgeIcon} text-[8px]`} />
                         <span>{currentStage.tag}</span>
                       </span>
-                      <span className="text-[9px] sm:text-[10px] font-mono text-gray-500 hidden sm:inline">
+                      <span className="text-[9px] font-mono text-gray-500 hidden sm:inline">
                         • {Math.round((activeFrame / (TOTAL_FRAMES - 1)) * 100)}% ASSEMBLED
                       </span>
                     </div>
 
-                    <div className="flex items-baseline gap-1.5 mt-0.5 sm:mt-1">
-                      <h2 className="font-display font-black text-base sm:text-xl lg:text-2xl uppercase tracking-tight text-white whitespace-nowrap">
+                    <div className="flex items-baseline gap-1.5 mt-0.5">
+                      <h2 className="font-display font-black text-sm sm:text-xl lg:text-2xl uppercase tracking-tight text-white whitespace-nowrap">
                         <span className="font-light text-gray-300 mr-1">{currentStage.titleLight}</span>
                         <span className="text-gradient-red">{currentStage.titleAccent}</span>
                       </h2>
@@ -456,7 +462,7 @@ export default function HeroSection() {
                 </AnimatePresence>
               </div>
 
-              {/* Center Live Metrics (Visible on tablet & desktop) */}
+              {/* Center Live Metrics (Tablet & Desktop) */}
               <div className="hidden md:flex items-center gap-2 shrink-0">
                 {currentStage.metrics.map((m, i) => (
                   <div key={i} className="px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/10 flex items-center gap-1.5">
@@ -466,42 +472,42 @@ export default function HeroSection() {
                 ))}
               </div>
 
-              {/* Action Buttons (Full-width and touch-friendly on mobile) */}
-              <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+              {/* Action Buttons */}
+              <div className="flex items-center gap-2 shrink-0">
                 {currentStage.ctaType === 'action' ? (
                   <div className="flex items-center gap-2 w-full sm:w-auto">
                     <motion.a
                       href={WA_LINK}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 sm:px-5 min-h-[38px] sm:min-h-[42px] rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-[11px] sm:text-xs font-bold font-mono uppercase tracking-wider shadow-lg shadow-red-600/30 transition-all cursor-pointer whitespace-nowrap active:scale-95"
+                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-5 min-h-[36px] sm:min-h-[42px] rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-[10px] sm:text-xs font-bold font-mono uppercase tracking-wider shadow-lg shadow-red-600/30 transition-all cursor-pointer whitespace-nowrap active:scale-95"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.96 }}
                     >
                       <i className="fa-brands fa-whatsapp text-sm" />
-                      <span>Reserve via WhatsApp</span>
+                      <span>Reserve</span>
                     </motion.a>
 
                     <motion.a
                       href="#inventory"
-                      className="inline-flex items-center justify-center gap-1 px-3 sm:px-4 min-h-[38px] sm:min-h-[42px] rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-white hover:border-red-500 transition-all cursor-pointer whitespace-nowrap active:scale-95"
+                      className="inline-flex items-center justify-center gap-1 px-3 sm:px-4 min-h-[36px] sm:min-h-[42px] rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-white hover:border-red-500 transition-all cursor-pointer whitespace-nowrap active:scale-95"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.96 }}
                     >
                       <span>Cars</span>
-                      <i className="fa-solid fa-arrow-down text-red-500 text-[10px]" />
+                      <i className="fa-solid fa-arrow-down text-red-500 text-[9px]" />
                     </motion.a>
                   </div>
                 ) : (
-                  <div className="flex items-center justify-between w-full sm:w-auto gap-3">
-                    <span className="text-[10px] sm:text-[11px] font-mono text-gray-400 flex items-center gap-1">
-                      <i className="fa-solid fa-angles-down text-red-500 animate-bounce text-[9px]" />
-                      Scroll down to assemble
+                  <div className="flex items-center justify-between w-full sm:w-auto gap-2 sm:gap-3">
+                    <span className="text-[9px] sm:text-[11px] font-mono text-gray-400 flex items-center gap-1">
+                      <i className="fa-solid fa-angles-down text-red-500 animate-bounce text-[8px] sm:text-[9px]" />
+                      Scroll down
                     </span>
                     <button
                       onClick={() => jumpToStage(STAGES[Math.min(3, currentStageIndex + 1)].frameStart)}
                       aria-label="Next assembly phase"
-                      className="text-[10px] sm:text-xs font-mono font-bold text-red-400 hover:text-white px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-red-600/10 border border-red-500/20 hover:bg-red-600/20 transition-all cursor-pointer whitespace-nowrap active:scale-95"
+                      className="text-[9px] sm:text-xs font-mono font-bold text-red-400 hover:text-white px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-red-600/10 border border-red-500/20 hover:bg-red-600/20 transition-all cursor-pointer whitespace-nowrap active:scale-95"
                     >
                       Next &rarr;
                     </button>
@@ -510,8 +516,8 @@ export default function HeroSection() {
               </div>
             </div>
 
-            {/* Bottom Row: Progress Gauge + Frame Counter + Social Links */}
-            <div className="flex items-center justify-between pt-1.5 border-t border-white/[0.07] text-[9px] sm:text-[10px] font-mono text-gray-400">
+            {/* Bottom Row: Progress Gauge + Social Links */}
+            <div className="flex items-center justify-between pt-1 border-t border-white/[0.07] text-[8px] sm:text-[10px] font-mono text-gray-400 pr-14 sm:pr-0">
               <div className="flex items-center gap-2 sm:gap-3">
                 <span className="text-white font-bold tracking-wider uppercase text-[8px] sm:text-[9px]">PROGRESS</span>
                 <div className="w-16 sm:w-32 h-1 sm:h-1.5 bg-white/10 rounded-full overflow-hidden relative">
@@ -525,7 +531,7 @@ export default function HeroSection() {
                 </span>
               </div>
 
-              <div className="flex items-center gap-2.5 sm:gap-3 text-gray-400">
+              <div className="flex items-center gap-2 sm:gap-3 text-gray-400">
                 <span className="hidden sm:inline uppercase text-gray-500 text-[8px]">Connect:</span>
                 <a
                   href="https://www.facebook.com/share/1Jq4RvinxM/"
@@ -564,6 +570,7 @@ export default function HeroSection() {
     </div>
   );
 }
+
 
 
 
