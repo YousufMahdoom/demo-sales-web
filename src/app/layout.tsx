@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getImagePath } from "@/lib/data";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,6 +14,13 @@ export const metadata: Metadata = {
     "demo sales web",
     "used cars Kurunegala",
   ],
+  icons: {
+    icon: [
+      { url: getImagePath("/favicon.ico"), href: getImagePath("/favicon.ico") },
+    ],
+    shortcut: [getImagePath("/favicon.ico")],
+    apple: [getImagePath("/favicon.ico")],
+  },
   openGraph: {
     type: "website",
     title: "DEMO SALES WEB | Premium Japanese Vehicles",
@@ -30,6 +38,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        <link rel="icon" href={getImagePath("/favicon.ico")} sizes="any" />
+        <link rel="shortcut icon" href={getImagePath("/favicon.ico")} />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
