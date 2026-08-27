@@ -95,7 +95,11 @@ const STAGES: StageData[] = [
   },
 ];
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  onInitialReady?: () => void;
+}
+
+export default function HeroSection({ onInitialReady }: HeroSectionProps = {}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -209,7 +213,7 @@ export default function HeroSection() {
     ctx.restore();
   }, [getNearestLoadedFrame]);
 
-  // Progressive Preloading
+  // Progressive Preloading with priority for initial hero render
   useEffect(() => {
     let isCancelled = false;
 
@@ -221,11 +225,12 @@ export default function HeroSection() {
 
       if (idx === 0) {
         setInitialReady(true);
+        onInitialReady?.();
         drawFrame(0);
       }
     };
 
-    const loadImage = (idx: number): Promise<void> => {
+    const loadImage = (idx: number, priority: 'high' | 'low' = 'low'): Promise<void> => {
       return new Promise((resolve) => {
         if (imagesRef.current[idx] && loadedIndicesRef.current.has(idx)) {
           resolve();
@@ -234,9 +239,7 @@ export default function HeroSection() {
         const img = new Image();
         img.crossOrigin = 'anonymous';
         img.decoding = 'async';
-        if (idx < 24) {
-          img.fetchPriority = 'high';
-        }
+        img.fetchPriority = priority;
         img.src = getFramePath(idx);
         img.onload = () => {
           registerImage(idx, img);
@@ -248,43 +251,75 @@ export default function HeroSection() {
       });
     };
 
-    loadImage(0).then(() => {
+    // 1. Immediately load frame 0 to paint Hero first and notify parent
+    loadImage(0, 'high').then(() => {
       if (isCancelled) return;
 
+      // 2. Schedule sparse keyframes (every 8 frames) in gentle non-blocking batches
       const keyframes: number[] = [];
-      for (let i = 0; i < TOTAL_FRAMES; i += 6) {
-        if (i !== 0) keyframes.push(i);
+      for (let i = 8; i < TOTAL_FRAMES; i += 8) {
+        keyframes.push(i);
+      }
+      if (!keyframes.includes(TOTAL_FRAMES - 1)) {
+        keyframes.push(TOTAL_FRAMES - 1);
       }
 
-      const loadBatches = async () => {
-        const batchSize = 6;
-        for (let i = 0; i < keyframes.length; i += batchSize) {
-          if (isCancelled) break;
-          const batch = keyframes.slice(i, i + batchSize);
-          await Promise.all(batch.map((idx) => loadImage(idx)));
-        }
+      const scheduleBatches = () => {
+        const batchSize = 4;
+        let kIdx = 0;
 
-        const remaining: number[] = [];
-        for (let i = 0; i < TOTAL_FRAMES; i++) {
-          if (!loadedIndicesRef.current.has(i)) {
-            remaining.push(i);
+        const loadNextKeyframeBatch = () => {
+          if (isCancelled || kIdx >= keyframes.length) {
+            loadRemainingFrames();
+            return;
           }
-        }
+          const batch = keyframes.slice(kIdx, kIdx + batchSize);
+          kIdx += batchSize;
+          Promise.all(batch.map((idx) => loadImage(idx, 'low'))).then(() => {
+            if (!isCancelled) {
+              setTimeout(loadNextKeyframeBatch, 40);
+            }
+          });
+        };
 
-        for (let i = 0; i < remaining.length; i += batchSize) {
-          if (isCancelled) break;
-          const batch = remaining.slice(i, i + batchSize);
-          await Promise.all(batch.map((idx) => loadImage(idx)));
-        }
+        const loadRemainingFrames = () => {
+          const remaining: number[] = [];
+          for (let i = 0; i < TOTAL_FRAMES; i++) {
+            if (!loadedIndicesRef.current.has(i)) {
+              remaining.push(i);
+            }
+          }
+          let rIdx = 0;
+
+          const loadNextRemainingBatch = () => {
+            if (isCancelled || rIdx >= remaining.length) return;
+            const batch = remaining.slice(rIdx, rIdx + batchSize);
+            rIdx += batchSize;
+            Promise.all(batch.map((idx) => loadImage(idx, 'low'))).then(() => {
+              if (!isCancelled) {
+                if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+                  (window as any).requestIdleCallback(() => loadNextRemainingBatch(), { timeout: 200 });
+                } else {
+                  setTimeout(loadNextRemainingBatch, 60);
+                }
+              }
+            });
+          };
+
+          loadNextRemainingBatch();
+        };
+
+        // Start keyframe loading after a small delay to keep main thread free for initial hero paint
+        setTimeout(loadNextKeyframeBatch, 100);
       };
 
-      loadBatches();
+      scheduleBatches();
     });
 
     return () => {
       isCancelled = true;
     };
-  }, [drawFrame]);
+  }, [drawFrame, onInitialReady]);
 
   // Frame Index & Stage Sync
   useEffect(() => {
