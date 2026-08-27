@@ -1,643 +1,430 @@
 'use client';
 
-import { useRef, useEffect, useState, useCallback } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { getImagePath } from '@/lib/data';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
+import { getImagePath, VEHICLES_DATA, Vehicle } from '@/lib/data';
+import VehicleDetailsModal from '@/components/ui/VehicleDetailsModal';
 
-const TOTAL_FRAMES = 240;
-const FRAMES_DIR = '/images/Car_parts_assembling_together_202608162019_frames';
-const WA_LINK = 'https://wa.me/94755331445?text=Hello%20DEMO%20SALES%20WEB,%20I%20want%20to%20inquire%20about%20your%20vehicles.';
-
-// Helper to format frame path: frame_000000.jpeg to frame_000239.jpeg
-const getFramePath = (index: number) => {
-  const frameNum = String(index).padStart(6, '0');
-  return getImagePath(`${FRAMES_DIR}/frame_${frameNum}.jpeg`);
-};
-
-interface StageData {
-  id: number;
-  label: string;
-  tag: string;
-  tagColor: string;
-  badgeIcon: string;
-  titleLight: string;
-  titleAccent: string;
-  shortDesc: string;
-  metrics: { label: string; value: string; color: string }[];
-  ctaType?: 'scroll' | 'action';
-  frameStart: number;
-}
-
-const STAGES: StageData[] = [
-  {
-    id: 1,
-    label: 'Chassis',
-    tag: 'STAGE 01 // ARCHITECTURE',
-    tagColor: 'text-red-400 bg-red-500/10 border-red-500/30',
-    badgeIcon: 'fa-cube',
-    titleLight: 'DECONSTRUCTED',
-    titleAccent: 'PRECISION',
-    shortDesc: 'Exploded chassis blueprint & high-tensile modular subframes.',
-    metrics: [
-      { label: 'TOLERANCE', value: '0.01 mm', color: 'text-red-400' },
-      { label: 'AUCTION GRADE', value: '4.5 / 5.0', color: 'text-amber-400' },
-    ],
-    ctaType: 'scroll',
-    frameStart: 0,
-  },
-  {
-    id: 2,
-    label: 'Powertrain',
-    tag: 'STAGE 02 // POWERTRAIN',
-    tagColor: 'text-amber-400 bg-amber-500/10 border-amber-500/30',
-    badgeIcon: 'fa-gears',
-    titleLight: 'HYBRID',
-    titleAccent: 'PROPULSION',
-    shortDesc: 'Mild-hybrid ISG drivetrains & performance turbo synchronization.',
-    metrics: [
-      { label: 'FUEL ECONOMY', value: '30+ km/L', color: 'text-green-400' },
-      { label: 'REGEN MATRIX', value: 'ISG ACTIVE', color: 'text-amber-400' },
-    ],
-    ctaType: 'scroll',
-    frameStart: 60,
-  },
-  {
-    id: 3,
-    label: 'Aero',
-    tag: 'STAGE 03 // AERODYNAMICS',
-    tagColor: 'text-blue-400 bg-blue-500/10 border-blue-500/30',
-    badgeIcon: 'fa-wind',
-    titleLight: 'SCULPTED',
-    titleAccent: 'AERODYNAMICS',
-    shortDesc: 'Wind-tunnel panels, LED signature optics & collision radar arrays.',
-    metrics: [
-      { label: 'DRAG COEFF', value: '0.26 Cd', color: 'text-blue-400' },
-      { label: 'ACTIVE RADAR', value: 'DSBS SENSE', color: 'text-green-400' },
-    ],
-    ctaType: 'scroll',
-    frameStart: 130,
-  },
-  {
-    id: 4,
-    label: 'Manifest',
-    tag: 'STAGE 04 // FINAL MANIFEST',
-    tagColor: 'text-green-400 bg-green-500/10 border-green-500/30',
-    badgeIcon: 'fa-circle-check',
-    titleLight: 'COMMAND',
-    titleAccent: 'THE ROAD',
-    shortDesc: 'Masterpiece assembled & verified for immediate Sri Lankan delivery.',
-    metrics: [
-      { label: 'STOCK STATUS', value: 'READY IN STOCK', color: 'text-green-400' },
-      { label: 'DOCUMENTS', value: '100% VERIFIED', color: 'text-white' },
-    ],
-    ctaType: 'action',
-    frameStart: 195,
-  },
-];
+const EASE_OUT_QUART = [0.25, 1, 0.5, 1] as const;
 
 interface HeroSectionProps {
   onInitialReady?: () => void;
 }
 
+interface SpotlightCar {
+  id: string;
+  dataId: string;
+  badge: string;
+  name: string;
+  modelCode: string;
+  price: string;
+  image: string;
+  glowColor: string;
+  specs: {
+    mileage: string;
+    engine: string;
+    grade: string;
+  };
+}
+
+const SPOTLIGHT_CARS: SpotlightCar[] = [
+  {
+    id: 'wr-fz',
+    dataId: 'wr-fz-2023',
+    badge: 'Flagship Hybrid',
+    name: 'Suzuki Wagon R FZ',
+    modelCode: '2023 • Safety Package • HUD',
+    price: 'Rs. 6,850,000',
+    image: getImagePath('/images/wagonr-fz.jpg'),
+    glowColor: 'rgba(239, 68, 68, 0.24)',
+    specs: {
+      mileage: '30+ km/L',
+      engine: '660cc ISG Hybrid',
+      grade: 'Grade 4.5 / B',
+    },
+  },
+  {
+    id: 'wr-stingray',
+    dataId: 'wr-stingray-2022',
+    badge: 'Turbo Sport',
+    name: 'Wagon R Stingray T',
+    modelCode: '2022 • Turbo • Paddle Shift',
+    price: 'Rs. 7,250,000',
+    image: getImagePath('/images/wagonr-stingray.jpg'),
+    glowColor: 'rgba(245, 158, 11, 0.24)',
+    specs: {
+      mileage: '28+ km/L',
+      engine: '660cc Turbo Hybrid',
+      grade: 'Grade 4.5 / A',
+    },
+  },
+  {
+    id: 'honda-fit',
+    dataId: 'honda-fit-crosstar-2022',
+    badge: 'Crossover e:HEV',
+    name: 'Honda Fit Crosstar',
+    modelCode: '2022 • Dual Motor • Honda SENSING',
+    price: 'Rs. 9,450,000',
+    image: getImagePath('/images/honda-fit.jpg'),
+    glowColor: 'rgba(6, 182, 212, 0.24)',
+    specs: {
+      mileage: '29+ km/L',
+      engine: '1.5L e:HEV Dual Motor',
+      grade: 'Grade 5.0 Mint',
+    },
+  },
+  {
+    id: 'toyota-vitz',
+    dataId: 'toyota-vitz-2019',
+    badge: 'Safety Edition',
+    name: 'Toyota Vitz F Safety',
+    modelCode: '2020 • Push Start • Reverse Cam',
+    price: 'Rs. 7,400,000',
+    image: getImagePath('/images/toyota-vitz.jpg'),
+    glowColor: 'rgba(168, 85, 247, 0.24)',
+    specs: {
+      mileage: '24+ km/L',
+      engine: '1.0L VVT-i Petrol',
+      grade: 'Grade 4.5 Clean',
+    },
+  },
+  {
+    id: 'nissan-dayz',
+    dataId: 'nissan-dayz-2022',
+    badge: 'Highway Star',
+    name: 'Nissan Dayz Highway',
+    modelCode: '2022 • Around View 360° • LED',
+    price: 'Rs. 6,650,000',
+    image: getImagePath('/images/nissan-dayz.jpg'),
+    glowColor: 'rgba(245, 158, 11, 0.24)',
+    specs: {
+      mileage: '27+ km/L',
+      engine: '660cc Smart Hybrid',
+      grade: 'Grade 4.5 / B',
+    },
+  },
+];
+
+const AUTO_ROTATE_INTERVAL = 6000;
+
 export default function HeroSection({ onInitialReady }: HeroSectionProps = {}) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const canvasContainerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [selectedModalVehicle, setSelectedModalVehicle] = useState<Vehicle | null>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const touchStartXRef = useRef<number | null>(null);
 
-  const imagesRef = useRef<(HTMLImageElement | null)[]>(new Array(TOTAL_FRAMES).fill(null));
-  const loadedIndicesRef = useRef<Set<number>>(new Set());
+  const currentCar = SPOTLIGHT_CARS[selectedIndex];
 
-  const [loadedCount, setLoadedCount] = useState(0);
-  const [initialReady, setInitialReady] = useState(false);
-  const [activeFrame, setActiveFrame] = useState(0);
-  const [currentStageIndex, setCurrentStageIndex] = useState(0);
+  // Notify parent immediately that Hero is mounted and ready
+  useEffect(() => {
+    onInitialReady?.();
+  }, [onInitialReady]);
 
-  // Scroll Tracking
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
-
-  // Smooth frame mapping 0..239
-  const frameIndexTransform = useTransform(scrollYProgress, [0, 1], [0, TOTAL_FRAMES - 1]);
-
-  // Find the nearest loaded frame if current one is still downloading
-  const getNearestLoadedFrame = useCallback((targetIdx: number): HTMLImageElement | null => {
-    const images = imagesRef.current;
-    if (images[targetIdx] && loadedIndicesRef.current.has(targetIdx)) {
-      return images[targetIdx];
-    }
-    let closestIdx = -1;
-    let minDistance = Infinity;
-    for (const idx of loadedIndicesRef.current) {
-      const dist = Math.abs(idx - targetIdx);
-      if (dist < minDistance) {
-        minDistance = dist;
-        closestIdx = idx;
-      }
-    }
-    if (closestIdx !== -1 && images[closestIdx]) {
-      return images[closestIdx];
-    }
-    return null;
+  const handleNext = useCallback(() => {
+    setSelectedIndex((prev) => (prev + 1) % SPOTLIGHT_CARS.length);
   }, []);
 
-  // Dual-Layer Atmospheric Canvas drawing (Full bleed ambience + sharp foreground car)
-  const drawFrame = useCallback((index: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+  const handlePrev = useCallback(() => {
+    setSelectedIndex((prev) => (prev - 1 + SPOTLIGHT_CARS.length) % SPOTLIGHT_CARS.length);
+  }, []);
 
-    const img = getNearestLoadedFrame(index);
-    if (!img || !img.complete || img.naturalWidth === 0) return;
-
-    const imgWidth = img.naturalWidth || 1280;
-    const imgHeight = img.naturalHeight || 720;
-    const canvasWidth = canvas.width;
-    const canvasHeight = canvas.height;
-
-    const imgRatio = imgWidth / imgHeight; // 1.777 (16:9)
-    const canvasRatio = canvasWidth / canvasHeight;
-
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-
-    // 1. LAYER 1: Full-Bleed Atmospheric Studio Background (fills all blank/black bars)
-    ctx.save();
-    let bgWidth = canvasWidth;
-    let bgHeight = canvasHeight;
-    if (imgRatio > canvasRatio) {
-      bgWidth = canvasHeight * imgRatio;
-    } else {
-      bgHeight = canvasWidth / imgRatio;
-    }
-    const bgOffsetX = (canvasWidth - bgWidth) / 2;
-    const bgOffsetY = (canvasHeight - bgHeight) / 2;
-
-    // Apply smooth ambient blur and contrast to extend background
-    ctx.filter = 'blur(35px) brightness(0.55) contrast(1.1)';
-    ctx.drawImage(img, bgOffsetX, bgOffsetY, bgWidth, bgHeight);
-    ctx.restore();
-
-    // 2. LAYER 2: Crisp Foreground Main Vehicle Frame
-    ctx.save();
-    let fgWidth: number;
-    let fgHeight: number;
-    let fgOffsetX: number;
-    let fgOffsetY: number;
-
-    if (canvasRatio < 1.45) {
-      // Portrait / Square Mobile: fit full width with nice vertical breathing room
-      fgWidth = canvasWidth * 0.98;
-      fgHeight = fgWidth / imgRatio;
-      fgOffsetX = (canvasWidth - fgWidth) / 2;
-      fgOffsetY = (canvasHeight - fgHeight) / 2;
-    } else {
-      // Widescreen Desktop / Tablets: cover fit
-      if (imgRatio > canvasRatio) {
-        fgWidth = canvasHeight * imgRatio;
-        fgHeight = canvasHeight;
-        fgOffsetX = (canvasWidth - fgWidth) / 2;
-        fgOffsetY = 0;
-      } else {
-        fgWidth = canvasWidth;
-        fgHeight = canvasWidth / imgRatio;
-        fgOffsetX = 0;
-        fgOffsetY = (canvasHeight - fgHeight) / 2;
-      }
-    }
-
-    // Draw foreground car with subtle depth
-    ctx.filter = 'brightness(0.98) contrast(1.06) saturate(1.05)';
-    ctx.drawImage(img, fgOffsetX, fgOffsetY, fgWidth, fgHeight);
-    ctx.restore();
-  }, [getNearestLoadedFrame]);
-
-  // Progressive Preloading with priority for initial hero render
+  // Auto-rotation timer with pause on hover/interaction
   useEffect(() => {
-    let isCancelled = false;
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      handleNext();
+    }, AUTO_ROTATE_INTERVAL);
+    return () => clearInterval(timer);
+  }, [isPaused, handleNext]);
 
-    const registerImage = (idx: number, img: HTMLImageElement) => {
-      if (isCancelled) return;
-      imagesRef.current[idx] = img;
-      loadedIndicesRef.current.add(idx);
-      setLoadedCount((prev) => prev + 1);
-
-      if (idx === 0) {
-        setInitialReady(true);
-        onInitialReady?.();
-        drawFrame(0);
-      }
-    };
-
-    const loadImage = (idx: number, priority: 'high' | 'low' = 'low'): Promise<void> => {
-      return new Promise((resolve) => {
-        if (imagesRef.current[idx] && loadedIndicesRef.current.has(idx)) {
-          resolve();
-          return;
-        }
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.decoding = 'async';
-        img.fetchPriority = priority;
-        img.src = getFramePath(idx);
-        img.onload = () => {
-          registerImage(idx, img);
-          resolve();
-        };
-        img.onerror = () => {
-          resolve();
-        };
-      });
-    };
-
-    // 1. Immediately load frame 0 to paint Hero first and notify parent
-    loadImage(0, 'high').then(() => {
-      if (isCancelled) return;
-
-      // 2. Schedule sparse keyframes (every 8 frames) in gentle non-blocking batches
-      const keyframes: number[] = [];
-      for (let i = 8; i < TOTAL_FRAMES; i += 8) {
-        keyframes.push(i);
-      }
-      if (!keyframes.includes(TOTAL_FRAMES - 1)) {
-        keyframes.push(TOTAL_FRAMES - 1);
-      }
-
-      const scheduleBatches = () => {
-        const batchSize = 4;
-        let kIdx = 0;
-
-        const loadNextKeyframeBatch = () => {
-          if (isCancelled || kIdx >= keyframes.length) {
-            loadRemainingFrames();
-            return;
-          }
-          const batch = keyframes.slice(kIdx, kIdx + batchSize);
-          kIdx += batchSize;
-          Promise.all(batch.map((idx) => loadImage(idx, 'low'))).then(() => {
-            if (!isCancelled) {
-              setTimeout(loadNextKeyframeBatch, 40);
-            }
-          });
-        };
-
-        const loadRemainingFrames = () => {
-          const remaining: number[] = [];
-          for (let i = 0; i < TOTAL_FRAMES; i++) {
-            if (!loadedIndicesRef.current.has(i)) {
-              remaining.push(i);
-            }
-          }
-          let rIdx = 0;
-
-          const loadNextRemainingBatch = () => {
-            if (isCancelled || rIdx >= remaining.length) return;
-            const batch = remaining.slice(rIdx, rIdx + batchSize);
-            rIdx += batchSize;
-            Promise.all(batch.map((idx) => loadImage(idx, 'low'))).then(() => {
-              if (!isCancelled) {
-                if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-                  (window as any).requestIdleCallback(() => loadNextRemainingBatch(), { timeout: 200 });
-                } else {
-                  setTimeout(loadNextRemainingBatch, 60);
-                }
-              }
-            });
-          };
-
-          loadNextRemainingBatch();
-        };
-
-        // Start keyframe loading after a small delay to keep main thread free for initial hero paint
-        setTimeout(loadNextKeyframeBatch, 100);
-      };
-
-      scheduleBatches();
-    });
-
-    return () => {
-      isCancelled = true;
-    };
-  }, [drawFrame, onInitialReady]);
-
-  // Frame Index & Stage Sync
-  useEffect(() => {
-    let animId: number;
-
-    const unsubscribe = frameIndexTransform.on('change', (latest) => {
-      const idx = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(latest)));
-      setActiveFrame(idx);
-
-      let stageIdx = 0;
-      if (idx < 60) stageIdx = 0;
-      else if (idx < 130) stageIdx = 1;
-      else if (idx < 195) stageIdx = 2;
-      else stageIdx = 3;
-
-      setCurrentStageIndex(stageIdx);
-
-      cancelAnimationFrame(animId);
-      animId = requestAnimationFrame(() => {
-        drawFrame(idx);
-      });
-    });
-
-    return () => {
-      unsubscribe();
-      cancelAnimationFrame(animId);
-    };
-  }, [frameIndexTransform, drawFrame]);
-
-  // Handle Resize and Orientation Change with high-DPI scaling
-  useEffect(() => {
-    const handleResize = () => {
-      const canvas = canvasRef.current;
-      const container = canvasContainerRef.current;
-      if (!canvas || !container) return;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = container.clientWidth * dpr;
-      canvas.height = container.clientHeight * dpr;
-      drawFrame(activeFrame);
-    };
-
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('orientationchange', handleResize);
-    handleResize();
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('orientationchange', handleResize);
-    };
-  }, [drawFrame, activeFrame]);
-
-  useEffect(() => {
-    if (initialReady) {
-      setTimeout(() => {
-        const canvas = canvasRef.current;
-        const container = canvasContainerRef.current;
-        if (canvas && container) {
-          const dpr = Math.min(window.devicePixelRatio || 1, 2);
-          canvas.width = container.clientWidth * dpr;
-          canvas.height = container.clientHeight * dpr;
-        }
-        drawFrame(0);
-      }, 50);
-    }
-  }, [initialReady, drawFrame]);
-
-  const jumpToStage = (frameStart: number) => {
-    if (!containerRef.current) return;
-    const containerTop = containerRef.current.offsetTop;
-    const containerHeight = containerRef.current.offsetHeight - window.innerHeight;
-    const targetScroll = containerTop + (frameStart / (TOTAL_FRAMES - 1)) * containerHeight;
-    window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+  // Touch swipe support for mobile/tablet
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
   };
 
-  const currentStage = STAGES[currentStageIndex];
-  const progressPercent = Math.min(100, Math.round((loadedCount / TOTAL_FRAMES) * 100));
-  const isFullyLoaded = loadedCount >= TOTAL_FRAMES;
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartXRef.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const deltaX = touchStartXRef.current - touchEndX;
+
+    if (deltaX > 40) {
+      handleNext();
+    } else if (deltaX < -40) {
+      handlePrev();
+    }
+    touchStartXRef.current = null;
+  };
+
+  // Subtle mouse tracking for studio glow on desktop
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 30;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 20;
+    setMousePos({ x, y });
+  };
+
+  const handleWhatsAppInquiry = (car: SpotlightCar) => {
+    const text = encodeURIComponent(
+      `Hello DEMO SALES WEB, I would like to inquire about the ${car.name} (${car.modelCode}) listed at ${car.price}. Please share auction sheet and stock details.`
+    );
+    window.open(`https://wa.me/94755331445?text=${text}`, '_blank');
+  };
+
+  const handleOpenDetails = (car: SpotlightCar) => {
+    const vehicle = VEHICLES_DATA.find((v) => v.id === car.dataId);
+    if (vehicle) {
+      setSelectedModalVehicle(vehicle);
+    }
+  };
 
   return (
-    <div
-      ref={containerRef}
-      className="relative w-full h-[360vh] md:h-[400vh] bg-[#020202] touch-pan-y"
+    <section
+      id="hero"
+      className="relative min-h-[90vh] lg:h-screen lg:max-h-[920px] lg:min-h-[640px] w-full bg-[#030305] overflow-hidden flex flex-col justify-between pt-20 sm:pt-24 lg:pt-20 pb-4 sm:pb-6 select-none"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => {
+        setIsPaused(false);
+        setMousePos({ x: 0, y: 0 });
+      }}
+      onTouchStart={() => setIsPaused(true)}
+      onTouchEnd={() => setTimeout(() => setIsPaused(false), 2000)}
+      onMouseMove={handleMouseMove}
     >
-      {/* Initial Warmup Overlay */}
-      <AnimatePresence>
-        {!initialReady && (
-          <motion.div
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#040406] text-white px-4"
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: 'easeInOut' }}
-          >
-            <div className="glass p-6 sm:p-8 rounded-3xl border border-white/10 text-center flex flex-col items-center space-y-4 max-w-xs sm:max-w-sm w-full shadow-2xl">
-              <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center">
-                <div className="absolute inset-0 rounded-full border-4 border-red-500/20 border-t-red-500 animate-spin" />
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-red-600/20 flex items-center justify-center">
-                  <i className="fa-solid fa-car text-red-500 text-xs sm:text-sm animate-pulse" />
-                </div>
-              </div>
-              <div className="space-y-1">
-                <div className="text-[10px] sm:text-xs font-mono font-bold tracking-[0.2em] text-red-500 uppercase">
-                  INITIALIZING SHOWCASE
-                </div>
-                <h3 className="font-display font-extrabold text-white text-base sm:text-lg tracking-wide uppercase">
-                  Precision Engineering
-                </h3>
-                <p className="text-[11px] sm:text-xs text-gray-400 font-mono">
-                  Loading Interactive Assembly...
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* 1. AMBIENT STUDIO LIGHTING */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <motion.div
+          key={currentCar.id}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+            x: mousePos.x,
+            y: mousePos.y,
+          }}
+          transition={{ duration: 0.8, ease: EASE_OUT_QUART }}
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[320px] sm:w-[550px] lg:w-[750px] h-[320px] sm:h-[450px] rounded-full blur-[90px] sm:blur-[130px] pointer-events-none"
+          style={{ background: `radial-gradient(circle, ${currentCar.glowColor} 0%, transparent 70%)` }}
+        />
+        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#030305] via-[#030305]/80 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#030305] via-[#030305]/80 to-transparent" />
+      </div>
 
-      {/* Sticky Hero Showcase Frame */}
-      <div className="sticky top-0 w-full h-[100dvh] overflow-hidden flex flex-col justify-between select-none bg-[#020202]">
-        
-        {/* TOP HUD BAR: Ample top clearance (pt-24 sm:pt-28) ensuring 0 collision with the top navbar */}
-        <header className="relative z-20 w-full max-w-[1600px] mx-auto px-3 sm:px-8 pt-24 sm:pt-28 pb-1 sm:pb-2 flex items-center justify-between pointer-events-auto shrink-0 gap-2">
-          {/* Stage Switcher Pills */}
-          <div className="flex items-center gap-1 sm:gap-1.5 glass px-1.5 sm:px-2.5 py-1 rounded-full border border-white/10 shadow-lg backdrop-blur-xl max-w-full overflow-x-auto no-scrollbar">
-            {STAGES.map((stg, index) => {
-              const isCurrent = currentStageIndex === index;
-              return (
-                <button
-                  key={stg.id}
-                  onClick={() => jumpToStage(stg.frameStart)}
-                  aria-label={`Jump to ${stg.label} stage`}
-                  className={`flex items-center gap-1 px-2.5 sm:px-3.5 py-1 rounded-full text-[10px] sm:text-xs font-mono font-bold transition-all cursor-pointer whitespace-nowrap min-h-[28px] ${
-                    isCurrent
-                      ? 'bg-red-600 text-white shadow-md shadow-red-600/40'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isCurrent ? 'bg-white animate-pulse' : 'bg-gray-500'}`} />
-                  <span className="hidden xs:inline">{stg.label}</span>
-                  <span className="xs:hidden">0{stg.id}</span>
-                </button>
-              );
-            })}
+      {/* 2. MAIN CLEAN HERO CONTAINER */}
+      <div className="container-max relative z-10 my-auto w-full px-4 sm:px-6 lg:px-8">
+        {/* 2-Column Responsive Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
+          
+          {/* LEFT: Clean Headline & Action Buttons */}
+          <div className="lg:col-span-5 space-y-4 sm:space-y-5 text-left">
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: EASE_OUT_QUART }}
+            >
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white font-display tracking-tight leading-[1.1]">
+                Premium Japanese <br />
+                <span className="text-gradient-red">Vehicles in Stock.</span>
+              </h1>
+            </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: EASE_OUT_QUART }}
+              className="text-gray-300 text-xs sm:text-sm lg:text-base leading-relaxed max-w-lg"
+            >
+              Handpicked Grade 4.5+ hybrid hatchbacks and Japanese imports in Kurunegala with guaranteed auction sheets and direct import pricing.
+            </motion.p>
+
+            {/* Clean CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15, ease: EASE_OUT_QUART }}
+              className="flex flex-col min-[420px]:flex-row items-stretch min-[420px]:items-center gap-2.5 sm:gap-3 pt-1"
+            >
+              <a
+                href="#inventory"
+                className="px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-semibold text-xs sm:text-sm font-mono tracking-wide shadow-lg shadow-red-600/30 hover:shadow-red-600/50 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+              >
+                <span>Explore Inventory</span>
+                <i className="fa-solid fa-arrow-down text-xs" />
+              </a>
+
+              <button
+                onClick={() => handleWhatsAppInquiry(currentCar)}
+                className="px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl glass hover:bg-white/10 border border-white/15 text-white font-semibold text-xs sm:text-sm font-mono tracking-wide transition-all duration-300 hover:border-green-500/50 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <i className="fa-brands fa-whatsapp text-green-400 text-base" />
+                <span>WhatsApp Us</span>
+              </button>
+            </motion.div>
+
+            {/* Clean 3-Metric Trust Bar */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.25 }}
+              className="grid grid-cols-3 gap-2 sm:gap-3 pt-3 sm:pt-4 border-t border-white/10 max-w-md"
+            >
+              <div className="glass-panel p-2 sm:p-2.5 rounded-xl border border-white/5 text-center">
+                <span className="text-sm sm:text-lg font-bold text-white block font-display">1,450+</span>
+                <span className="text-[8px] sm:text-[10px] font-mono text-gray-400 uppercase">Delivered</span>
+              </div>
+              <div className="glass-panel p-2 sm:p-2.5 rounded-xl border border-white/5 text-center">
+                <span className="text-sm sm:text-lg font-bold text-green-400 block font-display">100%</span>
+                <span className="text-[8px] sm:text-[10px] font-mono text-gray-400 uppercase">Auction Sheets</span>
+              </div>
+              <div className="glass-panel p-2 sm:p-2.5 rounded-xl border border-white/5 text-center">
+                <span className="text-sm sm:text-lg font-bold text-amber-400 block font-display">12+ Yrs</span>
+                <span className="text-[8px] sm:text-[10px] font-mono text-gray-400 uppercase">Trust</span>
+              </div>
+            </motion.div>
           </div>
 
-          {/* Live Telemetry & Frame Counter */}
-          <div className="flex items-center gap-1.5 sm:gap-2 text-[9px] sm:text-xs font-mono glass px-2.5 sm:px-3 py-1 rounded-full border border-white/10 text-gray-400 shadow-lg backdrop-blur-xl shrink-0">
-            <span className="inline-flex items-center gap-1 text-red-400 font-bold">
-              <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping" />
-              LIVE
-            </span>
-            <span className="text-white/20">|</span>
-            <span className="text-white">
-              <strong className="text-red-400">{String(activeFrame).padStart(3, '0')}</strong><span className="text-gray-500">/239</span>
-            </span>
-          </div>
-        </header>
+          {/* RIGHT: Clean Vehicle Showcase Stage */}
+          <div className="lg:col-span-7 flex flex-col items-center w-full">
+            <div 
+              className="relative w-full glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-4 lg:p-5 border border-white/15 bg-[#09090d]/90 shadow-2xl overflow-hidden"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
+              {/* Header: Name + Price */}
+              <div className="flex items-center justify-between gap-3 mb-2.5 sm:mb-3">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-sm sm:text-lg lg:text-xl font-bold text-white font-display">
+                      {currentCar.name}
+                    </h3>
+                    <span className="px-2 py-0.5 rounded-full text-[8px] sm:text-[10px] font-mono font-semibold uppercase text-red-400 bg-red-500/10 border border-red-500/30">
+                      {currentCar.badge}
+                    </span>
+                  </div>
+                  <p className="text-[9px] sm:text-xs text-gray-400 font-mono mt-0.5">
+                    {currentCar.modelCode}
+                  </p>
+                </div>
 
-        {/* FULL BLEED CAR VIEWPORT (Dual-Layer: Atmospheric Background + Sharp Foreground Car) */}
-        <div ref={canvasContainerRef} className="relative flex-1 w-full min-h-0 overflow-hidden flex items-center justify-center">
-          <canvas
-            ref={canvasRef}
-            className="w-full h-full object-cover"
-          />
-          {/* Subtle Ambient Gradients on top/bottom edges of canvas */}
-          <div className="absolute inset-x-0 top-0 h-12 sm:h-20 bg-gradient-to-b from-[#020202] via-[#020202]/60 to-transparent pointer-events-none" />
-          <div className="absolute inset-x-0 bottom-0 h-12 sm:h-20 bg-gradient-to-t from-[#050508] via-[#050508]/60 to-transparent pointer-events-none" />
-        </div>
+                <div className="text-right">
+                  <span className="text-xs sm:text-base lg:text-lg font-mono font-bold text-white block">
+                    {currentCar.price}
+                  </span>
+                </div>
+              </div>
 
-        {/* BOTTOM COCKPIT DOCK: POSITIONED UNDER THE CAR (With right padding so FAB does not overlap) */}
-        <footer className="relative z-30 w-full bg-[#050508]/96 border-t border-white/10 backdrop-blur-2xl px-3 sm:px-8 py-2.5 sm:py-3.5 shadow-2xl shrink-0 pointer-events-auto pb-[calc(0.6rem+env(safe-area-inset-bottom,0px))]">
-          <div className="max-w-[1600px] mx-auto flex flex-col gap-1.5 sm:gap-2.5">
-            
-            {/* Top Row inside Dock: Stage info + Live Metrics + CTAs */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-1.5 sm:gap-4 pr-14 sm:pr-0">
-              
-              {/* Stage Identity & Title */}
-              <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
+              {/* Vehicle Showcase Image Window */}
+              <div className="relative aspect-[16/10] w-full rounded-xl sm:rounded-2xl overflow-hidden bg-black/50 border border-white/10 flex items-center justify-center group/stage">
+                
+                {/* Ambient Floor Glow */}
+                <div 
+                  className="absolute bottom-1 inset-x-12 h-14 rounded-full blur-2xl opacity-70 pointer-events-none transition-colors duration-700"
+                  style={{ backgroundColor: currentCar.glowColor }}
+                />
+
+                {/* Animated Vehicle Transition */}
                 <AnimatePresence mode="wait">
                   <motion.div
-                    key={currentStage.id}
-                    initial={{ opacity: 0, x: -8 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 8 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex flex-col min-w-0"
+                    key={currentCar.id}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.35, ease: EASE_OUT_QUART }}
+                    className="relative w-full h-full flex items-center justify-center cursor-pointer"
+                    onClick={() => handleOpenDetails(currentCar)}
                   >
-                    <div className="flex items-center gap-1.5">
-                      <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[8px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border ${currentStage.tagColor}`}>
-                        <i className={`fa-solid ${currentStage.badgeIcon} text-[8px]`} />
-                        <span>{currentStage.tag}</span>
-                      </span>
-                      <span className="text-[9px] font-mono text-gray-500 hidden sm:inline">
-                        • {Math.round((activeFrame / (TOTAL_FRAMES - 1)) * 100)}% ASSEMBLED
-                      </span>
-                    </div>
+                    <Image
+                      src={currentCar.image}
+                      alt={currentCar.name}
+                      fill
+                      priority
+                      loading="eager"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 55vw"
+                      className="object-cover rounded-lg sm:rounded-xl group-hover/stage:scale-105 transition-transform duration-500 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
 
-                    <div className="flex items-baseline gap-1.5 mt-0.5">
-                      <h2 className="font-display font-black text-sm sm:text-xl lg:text-2xl uppercase tracking-tight text-white whitespace-nowrap">
-                        <span className="font-light text-gray-300 mr-1">{currentStage.titleLight}</span>
-                        <span className="text-gradient-red">{currentStage.titleAccent}</span>
-                      </h2>
-                      <span className="hidden xl:inline text-xs text-gray-400 font-sans truncate max-w-sm">
-                        {currentStage.shortDesc}
+                    {/* Subtle Quick Inspect Overlay Tag */}
+                    <div className="absolute top-2.5 right-2.5 z-10 opacity-90 sm:opacity-0 sm:group-hover/stage:opacity-100 transition-opacity duration-300">
+                      <span className="px-2.5 py-1 rounded-full text-[9px] sm:text-[10px] font-mono font-semibold text-white bg-black/75 border border-white/20 backdrop-blur-md flex items-center gap-1.5 shadow-lg">
+                        <i className="fa-solid fa-expand text-[8px]" />
+                        <span>Inspect Specs</span>
                       </span>
                     </div>
                   </motion.div>
                 </AnimatePresence>
-              </div>
 
-              {/* Center Live Metrics (Tablet & Desktop) */}
-              <div className="hidden md:flex items-center gap-2 shrink-0">
-                {currentStage.metrics.map((m, i) => (
-                  <div key={i} className="px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/10 flex items-center gap-1.5">
-                    <span className="text-[9px] font-mono text-gray-400 uppercase tracking-wider">{m.label}:</span>
-                    <span className={`text-[11px] font-mono font-bold ${m.color}`}>{m.value}</span>
-                  </div>
-                ))}
-              </div>
+                {/* Touch Navigation Left & Right */}
+                <button
+                  onClick={handlePrev}
+                  className="absolute left-2 sm:left-2.5 top-1/2 -translate-y-1/2 w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-black/60 hover:bg-black/90 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 z-20 cursor-pointer"
+                  aria-label="Previous Car"
+                >
+                  <i className="fa-solid fa-chevron-left text-[10px] sm:text-xs" />
+                </button>
 
-              {/* Action Buttons */}
-              <div className="flex items-center gap-2 shrink-0">
-                {currentStage.ctaType === 'action' ? (
-                  <div className="flex items-center gap-2 w-full sm:w-auto">
-                    <motion.a
-                      href={WA_LINK}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-5 min-h-[36px] sm:min-h-[42px] rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-[10px] sm:text-xs font-bold font-mono uppercase tracking-wider shadow-lg shadow-red-600/30 transition-all cursor-pointer whitespace-nowrap active:scale-95"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.96 }}
-                    >
-                      <i className="fa-brands fa-whatsapp text-sm" />
-                      <span>Reserve</span>
-                    </motion.a>
+                <button
+                  onClick={handleNext}
+                  className="absolute right-2 sm:right-2.5 top-1/2 -translate-y-1/2 w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-black/60 hover:bg-black/90 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 z-20 cursor-pointer"
+                  aria-label="Next Car"
+                >
+                  <i className="fa-solid fa-chevron-right text-[10px] sm:text-xs" />
+                </button>
 
-                    <motion.a
-                      href="#inventory"
-                      className="inline-flex items-center justify-center gap-1 px-3 sm:px-4 min-h-[36px] sm:min-h-[42px] rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-white hover:border-red-500 transition-all cursor-pointer whitespace-nowrap active:scale-95"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.96 }}
-                    >
-                      <span>Cars</span>
-                      <i className="fa-solid fa-arrow-down text-red-500 text-[9px]" />
-                    </motion.a>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-between w-full sm:w-auto gap-2 sm:gap-3">
-                    <span className="text-[9px] sm:text-[11px] font-mono text-gray-400 flex items-center gap-1">
-                      <i className="fa-solid fa-angles-down text-red-500 animate-bounce text-[8px] sm:text-[9px]" />
-                      Scroll down
-                    </span>
+                {/* Slide Dots Indicator with Auto-Progress */}
+                <div className="absolute bottom-2 sm:bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20">
+                  {SPOTLIGHT_CARS.map((_, i) => (
                     <button
-                      onClick={() => jumpToStage(STAGES[Math.min(3, currentStageIndex + 1)].frameStart)}
-                      aria-label="Next assembly phase"
-                      className="text-[9px] sm:text-xs font-mono font-bold text-red-400 hover:text-white px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-red-600/10 border border-red-500/20 hover:bg-red-600/20 transition-all cursor-pointer whitespace-nowrap active:scale-95"
-                    >
-                      Next &rarr;
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Bottom Row: Progress Gauge + Social Links */}
-            <div className="flex items-center justify-between pt-1 border-t border-white/[0.07] text-[8px] sm:text-[10px] font-mono text-gray-400 pr-14 sm:pr-0">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <span className="text-white font-bold tracking-wider uppercase text-[8px] sm:text-[9px]">PROGRESS</span>
-                <div className="w-16 sm:w-32 h-1 sm:h-1.5 bg-white/10 rounded-full overflow-hidden relative">
-                  <motion.div
-                    className="h-full bg-gradient-to-r from-red-600 via-red-500 to-amber-400"
-                    style={{ width: useTransform(scrollYProgress, [0, 1], ['0%', '100%']) }}
-                  />
+                      key={i}
+                      onClick={() => setSelectedIndex(i)}
+                      className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                        selectedIndex === i ? 'w-5 sm:w-6 bg-red-500' : 'w-1.5 bg-white/40'
+                      }`}
+                      aria-label={`Car ${i + 1}`}
+                    />
+                  ))}
                 </div>
-                <span className="text-white font-mono font-bold">
-                  {Math.round((activeFrame / (TOTAL_FRAMES - 1)) * 100)}%
-                </span>
               </div>
 
-              <div className="flex items-center gap-2 sm:gap-3 text-gray-400">
-                <span className="hidden sm:inline uppercase text-gray-500 text-[8px]">Connect:</span>
-                <a
-                  href="https://www.facebook.com/share/1Jq4RvinxM/"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Facebook"
-                  className="hover:text-white transition-colors p-1"
-                >
-                  <i className="fa-brands fa-facebook text-xs" />
-                </a>
-                <a
-                  href="https://www.instagram.com/azytion"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Instagram"
-                  className="hover:text-white transition-colors p-1"
-                >
-                  <i className="fa-brands fa-instagram text-xs" />
-                </a>
-                <a
-                  href="https://www.tiktok.com/@azytion"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="TikTok"
-                  className="hover:text-white transition-colors p-1"
-                >
-                  <i className="fa-brands fa-tiktok text-xs" />
-                </a>
+              {/* 3 Key Specs Strip */}
+              <div className="grid grid-cols-3 gap-1.5 sm:gap-2 mt-2.5 sm:mt-3">
+                <div className="glass-panel p-1.5 sm:p-2 rounded-xl border border-white/5 text-center">
+                  <span className="text-[8px] sm:text-[9px] font-mono text-gray-400 block uppercase">Economy</span>
+                  <span className="text-[11px] sm:text-xs lg:text-sm font-bold text-green-400 font-mono">{currentCar.specs.mileage}</span>
+                </div>
+                <div className="glass-panel p-1.5 sm:p-2 rounded-xl border border-white/5 text-center">
+                  <span className="text-[8px] sm:text-[9px] font-mono text-gray-400 block uppercase">Engine</span>
+                  <span className="text-[11px] sm:text-xs lg:text-sm font-bold text-white font-mono truncate">{currentCar.specs.engine}</span>
+                </div>
+                <div className="glass-panel p-1.5 sm:p-2 rounded-xl border border-white/5 text-center">
+                  <span className="text-[8px] sm:text-[9px] font-mono text-gray-400 block uppercase">Grade</span>
+                  <span className="text-[11px] sm:text-xs lg:text-sm font-bold text-amber-400 font-mono">{currentCar.specs.grade}</span>
+                </div>
               </div>
+
             </div>
-
           </div>
-        </footer>
+
+        </div>
 
       </div>
-    </div>
+
+      {/* 3. SUBTLE SCROLL HINT */}
+      <div className="relative z-10 w-full pt-1 sm:pt-2 text-center">
+        <a href="#inventory" className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono text-gray-500 hover:text-red-400 transition-colors">
+          <span>Scroll to explore stock</span>
+          <i className="fa-solid fa-chevron-down text-[8px] animate-bounce" />
+        </a>
+      </div>
+
+      {/* Vehicle Details Modal from Hero */}
+      {selectedModalVehicle && (
+        <VehicleDetailsModal
+          vehicle={selectedModalVehicle}
+          onClose={() => setSelectedModalVehicle(null)}
+        />
+      )}
+    </section>
   );
 }
-
-
-
-
-
-
