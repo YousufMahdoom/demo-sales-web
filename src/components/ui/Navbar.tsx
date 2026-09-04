@@ -53,23 +53,57 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isVehiclesPage]);
 
+  const scrollToSection = (sectionId: string) => {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+      setActiveSection(sectionId);
+    }
+  };
+
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     link: NavItem
   ) => {
     if (mobileOpen) setMobileOpen(false);
 
-    if (link.section) {
-      if (!isVehiclesPage) {
+    // If clicking "Vehicles" while already on the vehicles page, scroll to top
+    if (link.isPage && isVehiclesPage) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    if (!isVehiclesPage) {
+      // Currently on Home page: smooth scroll directly to section
+      if (link.section === 'hero' || link.href === '/') {
         e.preventDefault();
-        const el = document.getElementById(link.section);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-          setActiveSection(link.section);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setActiveSection('hero');
+        if (window.location.hash) {
+          window.history.pushState(null, '', window.location.pathname);
         }
-      } else {
+        return;
+      }
+
+      if (link.section) {
+        e.preventDefault();
+        scrollToSection(link.section);
+        window.history.pushState(null, '', `/#${link.section}`);
+        return;
+      }
+    } else {
+      // Currently on /vehicles: navigate back to Home with hash
+      if (link.section === 'hero' || link.href === '/') {
+        e.preventDefault();
+        router.push('/');
+        return;
+      }
+
+      if (link.section) {
         e.preventDefault();
         router.push(`/#${link.section}`);
+        return;
       }
     }
   };
@@ -97,6 +131,10 @@ export default function Navbar() {
                 if (!isVehiclesPage) {
                   e.preventDefault();
                   window.scrollTo({ top: 0, behavior: 'smooth' });
+                  setActiveSection('hero');
+                  if (window.location.hash) {
+                    window.history.pushState(null, '', window.location.pathname);
+                  }
                 }
               }}
               className="flex items-center gap-3 cursor-pointer group"
