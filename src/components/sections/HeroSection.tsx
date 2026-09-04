@@ -216,8 +216,8 @@ export default function HeroSection({ onInitialReady }: HeroSectionProps = {}) {
         {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
           
-          {/* LEFT: Clean Headline & Action Buttons */}
-          <div className="lg:col-span-5 space-y-4 sm:space-y-5 text-left">
+          {/* LEFT / AFTER CARS ON MOBILE: Clean Headline & Action Buttons */}
+          <div className="order-2 lg:order-1 lg:col-span-5 space-y-4 sm:space-y-5 text-left">
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
@@ -284,8 +284,8 @@ export default function HeroSection({ onInitialReady }: HeroSectionProps = {}) {
             </motion.div>
           </div>
 
-          {/* RIGHT: Clean Vehicle Showcase Stage */}
-          <div className="lg:col-span-7 flex flex-col items-center w-full">
+          {/* RIGHT / FIRST ON MOBILE: Clean Vehicle Showcase Stage */}
+          <div className="order-1 lg:order-2 lg:col-span-7 flex flex-col items-center w-full">
             <div 
               className="relative w-full glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-4 lg:p-5 border border-white/15 bg-[#09090d]/90 shadow-2xl overflow-hidden"
               onTouchStart={handleTouchStart}
